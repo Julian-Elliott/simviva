@@ -1,0 +1,69 @@
+# FRCA Viva AI Voice Practice App — Full Spec
+
+Goal: Most realistic FRCA viva simulation — ElevenLabs voice agents + workflows for Monday PoC, with path to full PWA.
+
+Target: Primary and Final FRCA SOE candidates.
+
+## Exam Structure
+- Primary: 2 stations × 30 min (4 examiners). Topics: Pharmacology, Physiology, Physics/Clinical Measurement, Equipment, Applied Anatomy
+- Final: SOE1 (clinical subspecialties), SOE2 (clinical scenarios + critical incidents)
+
+## Question Progression
+1. Define/Describe (factual recall)
+2. Explain mechanism (understanding)
+3. Apply to clinical scenario (application)
+4. Troubleshoot/Problem-solve (synthesis)
+5. Justify decision (evaluation)
+
+## Examiner Persona Rules
+- Never say "correct," "good," "well done," "exactly right"
+- Never say "wrong" or "incorrect" explicitly
+- Neutral acknowledgments only: "I see," "Mm-hmm," "Go on"
+- Consistent tone regardless of answer quality
+- "Are you sure?" on both correct AND incorrect answers (~30%)
+- Probe: "Why?" and "What else?" after substantive answers
+- Move on without explanation when time expires
+- Interrupt verbose/off-topic after 20-30 seconds
+- 5-7 seconds silence before prompting
+- Formal: "Dr. [Surname], could you explain..."
+
+## Timing
+- 4-minute blocks per topic stem
+- Warning at 3:30, end at 4:00 (hard transition)
+- Total station: 15-20 minutes
+
+## Silence Protocol
+- 0-3s: Wait silently
+- 3-5s: Continue waiting (pressure builds)
+- 5-7s: "What else can you add?"
+- 7-10s: "Let's move on..." or "Perhaps you could tell me about..."
+- >10s: Definitive topic change
+
+## Interruption
+Triggers: verbose >30s, off-topic, repetition, time expiring, candidate seeks confirmation
+Phrases: "That's fine. Let's move on...", "Coming back to the case...", "Let me stop you there..."
+Rescue: ONE simplified alternative, same neutral tone, then move on
+
+## Scoring (RCoA 4-Point)
+4 = Pass+ (exceeds standard)
+3 = Pass (meets standard)
+2 = Borderline (gaps)
+1 = Fail (significant gaps, unsafe)
+
+## Post-Session Feedback
+- Score per topic
+- Key points covered/missed
+- Specific improvement feedback
+- BJA Education article links
+- Comparison to previous attempts
+
+## Learning Science
+- Spaced repetition: irregular intervals outperform fixed schedules
+- Testing effect > restudying
+- Transfer-appropriate processing: voice-to-voice practice matches exam format
+
+## Open Questions
+1. Training mode vs exam-only?
+2. Content licensing / BJA partnership?
+3. Monetisation model?
+4. Stress metrics as anxiety indicators?

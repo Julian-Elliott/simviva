@@ -1,0 +1,15 @@
+# Proprietary content - do not share
+
+# Question banks
+questions/
+
+# System prompts (core IP)
+prompts/
+
+# Test data and results
+tests/
+test-results.json
+
+# Web app question data
+webapp/scenarios.json
+webapp/cheatsheet.txt
