@@ -57,7 +57,7 @@ anatomy, followed by automated scoring and debrief.
        ▼
 ┌─────────────────┐
 │   ASSESSMENT     │  Dispatch tool node
-│ assess_performance│  success ──► / failure ──►
+│ assess_performance│  success ──► / failure ──► DEBRIEF
 └──────┬──────────┘
        │ assessment_* dynamic vars set
        ▼
@@ -92,11 +92,11 @@ anatomy, followed by automated scoring and debrief.
 **Prompt summary:**
 - Introduce yourself as the exam coordinator
 - Ask: "May I have your surname, please?"
-- Extract and store `candidate_surname` via dynamic variable assignment
+- Extract and store `candidate_name` via dynamic variable assignment
 - Brief the candidate: "You will face two examiners, each covering two topics over approximately four minutes each. The examiners will not indicate whether your answers are correct or incorrect — this is normal exam procedure. Shall we begin?"
 
 **Output variables:**
-- `candidate_surname` (string) — updated via tool response → dynamic variable assignment
+- `candidate_name` (string) — updated via tool response → dynamic variable assignment
 
 **Forward edge → QUESTION SELECT:**
 - Type: LLM condition

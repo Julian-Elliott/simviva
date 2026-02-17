@@ -162,3 +162,87 @@ def extract_dynamic_variables(agent: dict) -> dict:
         return dv.get("dynamic_variable_placeholders") or {}
     except (KeyError, TypeError):
         return {}
+
+
+# ── Workflow helpers ──
+
+PROMPT_FILE_PREFIX = "__PROMPT_FILE__:"
+
+
+def extract_workflow(agent: dict):
+    """Extract the workflow definition (nodes + edges) if one exists.
+
+    Returns the workflow dict, or None when the agent has no workflow
+    (single-agent mode).
+    """
+    wf = agent.get("workflow")
+    if not wf or not isinstance(wf, dict):
+        return None
+    # Treat empty workflow structures as absent
+    if not wf.get("nodes") and not wf.get("edges"):
+        return None
+    return wf
+
+
+def node_slug(node: dict) -> str:
+    """Derive a filesystem-safe slug from a workflow node's name or id.
+
+    Examples: "WELCOME" -> "welcome", "EXAMINER 1" -> "examiner_1"
+    """
+    raw = node.get("name", "") or node.get("id", "unknown")
+    slug = raw.lower().strip()
+    slug = "".join(c if c.isalnum() or c == "_" else "_" for c in slug)
+    while "__" in slug:
+        slug = slug.replace("__", "_")
+    return slug.strip("_") or "unnamed"
+
+
+# Candidate key-paths where a subagent node's prompt text might live
+# in the ElevenLabs API response.  We try each in order.
+_NODE_PROMPT_PATHS = (
+    ("data", "agent", "prompt", "prompt"),
+    ("data", "prompt", "prompt"),
+    ("data", "system_prompt"),
+    ("config", "agent", "prompt", "prompt"),
+    ("config", "prompt", "prompt"),
+    ("config", "system_prompt"),
+    ("agent_config_override", "prompt", "prompt"),
+    ("agent_config_override", "system_prompt"),
+)
+
+
+def _walk_path(obj, path):
+    """Navigate a nested dict by a tuple of keys.  Returns None on miss."""
+    for key in path:
+        if isinstance(obj, dict) and key in obj:
+            obj = obj[key]
+        else:
+            return None
+    return obj
+
+
+def _set_path(obj, path, value):
+    """Set a value inside a nested dict, creating intermediate dicts."""
+    for key in path[:-1]:
+        if key not in obj or not isinstance(obj.get(key), dict):
+            obj[key] = {}
+        obj = obj[key]
+    obj[path[-1]] = value
+
+
+def find_node_prompt(node: dict):
+    """Locate the system-prompt override inside a workflow node.
+
+    Returns (prompt_text, key_path) or (None, None).
+    The *key_path* can be reused with set_node_prompt().
+    """
+    for path in _NODE_PROMPT_PATHS:
+        val = _walk_path(node, path)
+        if isinstance(val, str) and val.strip():
+            return val, path
+    return None, None
+
+
+def set_node_prompt(node: dict, path: tuple, text: str):
+    """Write *text* into a node at the given key *path*."""
+    _set_path(node, path, text)

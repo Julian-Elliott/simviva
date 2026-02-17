@@ -10,6 +10,7 @@ Usage:
   source .env && python3 scripts/agent_pull.py --diff    # diff only, no writes
 """
 
+import copy
 import difflib
 import json
 import os
@@ -105,6 +106,41 @@ def pull_to_local(agent: dict):
         json.dump(agent, f, indent=2, ensure_ascii=False)
     print(f"  ✓ history/{ts}.json")
 
+    # Workflow (present only when the agent uses ElevenLabs Workflows)
+    workflow = api.extract_workflow(agent)
+    if workflow:
+        wf = copy.deepcopy(workflow)
+        nodes_dir = os.path.join(CONFIG_DIR, "nodes")
+        node_count = 0
+        prompt_count = 0
+        for node in wf.get("nodes", []):
+            node_count += 1
+            slug = api.node_slug(node)
+            node_prompt, path = api.find_node_prompt(node)
+            if node_prompt and path:
+                prompt_count += 1
+                node_dir = os.path.join(nodes_dir, slug)
+                os.makedirs(node_dir, exist_ok=True)
+                pfile = os.path.join(node_dir, "prompt.md")
+                with open(pfile, "w", encoding="utf-8") as f:
+                    f.write(node_prompt)
+                    if not node_prompt.endswith("\n"):
+                        f.write("\n")
+                print(f"  ✓ nodes/{slug}/prompt.md  ({len(node_prompt)} chars)")
+                # Replace prompt in JSON with a file marker
+                api.set_node_prompt(
+                    node, path,
+                    f"{api.PROMPT_FILE_PREFIX}nodes/{slug}/prompt.md",
+                )
+
+        wf_path = os.path.join(CONFIG_DIR, "workflow.json")
+        with open(wf_path, "w", encoding="utf-8") as f:
+            json.dump(wf, f, indent=2, ensure_ascii=False)
+            f.write("\n")
+        print(f"  ✓ workflow.json  ({node_count} nodes, {prompt_count} prompt files)")
+    else:
+        print("  · No workflow (single-agent mode)")
+
 
 def diff_against_local(agent: dict):
     """Compare the live agent against local config files and print diffs."""
@@ -164,6 +200,42 @@ def diff_against_local(agent: dict):
         ))
     else:
         print("  settings.json       ✓ in sync")
+
+    # 4. Workflow
+    live_wf = api.extract_workflow(agent)
+    local_wf_raw = read_local_file(os.path.join(CONFIG_DIR, "workflow.json")).strip()
+
+    if live_wf and local_wf_raw:
+        # Reassemble local workflow: inject prompt files back into JSON
+        local_wf = json.loads(local_wf_raw)
+        for node in local_wf.get("nodes", []):
+            node_prompt, path = api.find_node_prompt(node)
+            if isinstance(node_prompt, str) and node_prompt.startswith(api.PROMPT_FILE_PREFIX):
+                rel = node_prompt[len(api.PROMPT_FILE_PREFIX):]
+                content = read_local_file(os.path.join(CONFIG_DIR, rel)).strip()
+                if content:
+                    api.set_node_prompt(node, path, content)
+
+        local_text = json.dumps(local_wf, indent=2, sort_keys=True, ensure_ascii=False)
+        live_text = json.dumps(live_wf, indent=2, sort_keys=True, ensure_ascii=False)
+
+        if local_text != live_text:
+            any_diff = True
+            print("\n── workflow.json ──")
+            print(coloured_diff(
+                local_text.splitlines(), live_text.splitlines(),
+                "workflow.json (assembled)", "ElevenLabs",
+            ))
+        else:
+            print("  workflow.json        ✓ in sync")
+    elif live_wf and not local_wf_raw:
+        any_diff = True
+        print("  workflow.json        ⚠ live workflow exists but no local file")
+    elif not live_wf and local_wf_raw:
+        any_diff = True
+        print("  workflow.json        ⚠ local file exists but no live workflow")
+    else:
+        print("  workflow              · no workflow (single-agent mode)")
 
     if any_diff:
         print("\n⚠️  Drift detected. Run without --diff to pull, or fix locally and push.")

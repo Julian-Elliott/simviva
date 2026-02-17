@@ -47,7 +47,7 @@ In the agent editor, switch to **Workflow** mode (not single-prompt mode).
      answers are correct — this is normal exam procedure."
   5. Ask: "Are you ready to begin?"
   ```
-- **Output variables:** Add `candidate_surname` (string)
+- **Output variables:** Add `candidate_name` (string)
 - **First message:** "Good afternoon. Welcome to your Primary FRCA practice viva. Before we begin, may I have your surname, please?"
 
 ### Node 2: Question Select (Examiner 1, Topic 1)
@@ -85,7 +85,7 @@ In the agent editor, switch to **Workflow** mode (not single-prompt mode).
   - Speaker Boost: ON
 - **System prompt:** Paste contents of `prompts/examiner-1.md`
 - **Dynamic variables:** 
-  - `{{candidate_surname}}` — from welcome node
+  - `{{candidate_name}}` — from welcome node
   - `{{current_question}}` — from question select
 - **First message:** Leave blank (the system prompt instructs the examiner to open with the stem question)
 

@@ -2,8 +2,9 @@
 """
 agent_push.py — Push local agent_config/ to the ElevenLabs agent.
 
-Reads system_prompt.md, data_collection.json, and settings.json from
-agent_config/ and PATCHes the live agent so it matches.
+Reads system_prompt.md, data_collection.json, settings.json, and
+(optionally) workflow.json + nodes/*/prompt.md from agent_config/
+and PATCHes the live agent so it matches.
 
 Usage:
   source .env && python3 scripts/agent_push.py
@@ -43,10 +44,30 @@ def read_config():
     with open(settings_path, encoding="utf-8") as f:
         settings = json.load(f)
 
-    return prompt, data_collection, settings
+    # Workflow (optional — only present when using ElevenLabs Workflows)
+    wf_path = os.path.join(CONFIG_DIR, "workflow.json")
+    workflow = None
+    if os.path.exists(wf_path):
+        with open(wf_path, encoding="utf-8") as f:
+            workflow = json.load(f)
+        # Inject prompt text from node .md files, replacing file markers
+        for node in workflow.get("nodes", []):
+            node_prompt, path = api.find_node_prompt(node)
+            if isinstance(node_prompt, str) and node_prompt.startswith(api.PROMPT_FILE_PREFIX):
+                rel = node_prompt[len(api.PROMPT_FILE_PREFIX):]
+                fpath = os.path.join(CONFIG_DIR, rel)
+                if not os.path.exists(fpath):
+                    slug = api.node_slug(node)
+                    print(f"  ⚠ Missing prompt file for node '{slug}': {rel}")
+                    continue
+                with open(fpath, encoding="utf-8") as f:
+                    api.set_node_prompt(node, path, f.read().strip())
+
+    return prompt, data_collection, settings, workflow
 
 
-def build_payload(prompt: str, data_collection: dict, settings: dict) -> dict:
+def build_payload(prompt: str, data_collection: dict, settings: dict,
+                  workflow: dict = None) -> dict:
     """Build the PATCH payload from local config."""
     llm = settings.get("llm", {})
     voice = settings.get("voice", {})
@@ -87,10 +108,13 @@ def build_payload(prompt: str, data_collection: dict, settings: dict) -> dict:
         },
     }
 
+    if workflow:
+        payload["workflow"] = workflow
+
     return payload
 
 
-def summarise_payload(prompt, data_collection, settings):
+def summarise_payload(prompt, data_collection, settings, workflow=None):
     """Print a human-readable summary of what will be pushed."""
     llm = settings.get("llm", {})
     voice = settings.get("voice", {})
@@ -102,20 +126,28 @@ def summarise_payload(prompt, data_collection, settings):
     print(f"  System prompt:  {len(prompt)} chars, ~{len(prompt.split())} words")
     print(f"  Data fields:    {list(data_collection.keys())}")
     dv = settings.get("dynamic_variables", {})
-    print(f"  Dyn variables:  {len(dv)} ({', '.join(sorted(dv)[:5])}{'…' if len(dv) > 5 else ''})")
-    print(f"  First message:  {settings.get('first_message', '')[:60]}…")
+    ellip = "\u2026" if len(dv) > 5 else ""
+    print(f"  Dyn variables:  {len(dv)} ({', '.join(sorted(dv)[:5])}{ellip})")
+    first_msg = settings.get("first_message", "")[:60]
+    print(f"  First message:  {first_msg}\u2026")
+    if workflow:
+        nodes = workflow.get("nodes", [])
+        edges = workflow.get("edges", [])
+        print(f"  Workflow:       {len(nodes)} nodes, {len(edges)} edges")
+    else:
+        print(f"  Workflow:       none (single-agent mode)")
 
 
 def main():
     dry_run = "--dry-run" in sys.argv
 
     print("Reading agent_config/...")
-    prompt, data_collection, settings = read_config()
+    prompt, data_collection, settings, workflow = read_config()
 
     print("\nPayload summary:")
-    summarise_payload(prompt, data_collection, settings)
+    summarise_payload(prompt, data_collection, settings, workflow)
 
-    payload = build_payload(prompt, data_collection, settings)
+    payload = build_payload(prompt, data_collection, settings, workflow)
 
     if dry_run:
         print("\n🏜️  Dry run — no changes pushed.")
@@ -138,7 +170,15 @@ def main():
     print(f"  Data collection fields match: {dc_match}")
     print(f"  System prompt match:          {prompt_match}")
 
-    if dc_match and prompt_match:
+    # Workflow verification
+    if workflow:
+        live_wf = api.extract_workflow(updated)
+        wf_match = live_wf is not None
+        print(f"  Workflow present:             {wf_match}")
+    else:
+        wf_match = True
+
+    if dc_match and prompt_match and wf_match:
         print("\n✅ Live agent is in sync with agent_config/.")
     else:
         print("\n⚠️  Drift detected after push — check the ElevenLabs dashboard.")
