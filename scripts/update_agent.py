@@ -13,6 +13,7 @@ Usage:
 
 import json
 import os
+import urllib.error
 import urllib.request
 
 API_KEY = os.environ["ELEVENLABS_API_KEY"]
@@ -30,7 +31,15 @@ BASE_URL = f"https://api.elevenlabs.io/v1/convai/agents/{AGENT_ID}"
 
 def get_agent():
     req = urllib.request.Request(BASE_URL, headers={"xi-api-key": API_KEY})
-    resp = urllib.request.urlopen(req, timeout=15)
+    try:
+        resp = urllib.request.urlopen(req, timeout=15)
+    except urllib.error.HTTPError as e:
+        body = e.read().decode(errors="replace")
+        raise SystemExit(
+            f"GET {BASE_URL} failed ({e.code} {e.reason})\n{body}"
+        ) from None
+    except urllib.error.URLError as e:
+        raise SystemExit(f"GET {BASE_URL} — network error: {e.reason}") from None
     return json.loads(resp.read())
 
 
@@ -42,7 +51,15 @@ def patch_agent(payload):
         headers={"xi-api-key": API_KEY, "Content-Type": "application/json"},
         method="PATCH",
     )
-    resp = urllib.request.urlopen(req, timeout=15)
+    try:
+        resp = urllib.request.urlopen(req, timeout=15)
+    except urllib.error.HTTPError as e:
+        body = e.read().decode(errors="replace")
+        raise SystemExit(
+            f"PATCH {BASE_URL} failed ({e.code} {e.reason})\n{body}"
+        ) from None
+    except urllib.error.URLError as e:
+        raise SystemExit(f"PATCH {BASE_URL} — network error: {e.reason}") from None
     return json.loads(resp.read())
 
 
