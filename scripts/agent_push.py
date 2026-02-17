@@ -88,8 +88,11 @@ def read_config() -> dict:
                     raise SystemExit("Refusing to read: {}".format(e))
                 if not os.path.exists(fpath):
                     slug = api.node_slug(node)
-                    print("  Warning: Missing prompt file for node '{}': {}".format(slug, rel))
-                    continue
+                    raise SystemExit(
+                        "Missing prompt file for node '{}': {}\n"
+                        "Every __PROMPT_FILE__ marker must resolve to an existing file.\n"
+                        "Create the file or run agent_pull.py to regenerate it.".format(slug, rel)
+                    )
                 with open(fpath, encoding="utf-8") as f:
                     api.set_node_prompt(node, path, f.read().strip())
 
