@@ -636,8 +636,8 @@
             // Build structured prompt block for each scenario
             function formatPromptsBlock(scenario) {
                 if (!scenario.prompts || scenario.prompts.length === 0) {
-                    // Fallback: old-style flat data
-                    return scenario.probes.join('; ');
+                    // Fallback: old-style flat data, or empty if neither exists
+                    return scenario.probes ? scenario.probes.join('; ') : '';
                 }
                 return scenario.prompts.map((p, i) => {
                     const tier = (p.tier || 'general').toUpperCase();
