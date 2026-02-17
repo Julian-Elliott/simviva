@@ -8,6 +8,11 @@
   "slotType": "clinical",
   "caseOrder": 0,
 
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "female"
+  },
+
   "stem": "Dr. {{surname}}, you are called to the ward where a patient with a recent tracheostomy is in respiratory distress. The nursing staff tell you the tracheostomy tube appears displaced. How would you manage this situation?",
 
   "prompts": [
@@ -82,9 +87,24 @@
   },
 
   "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude 3.5 Sonnet",
+    "generatedAt": "2024-02-18T10:15:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["NTSP_Green_Algorithm_2012", "BJA_Tracheostomy_2021"],
+    "validation": {
+      "reviewedBy": "Dr. Sarah Admin, FRCA",
+      "reviewedAt": "2024-02-19T15:00:00Z",
+      "status": "approved",
+      "accuracy": 1.0,
+      "concordance": 0.98,
+      "insight": 0.9,
+      "notes": "Good focus on the NTSP algorithm."
+    }
+  },
   "furtherReading": [
-    "https://www.tracheostomy.org.uk/storage/files/NTSP%20Emergency%20Algorithm.pdf",
-    "https://bjaed.org/article/S2058-5349(21)00003-3/fulltext"
+    "https://tracheostomy.org.uk/healthcare-staff/emergency-care",
+    "https://doi.org/10.1111/j.1365-2044.2012.07217.x"
   ],
   "isActive": true
 }
