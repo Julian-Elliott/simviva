@@ -1,3 +1,8 @@
+# Environment secrets
+.env
+.env.*
+!.env.example
+
 # Proprietary content - do not share
 
 # Question banks
