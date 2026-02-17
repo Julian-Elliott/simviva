@@ -18,3 +18,6 @@ test-results.json
 # Web app question data
 webapp/scenarios.json
 webapp/cheatsheet.txt
+
+# Agent config history (timestamped raw API responses for local diffing)
+agent_config/history/

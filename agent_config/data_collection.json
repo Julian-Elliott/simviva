@@ -1,0 +1,30 @@
+{
+  "question_1_mark": {
+    "type": "string",
+    "description": "You are the chief examiner. Based on the candidate's performance during Dr Whitmore's scenario and the SCORING GUIDANCE for that scenario, assign a mark on the RCoA per-question scale. Output ONLY the number first (0, 1, or 2), then a dash, then one sentence justification.\n2 = Pass (meets or exceeds expected standard — correct core knowledge, structured answer, good depth)\n1 = Borderline (approaches but does not reliably meet the standard — partial knowledge, significant gaps, needed rescue)\n0 = Fail (significantly below — major errors, unable to answer core questions, unsafe statements)\nExample: '2 — Candidate demonstrated clear understanding of propofol pharmacology with correct mechanism, dosing, and context-sensitive half-time.'"
+  },
+  "question_2_mark": {
+    "type": "string",
+    "description": "You are the chief examiner. Based on the candidate's performance during Dr Harris's scenario and the SCORING GUIDANCE for that scenario, assign a mark on the RCoA per-question scale. Output ONLY the number first (0, 1, or 2), then a dash, then one sentence justification.\n2 = Pass (meets or exceeds expected standard — correct core knowledge, structured answer, good depth)\n1 = Borderline (approaches but does not reliably meet the standard — partial knowledge, significant gaps, needed rescue)\n0 = Fail (significantly below — major errors, unable to answer core questions, unsafe statements)\nExample: '1 — Candidate had partial knowledge of tracheostomy anatomy but could not describe the blood supply or innervation reliably.'"
+  },
+  "topic_1_summary": {
+    "type": "string",
+    "description": "Summarise the candidate's performance during Dr Whitmore's section. Reference specific key facts they covered and missed from the scenario's expected points. Did they need rescue questions? 2-3 sentences."
+  },
+  "topic_2_summary": {
+    "type": "string",
+    "description": "Summarise the candidate's performance during Dr Harris's section. Reference specific key facts they covered and missed from the scenario's expected points. Did they need rescue questions? 2-3 sentences."
+  },
+  "key_facts_covered": {
+    "type": "string",
+    "description": "List the key clinical facts the candidate correctly stated across BOTH scenarios. Use semicolons to separate each fact. Only include facts from the scenario's expected points list that the candidate demonstrably covered."
+  },
+  "key_facts_missed": {
+    "type": "string",
+    "description": "List the key clinical facts the candidate FAILED to mention or got wrong across BOTH scenarios. Use semicolons to separate. Only include facts from the scenario's expected points that were clearly missed or incorrect."
+  },
+  "areas_for_improvement": {
+    "type": "string",
+    "description": "Provide 2-3 specific clinical topics for revision. Identify moments where the candidate hesitated, gave incomplete answers, or missed expected points. Format: '1. [Topic] — [reason]'. Always provide at least two items."
+  }
+}
