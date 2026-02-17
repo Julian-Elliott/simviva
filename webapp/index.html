@@ -462,27 +462,47 @@
 
             let html = '';
 
-            // Grade card — supports both RCoA 4-point (4/3/2/1) and legacy text grades
+            // Grade card — RCoA 4-point scale
+            // The agent is prompted to return "4 — justification", "3 — …", etc.
+            // We normalise defensively in case the model prefixes a word instead.
             const grade = (dc.candidate_grade || '').trim();
-            const gradeWord = grade.split(/[\s.,:—-]/)[0].toUpperCase();
-            // Map RCoA numeric or text to display
-            const rcoaMap = {
-                '4': { label: '4 — Pass+', css: 'distinction' },
-                '3': { label: '3 — Pass', css: 'pass' },
-                '2': { label: '2 — Borderline', css: 'borderline' },
-                '1': { label: '1 — Fail', css: 'fail' },
-                'PASS+': { label: '4 — Pass+', css: 'distinction' },
-                'DISTINCTION': { label: '4 — Pass+', css: 'distinction' },
-                'PASS': { label: '3 — Pass', css: 'pass' },
-                'BORDERLINE': { label: '2 — Borderline', css: 'borderline' },
-                'FAIL': { label: '1 — Fail', css: 'fail' }
-            };
-            const mapped = rcoaMap[gradeWord] || { label: gradeWord, css: '' };
+            function mapRcoaGrade(raw) {
+                if (!raw) return null;
+                const s = raw.trim();
+                // Primary match: leading digit 1–4
+                const numMatch = s.match(/^([1-4])\b/);
+                if (numMatch) {
+                    const n = numMatch[1];
+                    return { '4': { label: '4 — Pass+',      css: 'distinction' },
+                             '3': { label: '3 — Pass',       css: 'pass' },
+                             '2': { label: '2 — Borderline', css: 'borderline' },
+                             '1': { label: '1 — Fail',       css: 'fail' } }[n];
+                }
+                // Fallback: first word may be a grade label (case-insensitive)
+                const word = s.split(/[\s.,:;\u2014\u2013+/-]+/)[0].toUpperCase();
+                const textMap = {
+                    'PASS':       { label: '3 — Pass',       css: 'pass' },
+                    'BORDERLINE': { label: '2 — Borderline', css: 'borderline' },
+                    'FAIL':       { label: '1 — Fail',       css: 'fail' },
+                };
+                // "PASS+" is a two-char sequence; check the raw uppercase start
+                if (s.toUpperCase().startsWith('PASS+') || word === 'PASS+') {
+                    return { label: '4 — Pass+', css: 'distinction' };
+                }
+                return textMap[word] || null;
+            }
+            const mapped = mapRcoaGrade(grade);
             if (grade) {
+                const display = mapped || { label: grade, css: '' };
+                // Strip the matched grade token from the start to isolate justification
+                const justification = mapped
+                    ? grade.replace(/^[1-4]\s*[\u2014\u2013\-—]\s*/, '')
+                           .replace(/^(pass\+?|borderline|fail)\s*[\u2014\u2013\-—:.\s]*/i, '')
+                    : '';
                 html += `<div class="grade-card">
                     <div class="grade-label">Overall Grade (RCoA Scale)</div>
-                    <div class="grade-value ${mapped.css}">${mapped.label}</div>
-                    <div class="grade-justification">${grade.replace(gradeWord, '').replace(/^[\s.,:—-]+/, '')}</div>
+                    <div class="grade-value ${display.css}">${display.label}</div>
+                    ${justification ? `<div class="grade-justification">${justification}</div>` : ''}
                 </div>`;
             }
 
