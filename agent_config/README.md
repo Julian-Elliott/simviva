@@ -196,8 +196,9 @@ System dynamic variables (auto-populated by ElevenLabs):
 Edit the files here, then push them to the live agent:
 
 ```bash
-source .env && python3 scripts/agent_push.py        # live push
-source .env && python3 scripts/agent_push.py --dry-run  # preview only
+source .env && python3 scripts/agent_push.py              # live push
+source .env && python3 scripts/agent_push.py --dry-run    # preview only
+source .env && python3 scripts/agent_push.py --branch <name>  # push to a branch
 ```
 
 ### Pull ElevenLabs → local
@@ -206,6 +207,7 @@ Fetch the live agent's current config and overwrite these files:
 
 ```bash
 source .env && python3 scripts/agent_pull.py
+source .env && python3 scripts/agent_pull.py --branch <name>  # pull from a branch
 ```
 
 ### Diff (check for drift)
@@ -214,7 +216,21 @@ Compare local files against the live agent without changing anything:
 
 ```bash
 source .env && python3 scripts/agent_pull.py --diff
+source .env && python3 scripts/agent_pull.py --diff --branch <name>  # diff against branch
 ```
+
+### Branches
+
+List or manage ElevenLabs agent branches:
+
+```bash
+source .env && python3 scripts/agent_pull.py --list-branches
+```
+
+> The `--branch` flag enables versioning the first time it is used.
+> Once enabled, versioning cannot be disabled.  Merging branches and
+> deploying traffic percentages are managed via the ElevenLabs
+> dashboard or API.
 
 ---
 

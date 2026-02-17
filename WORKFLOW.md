@@ -183,6 +183,28 @@ transcript. The webapp fetches these via the results API.
 - Use branches for A/B testing different prompts or workflow structures
 - Local config sync (`agent_push.py`/`agent_pull.py`) complements ElevenLabs versioning
 
+#### Branch CLI
+```bash
+# Push current config to a new branch (creates the branch if it doesn't exist)
+source .env && python3 scripts/agent_push.py --branch realism-v2
+
+# Push to an existing branch (adds a new version on that branch)
+source .env && python3 scripts/agent_push.py --branch realism-v2
+
+# Pull from a specific branch instead of main
+source .env && python3 scripts/agent_pull.py --branch realism-v2
+
+# Diff local config against a specific branch
+source .env && python3 scripts/agent_pull.py --diff --branch realism-v2
+
+# List all branches
+source .env && python3 scripts/agent_pull.py --list-branches
+```
+
+> **Note:** `--branch` enables versioning on the agent the first time it is used.
+> Once enabled, versioning cannot be disabled.  Merging and traffic deployment
+> are managed in the ElevenLabs dashboard or via the API.
+
 ### Latency Optimisation
 - Set `optimize_streaming_latency` to 1 (balanced)
 - Use `eleven_v3_conversational` voice model (lowest latency, expressive mode built-in)
