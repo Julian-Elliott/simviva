@@ -64,6 +64,9 @@ def build_payload(prompt: str, data_collection: dict, settings: dict) -> dict:
                 },
                 "first_message": settings.get("first_message"),
                 "language": settings.get("language"),
+                "dynamic_variables": {
+                    "dynamic_variable_placeholders": settings.get("dynamic_variables", {}),
+                },
             },
             "tts": {
                 "voice_id": voice.get("voice_id"),
@@ -97,6 +100,8 @@ def summarise_payload(prompt, data_collection, settings):
     print(f"  Voice:          {voice.get('voice_id')} ({voice.get('model_id')})")
     print(f"  System prompt:  {len(prompt)} chars, ~{len(prompt.split())} words")
     print(f"  Data fields:    {list(data_collection.keys())}")
+    dv = settings.get("dynamic_variables", {})
+    print(f"  Dyn variables:  {len(dv)} ({', '.join(sorted(dv)[:5])}{'…' if len(dv) > 5 else ''})")
     print(f"  First message:  {settings.get('first_message', '')[:60]}…")
 
 

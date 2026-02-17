@@ -150,7 +150,15 @@ def extract_data_collection(agent: dict) -> dict:
 
 
 def extract_dynamic_variables(agent: dict) -> dict:
+    """Pull out dynamic variable placeholder defaults.
+
+    The API stores these at conversation_config.agent.dynamic_variables
+    (NOT under prompt), wrapped in {"dynamic_variable_placeholders": {...}}.
+    We flatten to just the placeholders dict for local config.
+    """
     try:
-        return agent["conversation_config"]["agent"]["prompt"].get("dynamic_variables", {}) or {}
+        dv = agent["conversation_config"]["agent"].get("dynamic_variables", {}) or {}
+        # API wraps in {"dynamic_variable_placeholders": {…}} — unwrap
+        return dv.get("dynamic_variable_placeholders", dv)
     except (KeyError, TypeError):
         return {}

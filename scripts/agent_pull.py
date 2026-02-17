@@ -87,13 +87,15 @@ def pull_to_local(agent: dict):
         "language": api.extract_language(agent),
         "llm": api.extract_llm(agent),
         "voice": api.extract_voice(agent),
+        "dynamic_variables": api.extract_dynamic_variables(agent),
         "first_message": api.extract_first_message(agent),
     }
     settings_path = os.path.join(CONFIG_DIR, "settings.json")
     with open(settings_path, "w") as f:
         json.dump(settings, f, indent=2, ensure_ascii=False)
         f.write("\n")
-    print(f"  ✓ settings.json")
+    dv_count = len(settings["dynamic_variables"])
+    print(f"  ✓ settings.json  ({dv_count} dynamic variables)")
 
     # Timestamped history copy (gitignored)
     os.makedirs(HISTORY_DIR, exist_ok=True)
@@ -144,6 +146,7 @@ def diff_against_local(agent: dict):
         "language": api.extract_language(agent),
         "llm": api.extract_llm(agent),
         "voice": api.extract_voice(agent),
+        "dynamic_variables": api.extract_dynamic_variables(agent),
         "first_message": api.extract_first_message(agent),
     }
     live_settings_text = json.dumps(live_settings, indent=2, ensure_ascii=False)
