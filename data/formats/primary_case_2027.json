@@ -1,0 +1,22 @@
+{
+  "id": "primary_case_2027",
+  "name": "Primary FRCA CASE (From July 2027)",
+  "validFrom": "2027-07-01",
+  "validUntil": null,
+  "interactionMode": "structured_oral",
+  "sections": [
+    {
+      "label": "CASE Station — Placeholder",
+      "slots": [
+        {
+          "label": "TBD — Awaiting RCoA specification",
+          "durationSec": 0,
+          "slotType": "any"
+        }
+      ],
+      "changeoverSec": 0
+    }
+  ],
+  "totalDurationSec": 0,
+  "notes": "Clinical Anaesthetic Sciences Examination — replaces Primary OSCE + SOE from July 2027. Station circuit format. Exact structure, timing, and station count TBD — the RCoA Resource Hub will publish details. Curriculum unchanged. Update this file when details are released."
+}

@@ -1,0 +1,47 @@
+{
+  "id": "primary_soe_2024",
+  "name": "Primary FRCA SOE (Current)",
+  "validFrom": "2024-01-01",
+  "validUntil": "2028-06-30",
+  "interactionMode": "viva",
+  "sections": [
+    {
+      "label": "Examiner 1 — Physiology & Pharmacology",
+      "slots": [
+        {
+          "label": "Topic 1",
+          "durationSec": 240,
+          "slotType": "any",
+          "requiredDomain": null
+        },
+        {
+          "label": "Topic 2",
+          "durationSec": 240,
+          "slotType": "any",
+          "requiredDomain": null
+        }
+      ],
+      "changeoverSec": 30
+    },
+    {
+      "label": "Examiner 2 — Physics, Equipment & Applied Anatomy",
+      "slots": [
+        {
+          "label": "Topic 3",
+          "durationSec": 240,
+          "slotType": "any",
+          "requiredDomain": null
+        },
+        {
+          "label": "Topic 4",
+          "durationSec": 240,
+          "slotType": "any",
+          "requiredDomain": null
+        }
+      ],
+      "changeoverSec": 0
+    }
+  ],
+  "totalDurationSec": 1230,
+  "notes": "2 examiners × 2 topics × 4 min + 30s changeover. Legacy format available until June 2028 for candidates with partial pass."
+}

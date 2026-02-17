@@ -1,0 +1,22 @@
+{
+  "id": "final_fcpe_2027",
+  "name": "Final FRCA FCPE (From July 2027)",
+  "validFrom": "2027-07-01",
+  "validUntil": null,
+  "interactionMode": "structured_oral",
+  "sections": [
+    {
+      "label": "FCPE Station — Placeholder",
+      "slots": [
+        {
+          "label": "TBD — Awaiting RCoA specification",
+          "durationSec": 0,
+          "slotType": "any"
+        }
+      ],
+      "changeoverSec": 0
+    }
+  ],
+  "totalDurationSec": 0,
+  "notes": "Final Clinical Performance Examination — replaces Final SOE from July 2027. Described as 'designed to mirror real anaesthetic practice.' Exact structure TBD. Curriculum unchanged — all existing scenarios remain valid, only the format wrapper needs updating. Monitor RCoA Resource Hub for published details."
+}
