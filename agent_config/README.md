@@ -43,19 +43,13 @@ via ElevenLabs' built-in **data collection** (post-call extraction).
 
 ### Target — ElevenLabs Workflow (Multi-Node, Multi-Voice)
 
-An ElevenLabs **Workflow** composed of subagent nodes, dispatch tool
-nodes, and edges with LLM conditions. Each node can override the base
-agent's configuration (system prompt, voice, LLM, tools, knowledge
-base) without creating separate agents.
+An ElevenLabs **Workflow** composed of subagent nodes and edges with
+LLM conditions. Each node can override the base agent's configuration
+(system prompt, voice, LLM, tools, knowledge base) without creating
+separate agents. Scenario data is injected at session start via dynamic
+variables — just as real examiners receive their questions beforehand.
 
 ```
-┌─────────────────┐
-│ QUESTION SELECT  │  Dispatch tool node
-│ select_question  │  Picks scenario for Examiner 1
-│ (webhook)        │
-└──┬──────────┬───┘
-   │ success  │ failure
-   ▼          ▼ (→ fallback / end)
 ┌─────────────────┐
 │   EXAMINER 1     │  Subagent node — Voice: George
 │  Override: E1     │  Override prompt (append), LLM, voice
@@ -64,24 +58,12 @@ base) without creating separate agents.
        │ LLM condition: "examiner has covered scenario sufficiently"
        ▼
 ┌─────────────────┐
-│ QUESTION SELECT  │  Dispatch tool node (reused)
-│ select_question  │  Picks scenario for Examiner 2
-└──┬──────────┬───┘
-   │ success  │ failure
-   ▼          ▼
-┌─────────────────┐
 │   EXAMINER 2     │  Subagent node — Voice: Charlie
 │  Override: E2     │  Override prompt (append), LLM, voice
 │  prompt + voice   │
 └──────┬──────────┘
        │ LLM condition: "examiner has completed scenario"
        ▼
-┌─────────────────┐
-│   ASSESSMENT     │  Dispatch tool node
-│ assess_performance│  Scores transcript vs model answers
-└──┬──────────┬───┘
-   │ success  │ failure
-   ▼          ▼
 ┌─────────────────┐
 │      END         │  End call node
 └─────────────────┘
@@ -92,10 +74,8 @@ base) without creating separate agents.
 | Primitive | SimViva Usage | Docs Reference |
 |-----------|--------------|----------------|
 | **Subagent node** | Override base agent config at each conversation phase (prompt, voice, LLM, tools, KB) | [Workflows → Subagent nodes](https://elevenlabs.io/docs/agents-platform/customization/agent-workflows) |
-| **Dispatch tool node** | Guaranteed tool execution for question selection and assessment scoring with success/failure routing | [Workflows → Dispatch tool node](https://elevenlabs.io/docs/agents-platform/customization/agent-workflows) |
-| **End call node** | Graceful conversation termination after assessment | [System tools → End call](https://elevenlabs.io/docs/agents-platform/customization/tools/system-tools/end-call) |
+| **End call node** | Graceful conversation termination after Examiner 2 completes | [System tools → End call](https://elevenlabs.io/docs/agents-platform/customization/tools/system-tools/end-call) |
 | **Forward edge (LLM condition)** | Natural language conditions evaluated by LLM to determine transitions (e.g. "has the examiner completed the scenario?") | [Workflows → Edges](https://elevenlabs.io/docs/agents-platform/customization/agent-workflows) |
-| **Forward edge (unconditional)** | Automatic progression from assessment to end | [Workflows → Edges](https://elevenlabs.io/docs/agents-platform/customization/agent-workflows) |
 | **Dynamic variables** | Per-conversation personalisation — candidate name, scenario data injected at session start | [Personalisation → Dynamic variables](https://elevenlabs.io/docs/agents-platform/customization/personalization/dynamic-variables) |
 | **Data collection** | Post-call structured extraction — scores, summaries, feedback | [Conversation analysis](https://elevenlabs.io/docs/agents-platform/customization/agent-analysis) |
 

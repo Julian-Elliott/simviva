@@ -13,9 +13,10 @@ conversation phase — they are not independent agents.
 
 Two AI examiners conduct a ~14-minute viva across physiology,
 pharmacology, physics, clinical measurement, equipment, and applied
-anatomy, followed by automated scoring. The candidate receives
-feedback via the webapp after the call ends — mirroring real life
-where candidates leave the room and receive results separately.
+anatomy. Scenario data is injected as dynamic variables at session
+start — just as real examiners receive their questions beforehand.
+Scoring happens post-call via ElevenLabs data collection, and the
+candidate receives feedback via the webapp afterwards.
 
 ---
 
@@ -23,100 +24,38 @@ where candidates leave the room and receive results separately.
 
 ```
 ┌─────────────────┐
-│ QUESTION SELECT  │  Dispatch tool node
-│ select_question  │  success ──► / failure ──► END
-│ (webhook)        │
-└──────┬──────────┘
-       │ success: scenario_1_* dynamic vars set
-       ▼
-┌─────────────────┐
 │   EXAMINER 1     │  Subagent node — Voice: George
-│  3 question       │  Override: E1 prompt + voice
-│  blocks, ~7 min  │
+│  3 question       │  scenario_1_* dynamic vars
+│  blocks, ~7 min  │  injected at session start
 └──────┬──────────┘
        │ LLM condition: "scenario sufficiently covered"
        ▼
 ┌─────────────────┐
-│ QUESTION SELECT  │  Dispatch tool node (reused)
-│ select_question  │  success ──► / failure ──► END
-└──────┬──────────┘
-       │ success: scenario_2_* dynamic vars set
-       ▼
-┌─────────────────┐
 │   EXAMINER 2     │  Subagent node — Voice: Charlie
-│  3 question       │  Override: E2 prompt + voice
-│  blocks, ~7 min  │
+│  3 question       │  scenario_2_* dynamic vars
+│  blocks, ~7 min  │  injected at session start
 └──────┬──────────┘
        │ LLM condition: "scenario completed"
-       ▼
-┌─────────────────┐
-│   ASSESSMENT     │  Dispatch tool node
-│ assess_performance│  success ──► / failure ──► END
-└──────┬──────────┘
-       │ assessment_* dynamic vars set
        ▼
 ┌─────────────────┐
 │      END         │  End call node
 └─────────────────┘
 ```
 
-> **Design rationale:** In a real FRCA viva, only the two examiners
-> interact with the candidate. There is no coordinator, no in-room
-> debrief. The candidate leaves and receives results separately.
-> This workflow mirrors that experience. Scoring and feedback are
-> delivered asynchronously via the webapp after the call ends.
+> **Design rationale:** In a real FRCA viva, examiners receive their
+> questions before the candidate enters — nothing is selected mid-exam.
+> Only the two examiners interact with the candidate. There is no
+> coordinator, no in-room debrief. The candidate leaves and receives
+> results separately. This workflow mirrors that experience exactly.
+> Scenario data is injected at session start via dynamic variables
+> (selected by the webapp). Scoring happens post-call via ElevenLabs
+> data collection, and the webapp displays results afterwards.
 
 ---
 
 ## Node Specifications
 
-### 1. QUESTION SELECT (Dispatch Tool Node)
-
-**Type:** Dispatch tool node — guarantees tool execution with success/failure routing.
-
-Unlike tools within subagent nodes (which the LLM may or may not call),
-a dispatch tool node **always** executes the configured tool. It has
-dedicated success and failure edges for deterministic routing.
-
-**Purpose:** Select an unseen question from the question bank for the current examiner.
-
-**Implementation:** Webhook tool that:
-1. Receives `examiner_id` (1 or 2), `seen_question_ids` (array)
-2. Filters `primary-bank.json` by examiner's category pool
-3. Randomly selects an unseen question
-4. Returns full question object (stem, expected points, follow-ups, timing)
-5. Updates dynamic variables from the tool response (scenario data)
-
-**Tool definition (ElevenLabs format):**
-```json
-{
-  "type": "webhook",
-  "name": "select_question",
-  "description": "Select the next unseen question for the specified examiner",
-  "url": "https://frca.databased.business/api/select-question",
-  "method": "POST",
-  "parameters": {
-    "examiner_id": { "type": "integer", "enum": [1, 2] },
-    "seen_ids": { "type": "array", "items": { "type": "string" } }
-  }
-}
-```
-
-**Dynamic variable assignment from response:**
-The tool response updates `scenario_N_*` dynamic variables using
-dot-notation paths (e.g. `response.topic` → `scenario_1_topic`).
-
-**For the PoC:** Can be simplified — the webapp already picks scenarios
-client-side and passes them as dynamic variables at session start.
-For the workflow, this dispatch tool replaces that client-side logic.
-
-**Edges:**
-- **Success** → EXAMINER 1 or EXAMINER 2 (question payload in dynamic vars)
-- **Failure** → END (fallback — no question available)
-
----
-
-### 2. EXAMINER 1 (Subagent Node)
+### 1. EXAMINER 1 (Subagent Node)
 
 **Type:** Subagent node — overrides base agent config.
 
@@ -131,18 +70,18 @@ For the workflow, this dispatch tool replaces that client-side logic.
 
 **Dynamic variables available:**
 - `candidate_name` (from session start)
-- `scenario_1_topic`, `scenario_1_opening`, `scenario_1_points`, etc. (from dispatch tool or session start)
+- `scenario_1_topic`, `scenario_1_opening`, `scenario_1_points`, etc. (from session start)
 
 **Forward edges (LLM conditions):**
 
 | Label | LLM Condition | Target |
 |-------|--------------|--------|
-| Scenario complete | `"The examiner has covered three question blocks on the clinical scenario and is ready to hand over."` | → QUESTION SELECT (for Examiner 2) |
-| Candidate requests stop | `"The candidate has explicitly requested to stop the examination."` | → ASSESSMENT |
+| Scenario complete | `"The examiner has covered three question blocks on the clinical scenario and is ready to hand over."` | → EXAMINER 2 |
+| Candidate requests stop | `"The candidate has explicitly requested to stop the examination."` | → END |
 
 ---
 
-### 3. EXAMINER 2 (Subagent Node)
+### 2. EXAMINER 2 (Subagent Node)
 
 **Type:** Subagent node — overrides base agent config.
 
@@ -163,63 +102,25 @@ For the workflow, this dispatch tool replaces that client-side logic.
 
 | Label | LLM Condition | Target |
 |-------|--------------|--------|
-| Scenario complete | `"The examiner has covered three question blocks and is closing the scenario."` | → ASSESSMENT |
-| Candidate requests stop | `"The candidate has explicitly requested to stop."` | → ASSESSMENT |
+| Scenario complete | `"The examiner has covered three question blocks and is closing the scenario."` | → END |
+| Candidate requests stop | `"The candidate has explicitly requested to stop."` | → END |
 
 ---
 
-### 4. ASSESSMENT (Dispatch Tool Node)
-
-**Type:** Dispatch tool node — guaranteed execution with success/failure routing.
-
-**Purpose:** Analyse the full transcript and score against model answers.
-
-**Implementation:** Webhook tool that:
-1. Receives the conversation transcript (via `system__conversation_id`)
-2. Compares candidate responses against `expectedPoints` for each scenario
-3. Assigns each question a per-question mark on the RCoA 0/1/2 scale
-4. Returns structured feedback payload
-5. Stores scores for post-call retrieval via the results API
-
-**Tool definition:**
-```json
-{
-  "type": "webhook",
-  "name": "assess_performance",
-  "description": "Score the candidate's viva performance against model answers",
-  "url": "https://frca.databased.business/api/assess",
-  "method": "POST",
-  "parameters": {
-    "conversation_id": { "type": "string" }
-  }
-}
-```
-
-**Dynamic variable assignment from response:**
-- `assessment_q1_mark` ← `response.question_1_mark`
-- `assessment_q2_mark` ← `response.question_2_mark`
-- `assessment_feedback` ← `response.feedback_summary`
-
-**For the PoC:** This is handled by ElevenLabs' built-in data collection
-(post-call extraction) defined in `agent_config/data_collection.json`.
-For the workflow, a dedicated dispatch tool scores the transcript
-so results are available via the results API after the call ends.
-
-**Edges:**
-- **Success** → END (scores stored; candidate views results in webapp)
-- **Failure** → END (end call; generic feedback available post-call)
-
----
-
-### 5. END (End Call Node)
+### 3. END (End Call Node)
 
 **Type:** End call node — graceful conversation termination.
 
-Terminates the WebRTC/WebSocket connection after the assessment
-completes. Mirrors real life — the viva simply ends, and the candidate
-receives results separately. The `end_call` system tool can also be
-triggered from within any subagent node if needed (e.g. candidate
-requests to stop early).
+Terminates the WebRTC/WebSocket connection after Examiner 2 completes.
+Mirrors real life — the viva simply ends, and the candidate receives
+results separately. The `end_call` system tool can also be triggered
+from within any subagent node if needed (e.g. candidate requests to
+stop early).
+
+**Post-call scoring:** After the call ends, ElevenLabs' built-in
+**data collection** (defined in `agent_config/data_collection.json`)
+extracts structured scores and feedback from the conversation
+transcript. The webapp fetches these via the results API.
 
 ---
 
@@ -227,11 +128,8 @@ requests to stop early).
 
 | Node | Type | Target Duration |
 |------|------|----------------|
-| Question Select 1 | Dispatch tool | <1 sec |
 | Examiner 1 (3 blocks) | Subagent | ~7 min |
-| Question Select 2 | Dispatch tool | <1 sec |
 | Examiner 2 (3 blocks) | Subagent | ~7 min |
-| Assessment | Dispatch tool | 2-3 sec |
 | End | End call | instant |
 | **Total** | | **~14 min** |
 
@@ -251,13 +149,12 @@ requests to stop early).
   all transitions — not expressions or keyword matching
 - The LLM condition evaluator receives conversation context and decides routing
 - Keep condition prompts specific and unambiguous
-- Dispatch tool nodes use **success/failure edges** (deterministic, not LLM-evaluated)
 
 ### Dynamic Variables Pipeline
-- Variables injected at session start: `candidate_name`, all `scenario_*` vars
-- Variables updated by dispatch tools: `assessment_*` scores and feedback
+- All scenario data injected at session start by the webapp: `candidate_name`, `scenario_1_*`, `scenario_2_*`
 - System variables auto-populated: `system__conversation_id`, `system__call_duration_secs`, `system__time_utc`
 - Dynamic variables persist across all nodes in the workflow
+- No mid-conversation tool calls needed — mirrors real life where examiners have questions beforehand
 
 ### Knowledge Base Strategy
 - **Global KB:** Upload scenario bank as a knowledge base document — available to all nodes
