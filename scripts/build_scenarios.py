@@ -56,7 +56,7 @@ def transform_scenario(src: dict) -> dict:
 
     # Primary topic = first topicTagId, humanised
     topic_ids = src.get("topicTagIds", [])
-    topic = humanise_topic_id(topic_ids[0]) if topic_ids else src.get("domain", "Unknown")
+    topic = humanise_topic_id(topic_ids[0]) if len(topic_ids) > 0 else src.get("domain", "Unknown")
 
     return {
         "id": src["id"],
