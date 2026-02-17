@@ -120,13 +120,13 @@ def main():
     result = api.patch_agent(payload)
     print(f"  ✓ Agent '{result.get('name', '?')}' updated successfully.")
 
-    # Quick verification
+    # Quick verification — compare normalized definitions, not just keys
     print("\nVerifying...")
     updated = api.get_agent()
     live_dc = api.extract_data_collection(updated)
     live_prompt = api.extract_prompt(updated)
 
-    dc_match = set(live_dc.keys()) == set(data_collection.keys())
+    dc_match = live_dc == data_collection
     prompt_match = live_prompt.strip() == prompt.strip()
 
     print(f"  Data collection fields match: {dc_match}")
@@ -137,8 +137,17 @@ def main():
     else:
         print("\n⚠️  Drift detected after push — check the ElevenLabs dashboard.")
         if not dc_match:
-            print(f"    Expected fields: {sorted(data_collection.keys())}")
-            print(f"    Live fields:     {sorted(live_dc.keys())}")
+            local_keys = set(data_collection.keys())
+            live_keys = set(live_dc.keys())
+            added = live_keys - local_keys
+            removed = local_keys - live_keys
+            if added:
+                print(f"    Unexpected live fields: {sorted(added)}")
+            if removed:
+                print(f"    Missing live fields:    {sorted(removed)}")
+            for key in sorted(local_keys & live_keys):
+                if data_collection[key] != live_dc.get(key):
+                    print(f"    Definition differs:     {key}")
 
 
 if __name__ == "__main__":
