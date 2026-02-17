@@ -125,12 +125,16 @@
             <div class="error-notice" id="errorNotice"></div>
         </div>
         <div class="soe-selector" style="display:flex;gap:1.5rem;margin-top:1.5rem;margin-bottom:0.5rem;">
-            <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;color:#bbb;font-size:0.95rem;">
-                <input type="radio" name="soePart" value="soe1" checked style="accent-color:#5ba3e6;"> SOE 1 — Pharmacology & Physiology
-            </label>
-            <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;color:#bbb;font-size:0.95rem;">
-                <input type="radio" name="soePart" value="soe2"> SOE 2 — Clinical & Physics
-            </label>
+            <div class="soe-option">
+                <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;color:#bbb;font-size:0.95rem;">
+                    <input type="radio" name="soePart" value="soe1" checked style="accent-color:#5ba3e6;"> SOE 1 — Pharmacology &amp; Physiology
+                </label>
+            </div>
+            <div class="soe-option">
+                <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;color:#bbb;font-size:0.95rem;">
+                    <input type="radio" name="soePart" value="soe2"> SOE 2 — Clinical &amp; Physics
+                </label>
+            </div>
         </div>
         <div class="instructions-brief">
             <strong>How it works:</strong> Two examiners will each cover one topic for five minutes, mirroring one question from each section of the real Primary FRCA SOE.
@@ -222,7 +226,76 @@
         fetch('/scenarios.json').then(r => r.json()).then(data => {
             scenarios = data;
             console.log(`Loaded ${scenarios.length} scenarios`);
+            checkPoolCoverage();
         });
+
+        /**
+         * Validate that every SOE part has at least one scenario in each
+         * examiner pool. Disable radio buttons for any part that cannot
+         * field both examiners, and auto-select the first available part.
+         */
+        function checkPoolCoverage() {
+            let firstAvailable = null;
+            let currentDisabled = false;
+
+            for (const [key, pool] of Object.entries(SOE_POOLS)) {
+                const radio = document.querySelector(`input[name="soePart"][value="${key}"]`);
+                const label = radio?.closest('label');
+                const wrapper = radio?.closest('.soe-option');
+                if (!radio || !label || !wrapper) continue;
+
+                const poolAEmpty = !scenarios.some(s => pool.examinerA.domains.has(s.domain));
+                const poolBEmpty = !scenarios.some(s => pool.examinerB.domains.has(s.domain));
+
+                // Remove any previous availability notice
+                const prev = wrapper.querySelector('.pool-notice[data-soe="' + key + '"]');
+                if (prev) prev.remove();
+
+                if (poolAEmpty || poolBEmpty) {
+                    radio.disabled = true;
+                    label.style.opacity = '0.4';
+                    label.style.cursor = 'not-allowed';
+                    if (radio.checked) currentDisabled = true;
+
+                    const missing = [];
+                    if (poolAEmpty) missing.push(pool.examinerA.section);
+                    if (poolBEmpty) missing.push(pool.examinerB.section);
+
+                    const notice = document.createElement('div');
+                    notice.className = 'pool-notice';
+                    notice.setAttribute('data-soe', key);
+                    notice.style.cssText = 'color:#e88;font-size:0.8rem;margin-left:1.8rem;margin-top:0.15rem;';
+                    notice.textContent = `No ${missing.join(' or ')} scenarios available`;
+                    wrapper.appendChild(notice);
+                } else {
+                    radio.disabled = false;
+                    label.style.opacity = '1';
+                    label.style.cursor = 'pointer';
+                    if (!firstAvailable) firstAvailable = key;
+                }
+            }
+
+            // If the currently checked part was disabled, switch to the first available
+            if (currentDisabled && firstAvailable) {
+                const fallbackRadio = document.querySelector(`input[name="soePart"][value="${firstAvailable}"]`);
+                if (fallbackRadio) fallbackRadio.checked = true;
+            }
+
+            // If NO part is available, disable the Begin button entirely
+            const anyAvailable = document.querySelector('input[name="soePart"]:not(:disabled)');
+            const beginBtn = document.getElementById('beginBtn');
+            const errEl = document.getElementById('errorNotice');
+            if (!anyAvailable) {
+                beginBtn.disabled = true;
+                errEl.textContent = '⚠ No SOE part has full domain coverage. Add scenarios to enable practice.';
+                errEl.style.display = 'block';
+            } else {
+                // Clear error only if it was set by us (not by something else)
+                if (errEl.textContent.includes('No SOE part has full domain coverage')) {
+                    errEl.style.display = 'none';
+                }
+            }
+        }
 
         /**
          * Domain pools matching the official RCoA Primary FRCA SOE structure.
@@ -278,10 +351,14 @@
             const poolA = scenarios.filter(s => pools.examinerA.domains.has(s.domain));
             const poolB = scenarios.filter(s => pools.examinerB.domains.has(s.domain));
 
-            // Fallback: if either pool is empty, just split randomly
+            // Fail fast: never silently cross domains
             if (poolA.length === 0 || poolB.length === 0) {
-                const shuffled = [...scenarios].sort(() => Math.random() - 0.5);
-                return { scenarios: [shuffled[0], shuffled[1] || shuffled[0]], pools };
+                const empty = [];
+                if (poolA.length === 0) empty.push(pools.examinerA.section);
+                if (poolB.length === 0) empty.push(pools.examinerB.section);
+                throw new Error(
+                    `Cannot start ${pools.label}: no scenarios available for ${empty.join(' or ')}.`
+                );
             }
 
             const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
@@ -517,7 +594,16 @@
             }
 
             const soePart = getSelectedSOEPart();
-            const pick = pickTwo(soePart);
+            let pick;
+            try {
+                pick = pickTwo(soePart);
+            } catch (e) {
+                errEl.textContent = '⚠ ' + e.message;
+                errEl.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Begin Examination';
+                return;
+            }
             selectedScenarios = pick.scenarios;
             const activePools = pick.pools;
             const s1 = selectedScenarios[0];
