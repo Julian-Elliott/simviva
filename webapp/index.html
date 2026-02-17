@@ -228,6 +228,50 @@
         let examinerSwitched = false;
         let firstMessageReceived = false;
 
+        /**
+         * Domain pools matching the official RCoA Primary FRCA SOE structure.
+         *
+         * SOE 1 (morning): Examiner A = Pharmacology, Examiner B = Physiology
+         * SOE 2 (afternoon): Examiner C = Clinical Anaesthesia, Examiner D = Physics/CM/Equipment/Safety
+         *
+         * Anatomy is NOT a standalone SOE section — it appears cross-cuttingly
+         * within physiology, clinical and physics questions. Scenarios tagged
+         * 'anatomy' are placed in the physics/equipment pool for SOE 2.
+         *
+         * Source: RCoA Guide to the FRCA Examination — The Primary, 4th ed.
+         */
+        const SOE_POOLS = {
+            soe1: {
+                label: 'SOE 1 — Physiology & Pharmacology',
+                examinerA: {
+                    name: 'Dr Whitmore',
+                    section: 'Pharmacology',
+                    domains: new Set(['pharmacology'])
+                },
+                examinerB: {
+                    name: 'Dr Harris',
+                    section: 'Physiology',
+                    domains: new Set(['physiology'])
+                }
+            },
+            soe2: {
+                label: 'SOE 2 — Clinical & Physics',
+                examinerA: {
+                    name: 'Dr Whitmore',
+                    section: 'Clinical Anaesthesia',
+                    domains: new Set(['clinical_anaesthesia', 'critical_care', 'pain_medicine',
+                        'critical_incidents', 'obstetric_anaesthesia', 'paediatric_anaesthesia',
+                        'neuroanaesthesia', 'cardiothoracic', 'regional_anaesthesia'])
+                },
+                examinerB: {
+                    name: 'Dr Harris',
+                    section: 'Physics, Clinical Measurement, Equipment & Safety',
+                    domains: new Set(['physics', 'clinical_measurement', 'equipment',
+                        'anatomy'])
+                }
+            }
+        };
+
         // ── Load scenario bank ──
         fetch('/scenarios.json').then(r => r.json()).then(data => {
             scenarios = data;
@@ -299,50 +343,6 @@
                 }
             }
         }
-
-        /**
-         * Domain pools matching the official RCoA Primary FRCA SOE structure.
-         *
-         * SOE 1 (morning): Examiner A = Pharmacology, Examiner B = Physiology
-         * SOE 2 (afternoon): Examiner C = Clinical Anaesthesia, Examiner D = Physics/CM/Equipment/Safety
-         *
-         * Anatomy is NOT a standalone SOE section — it appears cross-cuttingly
-         * within physiology, clinical and physics questions. Scenarios tagged
-         * 'anatomy' are placed in the physics/equipment pool for SOE 2.
-         *
-         * Source: RCoA Guide to the FRCA Examination — The Primary, 4th ed.
-         */
-        const SOE_POOLS = {
-            soe1: {
-                label: 'SOE 1 — Physiology & Pharmacology',
-                examinerA: {
-                    name: 'Dr Whitmore',
-                    section: 'Pharmacology',
-                    domains: new Set(['pharmacology'])
-                },
-                examinerB: {
-                    name: 'Dr Harris',
-                    section: 'Physiology',
-                    domains: new Set(['physiology'])
-                }
-            },
-            soe2: {
-                label: 'SOE 2 — Clinical & Physics',
-                examinerA: {
-                    name: 'Dr Whitmore',
-                    section: 'Clinical Anaesthesia',
-                    domains: new Set(['clinical_anaesthesia', 'critical_care', 'pain_medicine',
-                        'critical_incidents', 'obstetric_anaesthesia', 'paediatric_anaesthesia',
-                        'neuroanaesthesia', 'cardiothoracic', 'regional_anaesthesia'])
-                },
-                examinerB: {
-                    name: 'Dr Harris',
-                    section: 'Physics, Clinical Measurement, Equipment & Safety',
-                    domains: new Set(['physics', 'clinical_measurement', 'equipment',
-                        'anatomy'])
-                }
-            }
-        };
 
         function getSelectedSOEPart() {
             const radio = document.querySelector('input[name="soePart"]:checked');
