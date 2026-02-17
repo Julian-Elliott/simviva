@@ -27,30 +27,11 @@ Step-by-step guide to building the workflow in ElevenLabs.
 
 In the agent editor, switch to **Workflow** mode (not single-prompt mode).
 
-### Node 1: Welcome
+> **Design principle:** In a real FRCA viva, only the two examiners
+> interact with the candidate. There is no coordinator or debrief in the
+> room. This workflow mirrors that experience.
 
-- **Type:** Subagent
-- **Name:** `welcome`
-- **Voice:** `Rachel` (British, warm, professional)
-  - Stability: 0.75
-  - Clarity + Similarity: 0.80
-  - Style: 0.4
-- **System prompt:**
-  ```
-  You are the examination coordinator for a Primary FRCA practice viva.
-  
-  1. Greet the candidate warmly but professionally
-  2. Ask: "May I have your surname, please?"
-  3. Store their surname
-  4. Explain the format: "You'll face two examiners, each covering two topics 
-     for about four minutes each. The examiners won't indicate whether your 
-     answers are correct — this is normal exam procedure."
-  5. Ask: "Are you ready to begin?"
-  ```
-- **Output variables:** Add `candidate_name` (string)
-- **First message:** "Good afternoon. Welcome to your Primary FRCA practice viva. Before we begin, may I have your surname, please?"
-
-### Node 2: Question Select (Examiner 1, Topic 1)
+### Node 1: Question Select (Examiner 1, Topic 1)
 
 - **Type:** Dispatch (Tool call)
 - **Name:** `select_q_e1t1`
@@ -73,7 +54,7 @@ In the agent editor, switch to **Workflow** mode (not single-prompt mode).
    }
    ```
 
-### Node 3: Examiner 1
+### Node 2: Examiner 1
 
 - **Type:** Subagent
 - **Name:** `examiner_1`
@@ -85,25 +66,25 @@ In the agent editor, switch to **Workflow** mode (not single-prompt mode).
   - Speaker Boost: ON
 - **System prompt:** Paste contents of `prompts/examiner-1.md`
 - **Dynamic variables:** 
-  - `{{candidate_name}}` — from welcome node
+  - `{{candidate_name}}` — from session start (webapp)
   - `{{current_question}}` — from question select
 - **First message:** Leave blank (the system prompt instructs the examiner to open with the stem question)
 
-### Node 4: Question Select (Examiner 1, Topic 2)
+### Node 3: Question Select (Examiner 1, Topic 2)
 
 - Same as Node 2 but pass `seen_ids` containing the first question's ID
 - Select from remaining PHYSIOLOGY/PHARMACOLOGY questions
 
-### Node 5: Examiner 1 (Topic 2)
+### Node 4: Examiner 1 (Topic 2)
 
-- Same subagent as Node 3, new question context
+- Same subagent as Node 2, new question context
 - **Alternative PoC simplification:** Keep Examiner 1 as a single node and include 2 questions in the system prompt, instructing them to cover both sequentially
 
-### Node 6: Question Select (Examiner 2)
+### Node 5: Question Select (Examiner 2)
 
 - Same tool, but `examiner_id: 2`, categories: `["PHYSICS", "EQUIPMENT", "ANATOMY"]`
 
-### Node 7: Examiner 2
+### Node 6: Examiner 2
 
 - **Type:** Subagent
 - **Name:** `examiner_2`
@@ -115,7 +96,7 @@ In the agent editor, switch to **Workflow** mode (not single-prompt mode).
   - Speaker Boost: ON
 - **System prompt:** Paste contents of `prompts/examiner-2.md`
 
-### Node 8: Assessment
+### Node 7: Assessment
 
 - **Type:** Subagent (silent processing)
 - **Name:** `assessment`
@@ -133,17 +114,7 @@ In the agent editor, switch to **Workflow** mode (not single-prompt mode).
   
   Do not speak to the candidate. Output structured data only.
   ```
-- **Transition:** Immediate edge to Debrief with assessment payload
-
-### Node 9: Debrief
-
-- **Type:** Subagent
-- **Name:** `debrief`
-- **Voice:** `Rachel` (same as Welcome — warm continuity)
-  - Stability: 0.65
-  - Clarity + Similarity: 0.85
-  - Style: 0.50 (warmer, more expressive for feedback)
-- **System prompt:** Paste contents of `prompts/debrief.md`
+- **Transition:** Immediate edge to END (scores stored for post-call retrieval)
 
 ---
 
@@ -153,7 +124,6 @@ In the workflow canvas, draw edges between nodes:
 
 | From | To | Condition |
 |------|----|-----------|
-| welcome | select_q_e1t1 | LLM: "Candidate has provided surname and confirmed ready" |
 | select_q_e1t1 | examiner_1 | Auto (tool completes) |
 | examiner_1 | select_q_e1t2 | LLM: "Examiner has said 'let's move on' after covering first topic adequately (~5 min)" |
 | select_q_e1t2 | examiner_1_t2 | Auto |
@@ -162,7 +132,7 @@ In the workflow canvas, draw edges between nodes:
 | examiner_2 | select_q_e2t2 | LLM: "Examiner has moved on from first topic after ~5 minutes" |
 | select_q_e2t2 | examiner_2_t2 | Auto |
 | examiner_2_t2 | assessment | LLM: "Examiner has said 'that's my section complete'" |
-| assessment | debrief | Auto (assessment processing complete) |
+| assessment | END | Auto (assessment processing complete) |
 
 ### LLM Condition Tips
 - Keep conditions short and specific
@@ -185,14 +155,14 @@ In the workflow canvas, draw edges between nodes:
 
 For the Monday demo, simplify to reduce failure points:
 
-### Simplified 4-Node Workflow
+### Simplified 2-Node Workflow
 ```
-WELCOME → EXAMINER 1 → EXAMINER 2 → DEBRIEF
+EXAMINER 1 → EXAMINER 2
 ```
 
 - **Embed questions directly** in each examiner's system prompt (pick 2 questions each)
 - **Skip the question select tool** — hardcode the questions
-- **Skip the assessment tool** — have the debrief node assess the transcript itself
+- **Skip the assessment tool** — use post-call data collection for scoring
 - **Use LLM conditions** for transitions between examiners
 
 ### Minimal System Prompt Template for PoC Examiners
@@ -219,13 +189,13 @@ Start with Topic 1. After approximately 5 minutes, transition to Topic 2.
 
 Before the demo, test each voice:
 
-1. Go to **Voice Lab** → test `George` / `Charlie` / `Rachel` with sample examiner lines:
+1. Go to **Voice Lab** → test `George` / `Charlie` with sample examiner lines:
    - "I see. Can you tell me about the factors affecting cardiac output?"
    - "Are you sure about that?"
    - "Mm-hmm. What else?"
    - "Let's move on."
 2. Adjust stability/similarity if they sound too expressive or too robotic
-3. Lower **Style** for examiners (poker face), higher for debrief (warm)
+3. Lower **Style** for examiners (poker face)
 
 ### Voice Alternatives (if defaults don't sound right)
 
@@ -233,7 +203,6 @@ Before the demo, test each voice:
 |------|---------|----------|----------|
 | Examiner 1 | George | Daniel | Adam |
 | Examiner 2 | Charlie | Liam | Callum |
-| Welcome/Debrief | Rachel | Charlotte | Lily |
 
 ---
 
@@ -244,7 +213,7 @@ Before the demo, test each voice:
 3. Run a full end-to-end session yourself, playing the candidate
 4. Time each section — aim for 5 min per topic
 5. Check edge transitions fire correctly
-6. Verify the debrief references specific things you said
+6. Verify post-call results appear correctly in the webapp
 
 ### Common Issues & Fixes
 
@@ -253,7 +222,7 @@ Before the demo, test each voice:
 | Examiner sounds too friendly | Lower Style to 0.1–0.2, add "Never express warmth" to prompt |
 | Transitions don't fire | Simplify LLM condition text, add explicit trigger phrases to examiner prompts |
 | Variables don't pass between nodes | Check dynamic_variables are correctly named and mapped |
-| Debrief is generic | Ensure transcript context passes through; for PoC, the LLM should have conversation history |
+| Post-call results missing | Check data_collection.json fields match the analysis API response |
 | Voice latency too high | Use Turbo v2.5 voice model, set `optimize_streaming_latency` to 3 |
 
 --

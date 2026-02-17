@@ -9,8 +9,9 @@ plain, diffable files.
 Simulate a **Primary FRCA Structured Oral Examination** (SOE) viva.
 Two AI examiners each present a clinical scenario (short cases), probe
 the candidate's anaesthetic knowledge for ~7 minutes each, then the
-system scores performance on the RCoA 0/1/2 per-question scale and
-delivers a debrief with specific feedback.
+system scores performance on the RCoA 0/1/2 per-question scale.
+Feedback is delivered asynchronously via the webapp — mirroring real
+life where candidates leave and receive results separately.
 
 ---
 
@@ -20,7 +21,7 @@ delivers a debrief with specific feedback.
 
 One ElevenLabs agent (`agent_7401kgyecx7mewbv2c8gs5f0ff39`) handles
 the entire conversation. Dr Whitmore and Dr Harris are role-played via
-the system prompt, but use the same voice. Scoring and debrief happen
+the system prompt, but use the same voice. Scoring happens
 via ElevenLabs' built-in **data collection** (post-call extraction).
 
 ```
@@ -29,7 +30,6 @@ via ElevenLabs' built-in **data collection** (post-call extraction).
      │  WebRTC audio + dynamic vars  │
      │ ──────────────────────────► │
      │                               │  Single system prompt handles:
-     │                               │   • Welcome + name capture
      │                               │   • Examiner 1 (Dr Whitmore)
      │                               │   • Examiner 2 (Dr Harris)
      │                               │   • Post-call data collection
@@ -49,14 +49,6 @@ agent's configuration (system prompt, voice, LLM, tools, knowledge
 base) without creating separate agents.
 
 ```
-┌──────────────┐
-│   WELCOME     │  Subagent node — Voice: Rachel
-│  Greet, get   │  Override: welcome prompt
-│  candidate    │
-│  name         │
-└──────┬───────┘
-       │ LLM condition: "candidate confirmed ready"
-       ▼
 ┌─────────────────┐
 │ QUESTION SELECT  │  Dispatch tool node
 │ select_question  │  Picks scenario for Examiner 1
@@ -91,13 +83,6 @@ base) without creating separate agents.
    │ success  │ failure
    ▼          ▼
 ┌─────────────────┐
-│    DEBRIEF       │  Subagent node — Voice: Rachel
-│  Deliver scores,  │  Override: debrief prompt + voice
-│  feedback, close  │
-└──────┬──────────┘
-       │ unconditional
-       ▼
-┌─────────────────┐
 │      END         │  End call node
 └─────────────────┘
 ```
@@ -108,9 +93,9 @@ base) without creating separate agents.
 |-----------|--------------|----------------|
 | **Subagent node** | Override base agent config at each conversation phase (prompt, voice, LLM, tools, KB) | [Workflows → Subagent nodes](https://elevenlabs.io/docs/agents-platform/customization/agent-workflows) |
 | **Dispatch tool node** | Guaranteed tool execution for question selection and assessment scoring with success/failure routing | [Workflows → Dispatch tool node](https://elevenlabs.io/docs/agents-platform/customization/agent-workflows) |
-| **End call node** | Graceful conversation termination after debrief | [System tools → End call](https://elevenlabs.io/docs/agents-platform/customization/tools/system-tools/end-call) |
+| **End call node** | Graceful conversation termination after assessment | [System tools → End call](https://elevenlabs.io/docs/agents-platform/customization/tools/system-tools/end-call) |
 | **Forward edge (LLM condition)** | Natural language conditions evaluated by LLM to determine transitions (e.g. "has the examiner completed the scenario?") | [Workflows → Edges](https://elevenlabs.io/docs/agents-platform/customization/agent-workflows) |
-| **Forward edge (unconditional)** | Automatic progression from debrief to end | [Workflows → Edges](https://elevenlabs.io/docs/agents-platform/customization/agent-workflows) |
+| **Forward edge (unconditional)** | Automatic progression from assessment to end | [Workflows → Edges](https://elevenlabs.io/docs/agents-platform/customization/agent-workflows) |
 | **Dynamic variables** | Per-conversation personalisation — candidate name, scenario data injected at session start | [Personalisation → Dynamic variables](https://elevenlabs.io/docs/agents-platform/customization/personalization/dynamic-variables) |
 | **Data collection** | Post-call structured extraction — scores, summaries, feedback | [Conversation analysis](https://elevenlabs.io/docs/agents-platform/customization/agent-analysis) |
 

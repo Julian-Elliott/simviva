@@ -13,21 +13,15 @@ conversation phase — they are not independent agents.
 
 Two AI examiners conduct a ~14-minute viva across physiology,
 pharmacology, physics, clinical measurement, equipment, and applied
-anatomy, followed by automated scoring and debrief.
+anatomy, followed by automated scoring. The candidate receives
+feedback via the webapp after the call ends — mirroring real life
+where candidates leave the room and receive results separately.
 
 ---
 
 ## Workflow Diagram
 
 ```
-┌──────────────┐
-│   WELCOME     │  Subagent node — Voice: Rachel
-│  Greet, get   │  Override: welcome prompt
-│  candidate    │
-│  name         │
-└──────┬───────┘
-       │ LLM condition: "candidate confirmed ready"
-       ▼
 ┌─────────────────┐
 │ QUESTION SELECT  │  Dispatch tool node
 │ select_question  │  success ──► / failure ──► END
@@ -57,56 +51,26 @@ anatomy, followed by automated scoring and debrief.
        ▼
 ┌─────────────────┐
 │   ASSESSMENT     │  Dispatch tool node
-│ assess_performance│  success ──► / failure ──► DEBRIEF
+│ assess_performance│  success ──► / failure ──► END
 └──────┬──────────┘
        │ assessment_* dynamic vars set
-       ▼
-┌─────────────────┐
-│    DEBRIEF       │  Subagent node — Voice: Rachel
-│  Scores + feedback│  Override: debrief prompt + voice
-└──────┬──────────┘
-       │ unconditional
        ▼
 ┌─────────────────┐
 │      END         │  End call node
 └─────────────────┘
 ```
 
+> **Design rationale:** In a real FRCA viva, only the two examiners
+> interact with the candidate. There is no coordinator, no in-room
+> debrief. The candidate leaves and receives results separately.
+> This workflow mirrors that experience. Scoring and feedback are
+> delivered asynchronously via the webapp after the call ends.
+
 ---
 
 ## Node Specifications
 
-### 1. WELCOME (Subagent Node)
-
-**Type:** Subagent node — overrides base agent config.
-
-**Purpose:** Greet candidate, obtain surname for formal address, explain format.
-
-**Overrides applied:**
-- **System prompt:** Replace with welcome-specific prompt
-- **Voice:** `Rachel` (ElevenLabs preset) — warm, professional, British female
-- **LLM:** Base model (no override needed)
-- **Tools:** Global tools included
-- **Knowledge base:** Global KB included
-
-**Prompt summary:**
-- Introduce yourself as the exam coordinator
-- Ask: "May I have your surname, please?"
-- Extract and store `candidate_name` via dynamic variable assignment
-- Brief the candidate: "You will face two examiners, each covering two topics over approximately four minutes each. The examiners will not indicate whether your answers are correct or incorrect — this is normal exam procedure. Shall we begin?"
-
-**Output variables:**
-- `candidate_name` (string) — updated via tool response → dynamic variable assignment
-
-**Forward edge → QUESTION SELECT:**
-- Type: LLM condition
-- Condition: `"The candidate has provided their name and confirmed they are ready to begin."`
-
-**Timing:** ~60 seconds max.
-
----
-
-### 2. QUESTION SELECT (Dispatch Tool Node)
+### 1. QUESTION SELECT (Dispatch Tool Node)
 
 **Type:** Dispatch tool node — guarantees tool execution with success/failure routing.
 
@@ -152,7 +116,7 @@ For the workflow, this dispatch tool replaces that client-side logic.
 
 ---
 
-### 3. EXAMINER 1 (Subagent Node)
+### 2. EXAMINER 1 (Subagent Node)
 
 **Type:** Subagent node — overrides base agent config.
 
@@ -178,7 +142,7 @@ For the workflow, this dispatch tool replaces that client-side logic.
 
 ---
 
-### 4. EXAMINER 2 (Subagent Node)
+### 3. EXAMINER 2 (Subagent Node)
 
 **Type:** Subagent node — overrides base agent config.
 
@@ -204,7 +168,7 @@ For the workflow, this dispatch tool replaces that client-side logic.
 
 ---
 
-### 5. ASSESSMENT (Dispatch Tool Node)
+### 4. ASSESSMENT (Dispatch Tool Node)
 
 **Type:** Dispatch tool node — guaranteed execution with success/failure routing.
 
@@ -215,7 +179,7 @@ For the workflow, this dispatch tool replaces that client-side logic.
 2. Compares candidate responses against `expectedPoints` for each scenario
 3. Assigns each question a per-question mark on the RCoA 0/1/2 scale
 4. Returns structured feedback payload
-5. Updates dynamic variables with scores for the debrief node
+5. Stores scores for post-call retrieval via the results API
 
 **Tool definition:**
 ```json
@@ -238,44 +202,24 @@ For the workflow, this dispatch tool replaces that client-side logic.
 
 **For the PoC:** This is handled by ElevenLabs' built-in data collection
 (post-call extraction) defined in `agent_config/data_collection.json`.
-For the workflow, a dedicated dispatch tool replaces post-call extraction
-with in-call scoring so the debrief node can reference results.
+For the workflow, a dedicated dispatch tool scores the transcript
+so results are available via the results API after the call ends.
 
 **Edges:**
-- **Success** → DEBRIEF (scores in dynamic variables)
-- **Failure** → DEBRIEF (deliver generic feedback without specific scores)
+- **Success** → END (scores stored; candidate views results in webapp)
+- **Failure** → END (end call; generic feedback available post-call)
 
 ---
 
-### 6. DEBRIEF (Subagent Node)
-
-**Type:** Subagent node — overrides base agent config.
-
-**Purpose:** Deliver warm, constructive feedback with specific scores and recommendations.
-
-**Overrides applied:**
-- **System prompt:** Replace with debrief-specific prompt (see `agent_config/nodes/debrief/prompt.md` when created)
-- **Voice:** `Rachel` (same as Welcome) — continuity, warm closure
-- **LLM:** Base model
-- **Tools:** End call tool included
-- **Knowledge base:** Global KB (for reference if candidate asks follow-up questions)
-
-**Dynamic variables available:**
-- `candidate_name`
-- `assessment_q1_mark`, `assessment_q2_mark`, `assessment_feedback` (from dispatch tool)
-
-**Forward edge → END:**
-- Type: Unconditional (automatic progression after debrief completes)
-
----
-
-### 7. END (End Call Node)
+### 5. END (End Call Node)
 
 **Type:** End call node — graceful conversation termination.
 
-Terminates the WebRTC/WebSocket connection after the debrief node
-completes. The `end_call` system tool can also be triggered from within
-any subagent node if needed (e.g. candidate requests to stop early).
+Terminates the WebRTC/WebSocket connection after the assessment
+completes. Mirrors real life — the viva simply ends, and the candidate
+receives results separately. The `end_call` system tool can also be
+triggered from within any subagent node if needed (e.g. candidate
+requests to stop early).
 
 ---
 
@@ -283,15 +227,13 @@ any subagent node if needed (e.g. candidate requests to stop early).
 
 | Node | Type | Target Duration |
 |------|------|----------------|
-| Welcome | Subagent | ~1 min |
 | Question Select 1 | Dispatch tool | <1 sec |
 | Examiner 1 (3 blocks) | Subagent | ~7 min |
 | Question Select 2 | Dispatch tool | <1 sec |
 | Examiner 2 (3 blocks) | Subagent | ~7 min |
 | Assessment | Dispatch tool | 2-3 sec |
-| Debrief | Subagent | 3-4 min |
 | End | End call | instant |
-| **Total** | | **~18-20 min** |
+| **Total** | | **~14 min** |
 
 ---
 
@@ -300,8 +242,8 @@ any subagent node if needed (e.g. candidate requests to stop early).
 ### Base Agent Settings (inherited by all subagent nodes)
 - **Model:** Claude Sonnet 4.5 (current PoC) — can be overridden per subagent node
 - **Language:** English (British)
-- **Max conversation duration:** 30 minutes (buffer for full workflow)
-- **First message:** Handled by Welcome subagent node
+- **Max conversation duration:** 20 minutes (buffer for full workflow)
+- **First message:** Handled by the first examiner's subagent node (greeting + scenario stem)
 - **Turn eagerness:** Patient (gives candidates time to formulate answers)
 
 ### Edge Configuration
@@ -332,5 +274,4 @@ any subagent node if needed (e.g. candidate requests to stop early).
 ### Latency Optimisation
 - Set `optimize_streaming_latency` to 1 (balanced)
 - Use `eleven_v3_conversational` voice model for lowest latency
-- Consider using a faster LLM for simple nodes (Welcome, Debrief)
 - Keep system prompts under 2000 tokens per subagent node
