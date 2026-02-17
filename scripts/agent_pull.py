@@ -125,9 +125,11 @@ def diff_against_local(agent: dict):
         print("  system_prompt.md    ✓ in sync")
 
     # 2. Data collection
-    local_dc_text = read_local_file(os.path.join(CONFIG_DIR, "data_collection.json")).strip()
+    local_dc_raw = read_local_file(os.path.join(CONFIG_DIR, "data_collection.json")).strip()
+    local_dc = json.loads(local_dc_raw) if local_dc_raw else {}
     live_dc = api.extract_data_collection(agent)
-    live_dc_text = json.dumps(live_dc, indent=2, ensure_ascii=False)
+    local_dc_text = json.dumps(local_dc, indent=2, sort_keys=True, ensure_ascii=False)
+    live_dc_text = json.dumps(live_dc, indent=2, sort_keys=True, ensure_ascii=False)
 
     if local_dc_text != live_dc_text:
         any_diff = True
@@ -140,7 +142,8 @@ def diff_against_local(agent: dict):
         print("  data_collection.json ✓ in sync")
 
     # 3. Settings
-    local_settings_text = read_local_file(os.path.join(CONFIG_DIR, "settings.json")).strip()
+    local_settings_raw = read_local_file(os.path.join(CONFIG_DIR, "settings.json")).strip()
+    local_settings = json.loads(local_settings_raw) if local_settings_raw else {}
     live_settings = {
         "name": agent.get("name", ""),
         "language": api.extract_language(agent),
@@ -149,7 +152,8 @@ def diff_against_local(agent: dict):
         "dynamic_variables": api.extract_dynamic_variables(agent),
         "first_message": api.extract_first_message(agent),
     }
-    live_settings_text = json.dumps(live_settings, indent=2, ensure_ascii=False)
+    local_settings_text = json.dumps(local_settings, indent=2, sort_keys=True, ensure_ascii=False)
+    live_settings_text = json.dumps(live_settings, indent=2, sort_keys=True, ensure_ascii=False)
 
     if local_settings_text != live_settings_text:
         any_diff = True
