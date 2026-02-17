@@ -19,7 +19,7 @@
 
 ## https://rcoa.ac.uk
 
-- Royal college of anaesthetists website
+- Royal College of Anaesthetists website
 - Provides description of the exam structure
 - Details the exam curriculum
 - Provides practice questions
@@ -32,7 +32,7 @@
 
 ## Guide to the FRCA Examination: The Final
 
-- RCOA Published book with example questions in the structure of the exam
+- RCoA Published book with example questions in the structure of the exam
 
 ## The Clinical Anaesthesia Viva Book: Barker, Mills, Maguire
 
@@ -40,7 +40,7 @@
 - The Short Cases are a mixture of Clinical and Science questions.  They do not categorise them beyond short cases.
 - The long cases cover a wide range of common long case scenarios. 
 
-# The Science Viva Book: Bricker
+## The Science Viva Book: Bricker
 
 - Contains questions focused on the Clinical science exam questions.
 - Categorised as follows: 
