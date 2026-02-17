@@ -133,7 +133,7 @@
         <div class="soe-selector">
             <div class="soe-option">
                 <label>
-                    <input type="radio" name="soePart" value="soe1" checked> SOE 1 — Pharmacology &amp; Physiology
+                    <input type="radio" name="soePart" value="soe1" checked> SOE 1 — Physiology &amp; Pharmacology
                 </label>
             </div>
             <div class="soe-option">
@@ -314,7 +314,7 @@
          */
         const SOE_POOLS = {
             soe1: {
-                label: 'SOE 1 — Pharmacology & Physiology',
+                label: 'SOE 1 — Physiology & Pharmacology',
                 examinerA: {
                     name: 'Dr Whitmore',
                     section: 'Pharmacology',
@@ -652,7 +652,7 @@
             const dynamicVars = {
                 candidate_name: name.split(' ').pop(),
                 // SOE part context
-                soe_part: soePart === 'soe1' ? 'SOE 1 — Pharmacology & Physiology' : 'SOE 2 — Clinical Anaesthesia, Physics & Equipment',
+                soe_part: soePart === 'soe1' ? 'SOE 1 — Physiology & Pharmacology' : 'SOE 2 — Clinical Anaesthesia, Physics & Equipment',
                 examiner_1_section: activePools.examinerA.section,
                 examiner_2_section: activePools.examinerB.section,
                 // Scenario 1 — Examiner A
