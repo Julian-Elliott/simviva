@@ -227,6 +227,6 @@ source .env && python3 scripts/agent_pull.py --diff
 3. **Commit after every push.** The git history becomes the audit trail.
 4. The `system_prompt.md` file is **plain text only** — no YAML
    frontmatter, no metadata headers. The push script sends it verbatim.
-5. When the target workflow is built, each subagent node's prompt
-   override will live in `agent_config/nodes/<node_name>/prompt.md`
-   and the push/pull scripts will be extended to sync workflow nodes.
+5. Workflow node prompts live in `agent_config/nodes/<slug>/prompt.md`.
+   The push/pull scripts already sync these automatically — `workflow.json`
+   stores `__PROMPT_FILE__:` markers that reference the `.md` files.
