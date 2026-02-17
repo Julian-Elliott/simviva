@@ -183,6 +183,10 @@ def pull_to_local(agent: dict):
             if node_prompt and path:
                 prompt_count += 1
                 node_dir = os.path.join(nodes_dir, slug)
+                try:
+                    api.safe_resolve(CONFIG_DIR, os.path.join("nodes", slug))
+                except ValueError as e:
+                    raise SystemExit("Refusing to write: {}".format(e))
                 os.makedirs(node_dir, exist_ok=True)
                 pfile = os.path.join(node_dir, "prompt.md")
                 with open(pfile, "w", encoding="utf-8") as f:
@@ -317,7 +321,12 @@ def diff_against_local(agent: dict):
             node_prompt, path = api.find_node_prompt(node)
             if isinstance(node_prompt, str) and node_prompt.startswith(api.PROMPT_FILE_PREFIX):
                 rel = node_prompt[len(api.PROMPT_FILE_PREFIX):]
-                content = read_local_file(os.path.join(CONFIG_DIR, rel)).strip()
+                try:
+                    safe_path = api.safe_resolve(CONFIG_DIR, rel)
+                except ValueError as e:
+                    print("  Skipping unsafe marker: {}".format(e))
+                    continue
+                content = read_local_file(safe_path).strip()
                 if content:
                     api.set_node_prompt(node, path, content)
 

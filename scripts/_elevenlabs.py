@@ -252,6 +252,30 @@ def extract_asr(agent: dict) -> dict:
 PROMPT_FILE_PREFIX = "__PROMPT_FILE__:"
 
 
+def safe_resolve(config_dir: str, rel: str) -> str:
+    """Resolve *rel* inside *config_dir*, rejecting path traversal.
+
+    Raises ValueError if the resolved path escapes *config_dir*
+    (e.g. via '../' segments or absolute paths).
+    """
+    if os.path.isabs(rel):
+        raise ValueError(
+            "Absolute path in prompt-file marker is not allowed: {}".format(rel)
+        )
+    resolved = os.path.realpath(os.path.join(config_dir, rel))
+    root = os.path.realpath(config_dir)
+    # commonpath raises ValueError if paths are on different drives (Windows)
+    try:
+        common = os.path.commonpath([resolved, root])
+    except ValueError:
+        common = ""
+    if common != root:
+        raise ValueError(
+            "Path traversal detected — '{}' resolves outside config dir".format(rel)
+        )
+    return resolved
+
+
 def extract_workflow(agent: dict):
     """Extract the workflow definition (nodes + edges) if one exists.
 

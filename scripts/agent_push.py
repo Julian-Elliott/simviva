@@ -82,7 +82,10 @@ def read_config() -> dict:
             node_prompt, path = api.find_node_prompt(node)
             if isinstance(node_prompt, str) and node_prompt.startswith(api.PROMPT_FILE_PREFIX):
                 rel = node_prompt[len(api.PROMPT_FILE_PREFIX):]
-                fpath = os.path.join(CONFIG_DIR, rel)
+                try:
+                    fpath = api.safe_resolve(CONFIG_DIR, rel)
+                except ValueError as e:
+                    raise SystemExit("Refusing to read: {}".format(e))
                 if not os.path.exists(fpath):
                     slug = api.node_slug(node)
                     print("  Warning: Missing prompt file for node '{}': {}".format(slug, rel))
