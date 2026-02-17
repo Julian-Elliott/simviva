@@ -462,7 +462,7 @@
 
             let html = '';
 
-            // Grade card — RCoA 4-point scale
+            // Grade card — SimViva 4-point session grade
             // The agent is prompted to return "4 — justification", "3 — …", etc.
             // We normalise defensively in case the model prefixes a word instead.
             const grade = (dc.candidate_grade || '').trim();
@@ -500,7 +500,7 @@
                            .replace(/^(pass\+?|borderline|fail)\s*[\u2014\u2013\-—:.\s]*/i, '')
                     : '';
                 html += `<div class="grade-card">
-                    <div class="grade-label">Overall Grade (RCoA Scale)</div>
+                    <div class="grade-label">Session Grade (formative, not official RCoA marking)</div>
                     <div class="grade-value ${display.css}">${display.label}</div>
                     ${justification ? `<div class="grade-justification">${justification}</div>` : ''}
                 </div>`;

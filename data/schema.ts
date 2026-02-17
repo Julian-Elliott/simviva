@@ -198,15 +198,18 @@ export interface Scenario {
 
   // ── Scoring guidance ──
 
-  /** What each RCoA score looks like for THIS scenario */
+  /** What each SimViva session grade looks like for THIS scenario.
+   *  These descriptors inform the AI's holistic 4-point formative grade
+   *  (Pass+ / Pass / Borderline / Fail). They are NOT the real RCoA
+   *  per-question marks (0/1/2). */
   scoringGuidance: {
-    /** 4 = Pass+ */
+    /** 4 = Pass+ (exceeds expected standard) */
     pass_plus: string;
-    /** 3 = Pass */
+    /** 3 = Pass (meets expected standard) */
     pass: string;
-    /** 2 = Borderline */
+    /** 2 = Borderline (approaches but does not meet) */
     borderline: string;
-    /** 1 = Fail */
+    /** 1 = Fail (significantly below expected standard) */
     fail: string;
   };
 

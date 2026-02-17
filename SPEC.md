@@ -50,6 +50,15 @@ Per-question: fail (0) / borderline (1) / pass (2)
 All 4 examiners mark all 6 questions independently in their SOE part.
 Total: 48 marks, pass threshold: 37.
 
+### SimViva Session Grade (formative)
+SimViva covers only 2 of the 12 real questions, so replicating the full
+aggregate marking is not meaningful. Instead the AI gives a holistic
+4-point formative grade per session:
+- 4 = Pass+ — 3 = Pass — 2 = Borderline — 1 = Fail
+
+The per-scenario `scoringGuidance` descriptors inform this grade. It is
+clearly labelled as formative and is NOT an official RCoA score.
+
 ## Post-Session Feedback
 - Score per topic
 - Key points covered/missed

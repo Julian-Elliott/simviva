@@ -72,7 +72,7 @@ def main():
 
     # ── 1. Inject scoring guidance blocks into the system prompt ──
     scoring_block = """
-## SCORING GUIDANCE (RCoA 4-Point Scale)
+## SCORING GUIDANCE (SimViva Session Grade)
 
 Use the scenario-specific scoring rubric below when assessing the candidate.
 
@@ -82,11 +82,15 @@ Use the scenario-specific scoring rubric below when assessing the candidate.
 ### Dr Harris's Scenario Scoring:
 {{scenario_2_scoring}}
 
-When grading, use the RCoA 4-point scale ONLY:
+After the viva, grade the candidate's OVERALL session on this 4-point scale:
 - 4 = Pass+ (exceeds the expected standard)
 - 3 = Pass (meets the expected standard)
 - 2 = Borderline (approaches but does not meet the standard)
 - 1 = Fail (significantly below the expected standard)
+
+Note: The real RCoA SOE uses per-question marks (0/1/2) across 12 questions.
+SimViva covers only 2 questions, so this holistic grade is a formative estimate,
+not a real exam score.
 """
 
     # Check if scoring block is already present
@@ -110,9 +114,9 @@ When grading, use the RCoA 4-point scale ONLY:
             "type": "string",
             "description": (
                 "You are the chief examiner. Based on the ENTIRE conversation and the "
-                "SCORING GUIDANCE provided for each scenario, grade the candidate on the "
-                "RCoA 4-point scale. Output ONLY the number first (4, 3, 2, or 1), then "
-                "a dash, then one sentence justification.\n"
+                "SCORING GUIDANCE provided for each scenario, give the candidate a holistic "
+                "session grade on the SimViva 4-point scale. Output ONLY the number first "
+                "(4, 3, 2, or 1), then a dash, then one sentence justification.\n"
                 "4 = Pass+ (exceeds expected standard — structured answers, depth, anticipated follow-ups)\n"
                 "3 = Pass (meets expected standard — correct core knowledge, minor gaps only)\n"
                 "2 = Borderline (approaches but does not meet — partial knowledge, significant gaps, needed rescue)\n"
