@@ -30,7 +30,7 @@ def read_local_file(path: str) -> str:
     """Read a local file, returning '' if it doesn't exist."""
     if not os.path.exists(path):
         return ""
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         return f.read()
 
 
@@ -67,7 +67,7 @@ def pull_to_local(agent: dict):
     # System prompt
     prompt = api.extract_prompt(agent)
     prompt_path = os.path.join(CONFIG_DIR, "system_prompt.md")
-    with open(prompt_path, "w") as f:
+    with open(prompt_path, "w", encoding="utf-8") as f:
         f.write(prompt)
         if not prompt.endswith("\n"):
             f.write("\n")
@@ -76,7 +76,7 @@ def pull_to_local(agent: dict):
     # Data collection
     dc = api.extract_data_collection(agent)
     dc_path = os.path.join(CONFIG_DIR, "data_collection.json")
-    with open(dc_path, "w") as f:
+    with open(dc_path, "w", encoding="utf-8") as f:
         json.dump(dc, f, indent=2, ensure_ascii=False)
         f.write("\n")
     print(f"  ✓ data_collection.json  ({len(dc)} fields)")
@@ -91,7 +91,7 @@ def pull_to_local(agent: dict):
         "first_message": api.extract_first_message(agent),
     }
     settings_path = os.path.join(CONFIG_DIR, "settings.json")
-    with open(settings_path, "w") as f:
+    with open(settings_path, "w", encoding="utf-8") as f:
         json.dump(settings, f, indent=2, ensure_ascii=False)
         f.write("\n")
     dv_count = len(settings["dynamic_variables"])
@@ -101,7 +101,7 @@ def pull_to_local(agent: dict):
     os.makedirs(HISTORY_DIR, exist_ok=True)
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M%S")
     history_path = os.path.join(HISTORY_DIR, f"{ts}.json")
-    with open(history_path, "w") as f:
+    with open(history_path, "w", encoding="utf-8") as f:
         json.dump(agent, f, indent=2, ensure_ascii=False)
     print(f"  ✓ history/{ts}.json")
 

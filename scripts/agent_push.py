@@ -34,13 +34,13 @@ def read_config():
             "Missing config files:\n" + "\n".join(f"  {p}" for p in missing)
         )
 
-    with open(prompt_path) as f:
+    with open(prompt_path, encoding="utf-8") as f:
         prompt = f.read().strip()
 
-    with open(dc_path) as f:
+    with open(dc_path, encoding="utf-8") as f:
         data_collection = json.load(f)
 
-    with open(settings_path) as f:
+    with open(settings_path, encoding="utf-8") as f:
         settings = json.load(f)
 
     return prompt, data_collection, settings
