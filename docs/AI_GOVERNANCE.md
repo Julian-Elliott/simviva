@@ -30,13 +30,13 @@ Although SimViva is a formative assessment tool (practice) rather than a summati
 
 To prevent the generation of derivative works that infringe upon third-party copyright (e.g., BJA Education, Oxford University Press), SimViva employs a strict segregation of duties in the content generation pipeline.
 
-### 2.1. Principle of Atomic Fact Extraction
+### 3.1. Principle of Atomic Fact Extraction
 Copyright law (EU, UK, US) protects *expression*, not *facts*.
 *   **Protocol**: Source material is never provided directly to the generation model. 
 *   **Process**: A distinct "Extraction Phase" isolates atomic medical facts (e.g., pharmacokinetics, guideline thresholds) from their original literary expression.
 *   **Audit**: These atomic facts form the only input for the generation phase, complying with **Article 53 (Copyright)** obligations for General Purpose AI models.
 
-### 2.2. The Clean-Room Generation Pipeline
+### 3.2. The Clean-Room Generation Pipeline
 1.  **Input**: Anonymized, unstructured lists of atomic facts.
 2.  **Generation**: The AI model ("The Architect") constructs a *new, original* clinical scenario and viva structure based solely on the provided facts.
 3.  **Output**: A unique expression of public domain medical knowledge.
@@ -70,7 +70,7 @@ The `AIProvenance` record (defined in `data/schema.ts`) acts as our technical do
 *   **Source Material**: References to the primary literature from which facts were extracted.
 *   **Reviewer Chain**: The digital signature of the human approver.
 
-### 4.2. Auditability
+### 5.2. Auditability
 *   **Traceability**: Given a specific scenario ID, an auditor can trace back to the specific source guidelines used and the specific human who authorized its release.
 *   **Immutability**: Once approved, the `provenance` block is locked. Any subsequent edits require a new version or re-validation.
 
