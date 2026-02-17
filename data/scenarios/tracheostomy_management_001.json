@@ -87,18 +87,15 @@
 
   "author": "SimViva Team",
   "provenance": {
-    "generatedBy": "Claude 3.5 Sonnet",
-    "generatedAt": "2024-02-18T10:15:00Z",
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-17T10:15:00Z",
     "promptVersion": "v1.0.0",
     "sourceMaterial": ["NTSP_Green_Algorithm_2012", "BJA_Tracheostomy_2021"],
     "validation": {
-      "reviewedBy": "Dr. Sarah Admin, FRCA",
-      "reviewedAt": "2024-02-19T15:00:00Z",
-      "status": "approved",
-      "accuracy": 1.0,
-      "concordance": 0.98,
-      "insight": 0.9,
-      "notes": "Good focus on the NTSP algorithm."
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
     }
   },
   "furtherReading": [

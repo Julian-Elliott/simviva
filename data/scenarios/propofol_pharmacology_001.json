@@ -94,18 +94,15 @@
 
   "author": "SimViva Team",
   "provenance": {
-    "generatedBy": "Claude 3.5 Sonnet",
-    "generatedAt": "2024-02-18T10:00:00Z",
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-17T10:00:00Z",
     "promptVersion": "v1.0.0",
     "sourceMaterial": ["BJA_Propofol_Pharmacology_2018", "RCoA_Propofol_Guideline"],
     "validation": {
-      "reviewedBy": "Dr. Sarah Admin, FRCA",
-      "reviewedAt": "2024-02-19T14:30:00Z",
-      "status": "approved",
-      "accuracy": 1.0,
-      "concordance": 0.95,
-      "insight": 0.8,
-      "notes": "Excellent clinical context on elderly dosing."
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
     }
   },
   "furtherReading": [
