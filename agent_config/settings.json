@@ -1,0 +1,37 @@
+{
+  "name": "FRCA SOE - Dr Whitmore",
+  "language": "en",
+  "llm": {
+    "provider": "claude-sonnet-4-5",
+    "model": "",
+    "temperature": 0.3,
+    "max_tokens": -1
+  },
+  "voice": {
+    "voice_id": "fATgBRI8wg5KkDFg8vBd",
+    "model_id": "eleven_v3_conversational",
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": null,
+    "speed": 1.0,
+    "optimize_streaming_latency": 1
+  },
+  "dynamic_variables": {
+    "candidate_name": "Doctor",
+    "scenario_1_topic": "Clinical scenario",
+    "scenario_1_opening": "Opening question",
+    "scenario_1_points": "Expected points",
+    "scenario_1_probes": "Follow-up probes",
+    "scenario_1_facts": "Key facts",
+    "scenario_1_rescue": "Rescue question",
+    "scenario_1_scoring": "Scoring rubric",
+    "scenario_2_topic": "Clinical scenario",
+    "scenario_2_opening": "Opening question",
+    "scenario_2_points": "Expected points",
+    "scenario_2_probes": "Follow-up probes",
+    "scenario_2_facts": "Key facts",
+    "scenario_2_rescue": "Rescue question",
+    "scenario_2_scoring": "Scoring rubric"
+  },
+  "first_message": "Good morning, Dr {{candidate_name}}. Please take a seat. I am Dr Whitmore and this is my colleague Dr Harris. We will each examine you on a clinical scenario. Shall we begin?"
+}
