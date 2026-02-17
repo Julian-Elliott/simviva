@@ -16,7 +16,15 @@ import os
 import urllib.request
 
 API_KEY = os.environ["ELEVENLABS_API_KEY"]
-AGENT_ID = "agent_7401kgyecx7mewbv2c8gs5f0ff39"
+
+AGENT_ID = os.environ.get("ELEVENLABS_AGENT_ID", "").strip()
+if not AGENT_ID:
+    raise SystemExit(
+        "Error: ELEVENLABS_AGENT_ID is not set.\n"
+        "Run:  source .env && python3 scripts/update_agent.py\n"
+        "Or set the variable to the target agent ID before running."
+    )
+
 BASE_URL = f"https://api.elevenlabs.io/v1/convai/agents/{AGENT_ID}"
 
 
