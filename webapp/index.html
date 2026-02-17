@@ -66,6 +66,29 @@
         .status-dot.connected { background: #5be67a; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
+        /* ── View Toggle ── */
+        .view-toggle { display: flex; background: #111; border-bottom: 1px solid #222; padding: 0 1.5rem; }
+        .view-toggle button { background: none; border: none; color: #555; font-size: 0.75rem; padding: 0.5rem 1rem; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.08em; font-family: inherit; }
+        .view-toggle button.active { color: #5ba3e6; border-bottom-color: #5ba3e6; }
+        .view-toggle button:hover:not(.active) { color: #888; }
+
+        /* ── ECG Visualiser ── */
+        .visualiser-container { flex: 1; position: relative; background: #040804; display: none; overflow: hidden; }
+        .visualiser-container.visible { display: block; }
+        .transcript-container.hidden { display: none !important; }
+        .ecg-canvas { width: 100%; height: 100%; display: block; }
+        .monitor-overlay { position: absolute; top: 0; left: 0; right: 0; padding: 1rem 1.5rem; display: flex; justify-content: space-between; pointer-events: none; }
+        .monitor-readout { font-family: 'SF Mono', 'Fira Code', monospace; }
+        .monitor-readout .value { font-size: 2.2rem; font-weight: 700; line-height: 1; }
+        .monitor-readout .unit { font-size: 0.8rem; margin-left: 0.25rem; }
+        .monitor-readout .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.2rem; }
+        .monitor-readout.hr .value { color: #00ff41; text-shadow: 0 0 20px #00ff4160; }
+        .monitor-readout.hr .label, .monitor-readout.hr .unit { color: #00ff4180; }
+        .monitor-readout.state { text-align: right; }
+        .monitor-readout.state .value { font-size: 1rem; color: #5ba3e6; text-shadow: 0 0 10px #5ba3e640; }
+        .monitor-readout.state .label { color: #5ba3e680; }
+        .monitor-lead { position: absolute; bottom: 1rem; right: 1.5rem; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.9rem; color: #00ff4130; pointer-events: none; }
+
         /* ── End Screen ── */
         .end-screen { flex-direction: column; align-items: center; min-height: 100vh; padding: 2rem; text-align: center; overflow-y: auto; }
         .end-icon { font-size: 3rem; margin-bottom: 1rem; margin-top: 2rem; }
@@ -161,7 +184,25 @@
                 <div class="timer" id="timer">00:00</div>
             </div>
         </div>
+        <div class="view-toggle">
+            <button class="active" id="toggleTranscript">📝 Transcript</button>
+            <button id="toggleMonitor">💚 Monitor</button>
+        </div>
         <div class="transcript-container" id="transcript"></div>
+        <div class="visualiser-container" id="visualiserContainer">
+            <canvas class="ecg-canvas" id="ecgCanvas"></canvas>
+            <div class="monitor-overlay">
+                <div class="monitor-readout hr">
+                    <div class="label">Engagement</div>
+                    <div class="value"><span id="monitorHR">--</span><span class="unit">bpm</span></div>
+                </div>
+                <div class="monitor-readout state">
+                    <div class="label">Status</div>
+                    <div class="value" id="monitorState">Standby</div>
+                </div>
+            </div>
+            <div class="monitor-lead">II</div>
+        </div>
         <div class="status-bar">
             <div class="status-indicator">
                 <div class="status-dot" id="statusDot"></div>
@@ -428,6 +469,215 @@
             }
         }
 
+        // ── ECG Monitor ──
+        class ECGMonitor {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+                this.running = false;
+                this.activity = 0;
+                this.targetActivity = 0;
+                this.heartRate = 35;
+                this.phase = 0;
+                this.sweepX = 0;
+                this.buffer = [];
+                this.lastTime = 0;
+                this.w = 0;
+                this.h = 0;
+            }
+
+            // Realistic PQRST complex — Lead II morphology
+            pqrst(t) {
+                if (t < 0.10) return 0.12 * Math.sin(Math.PI * t / 0.10);       // P wave
+                if (t < 0.14) return 0;                                          // PR segment
+                if (t < 0.17) return -0.08 * Math.sin(Math.PI * (t - 0.14) / 0.03); // Q
+                if (t < 0.22) return Math.sin(Math.PI * (t - 0.17) / 0.05);     // R peak
+                if (t < 0.27) return -0.20 * Math.sin(Math.PI * (t - 0.22) / 0.05); // S
+                if (t < 0.36) return 0.02;                                       // ST segment
+                if (t < 0.52) return 0.25 * Math.sin(Math.PI * (t - 0.36) / 0.16); // T wave
+                return 0;                                                        // baseline
+            }
+
+            // Slow delta-wave pattern for low-activity state (anaesthetic depth metaphor)
+            deltaWave(t) {
+                return 0.06 * Math.sin(2 * Math.PI * t) + 0.025 * Math.sin(4.7 * Math.PI * t);
+            }
+
+            resize() {
+                if (!this.canvas) return;
+                const rect = this.canvas.parentElement.getBoundingClientRect();
+                if (rect.width === 0 || rect.height === 0) return;
+                const dpr = window.devicePixelRatio || 1;
+                this.w = rect.width;
+                this.h = rect.height;
+                this.canvas.width = this.w * dpr;
+                this.canvas.height = this.h * dpr;
+                this.canvas.style.width = this.w + 'px';
+                this.canvas.style.height = this.h + 'px';
+                this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                const len = Math.ceil(this.w);
+                if (this.buffer.length !== len) this.buffer = new Array(len).fill(0);
+            }
+
+            setActivity(level) {
+                this.targetActivity = Math.max(0, Math.min(1, level));
+            }
+
+            start() {
+                if (!this.canvas || this.running) return;
+                this.running = true;
+                this.resize();
+                this.lastTime = performance.now();
+                this._frame();
+            }
+
+            stop() { this.running = false; }
+
+            reset() {
+                this.stop();
+                this.sweepX = 0;
+                this.phase = 0;
+                this.activity = 0;
+                this.targetActivity = 0;
+                this.heartRate = 35;
+                if (this.buffer.length) this.buffer.fill(0);
+            }
+
+            _frame() {
+                if (!this.running) return;
+                const now = performance.now();
+                const dt = Math.min((now - this.lastTime) / 1000, 0.05);
+                this.lastTime = now;
+
+                // Smooth transitions
+                this.activity += (this.targetActivity - this.activity) * 2.5 * dt;
+                const thr = 35 + this.activity * 60;
+                this.heartRate += (thr - this.heartRate) * 2.0 * dt;
+
+                // Advance sweep head — 4-second sweep across canvas
+                const spd = this.w / 4;
+                const adv = spd * dt;
+                const from = Math.floor(this.sweepX);
+                const to = Math.floor(this.sweepX + adv);
+                const bps = this.heartRate / 60;
+                const ppx = bps / spd;
+
+                for (let i = from; i <= to; i++) {
+                    const px = i % this.buffer.length;
+                    this.phase += ppx;
+                    if (this.phase >= 1) this.phase -= Math.floor(this.phase);
+                    const e = this.pqrst(this.phase);
+                    const d = this.deltaWave(this.phase * 0.25);
+                    const a = this.activity;
+                    this.buffer[px] = (e * a + d * (1 - a)) * (0.4 + a * 0.6)
+                        + (Math.random() - 0.5) * 0.012;
+                }
+                this.sweepX = (this.sweepX + adv) % this.w;
+
+                // Update monitor readouts
+                const hrEl = document.getElementById('monitorHR');
+                if (hrEl) hrEl.textContent = Math.round(this.heartRate);
+                const stEl = document.getElementById('monitorState');
+                if (stEl) stEl.textContent = this.activity > 0.6 ? 'Responding'
+                    : this.activity > 0.2 ? 'Listening' : 'Standby';
+
+                this._draw();
+                requestAnimationFrame(() => this._frame());
+            }
+
+            _draw() {
+                const ctx = this.ctx, w = this.w, h = this.h;
+                if (!ctx || w === 0) return;
+                const midY = h * 0.5, amp = h * 0.35;
+                const sweep = Math.floor(this.sweepX);
+                const gap = Math.max(12, w * 0.025);
+
+                // Dark background
+                ctx.fillStyle = '#040804';
+                ctx.fillRect(0, 0, w, h);
+
+                // Grid — major (50px)
+                ctx.strokeStyle = '#0a1a0a';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                for (let x = 0; x < w; x += 50) { ctx.moveTo(x, 0); ctx.lineTo(x, h); }
+                for (let y = 0; y < h; y += 50) { ctx.moveTo(0, y); ctx.lineTo(w, y); }
+                ctx.stroke();
+
+                // Grid — minor (10px)
+                ctx.strokeStyle = '#060e06';
+                ctx.lineWidth = 0.5;
+                ctx.beginPath();
+                for (let x = 0; x < w; x += 10) { ctx.moveTo(x, 0); ctx.lineTo(x, h); }
+                for (let y = 0; y < h; y += 10) { ctx.moveTo(0, y); ctx.lineTo(w, y); }
+                ctx.stroke();
+
+                // Trace — phosphor glow pass
+                ctx.save();
+                ctx.shadowColor = '#00ff41';
+                ctx.shadowBlur = 15;
+                ctx.strokeStyle = '#00ff41';
+                ctx.lineWidth = 2.2;
+                this._trace(ctx, midY, amp, sweep, gap);
+                ctx.restore();
+
+                // Trace — bright core
+                ctx.strokeStyle = '#50ff90';
+                ctx.lineWidth = 1.0;
+                this._trace(ctx, midY, amp, sweep, gap);
+
+                // Sweep head dot
+                const sy = midY - (this.buffer[sweep] || 0) * amp;
+                ctx.beginPath();
+                ctx.arc(sweep, sy, 3, 0, 2 * Math.PI);
+                ctx.fillStyle = '#a0ffc0';
+                ctx.shadowColor = '#00ff41';
+                ctx.shadowBlur = 18;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            _trace(ctx, midY, amp, sweep, gap) {
+                const len = this.buffer.length;
+                ctx.beginPath();
+                let pen = false;
+                for (let i = 0; i < len; i++) {
+                    const dist = (i - sweep + len) % len;
+                    if (dist > 0 && dist < gap) { pen = false; continue; }
+                    const y = midY - this.buffer[i] * amp;
+                    if (!pen) { ctx.moveTo(i, y); pen = true; } else { ctx.lineTo(i, y); }
+                }
+                ctx.stroke();
+            }
+        }
+
+        const ecg = new ECGMonitor('ecgCanvas');
+
+        function setExamView(view) {
+            const trans = document.getElementById('transcript');
+            const vis = document.getElementById('visualiserContainer');
+            const btnT = document.getElementById('toggleTranscript');
+            const btnM = document.getElementById('toggleMonitor');
+            if (view === 'monitor') {
+                trans.classList.add('hidden');
+                vis.classList.add('visible');
+                btnT.classList.remove('active');
+                btnM.classList.add('active');
+                ecg.resize();
+                ecg.start();
+            } else {
+                trans.classList.remove('hidden');
+                vis.classList.remove('visible');
+                btnT.classList.add('active');
+                btnM.classList.remove('active');
+                ecg.stop();
+            }
+        }
+
+        document.getElementById('toggleTranscript').addEventListener('click', () => setExamView('transcript'));
+        document.getElementById('toggleMonitor').addEventListener('click', () => setExamView('monitor'));
+        window.addEventListener('resize', () => { if (ecg.running) ecg.resize(); });
+
         // ── Results fetching ──
         async function fetchResults(convId, retries = 10) {
             for (let i = 0; i < retries; i++) {
@@ -554,6 +804,8 @@
         // ── End screen ──
         async function showEnd() {
             if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+            ecg.stop();
+            setExamView('transcript');
             document.getElementById('endDuration').textContent = fmt(seconds);
             document.getElementById('endExchanges').textContent = exchangeCount;
 
@@ -693,8 +945,13 @@
                         }
                     },
                     onModeChange: (mode) => {
-                        if (mode.mode === 'listening') updateStatus('listening', 'Listening...');
-                        else if (mode.mode === 'speaking') updateStatus('speaking', currentExaminer + ' is speaking...');
+                        if (mode.mode === 'listening') {
+                            updateStatus('listening', 'Listening...');
+                            ecg.setActivity(1.0);
+                        } else if (mode.mode === 'speaking') {
+                            updateStatus('speaking', currentExaminer + ' is speaking...');
+                            ecg.setActivity(0.3);
+                        }
                     },
                     onError: (err) => console.error('EL error:', err)
                 });
@@ -758,6 +1015,8 @@
             firstMessageReceived = false;
             conversationId = null;
             updateExaminerBadge('Dr Whitmore');
+            ecg.reset();
+            setExamView('transcript');
             showScreen('entryScreen');
         });
 
