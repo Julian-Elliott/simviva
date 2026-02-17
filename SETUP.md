@@ -27,53 +27,13 @@ Step-by-step guide to building the workflow in ElevenLabs.
 
 In the agent editor, switch to **Workflow** mode (not single-prompt mode).
 
-### Node 1: Welcome
+> **Design principle:** In a real FRCA viva, only the two examiners
+> interact with the candidate. Examiners receive their questions
+> beforehand — nothing is selected mid-exam. This workflow mirrors
+> that experience. Scenario data is injected at session start via
+> dynamic variables.
 
-- **Type:** Subagent
-- **Name:** `welcome`
-- **Voice:** `Rachel` (British, warm, professional)
-  - Stability: 0.75
-  - Clarity + Similarity: 0.80
-  - Style: 0.4
-- **System prompt:**
-  ```
-  You are the examination coordinator for a Primary FRCA practice viva.
-  
-  1. Greet the candidate warmly but professionally
-  2. Ask: "May I have your surname, please?"
-  3. Store their surname
-  4. Explain the format: "You'll face two examiners, each covering two topics 
-     for about four minutes each. The examiners won't indicate whether your 
-     answers are correct — this is normal exam procedure."
-  5. Ask: "Are you ready to begin?"
-  ```
-- **Output variables:** Add `candidate_surname` (string)
-- **First message:** "Good afternoon. Welcome to your Primary FRCA practice viva. Before we begin, may I have your surname, please?"
-
-### Node 2: Question Select (Examiner 1, Topic 1)
-
-- **Type:** Dispatch (Tool call)
-- **Name:** `select_q_e1t1`
-
-**For the PoC (no external server):** Use a Subagent node instead:
-- System prompt: Include the full question bank JSON. Instruct it to select one PHYSIOLOGY or PHARMACOLOGY question at random and output the stem question and follow-ups as structured data.
-- This node should speak nothing — set its first message to trigger an immediate edge transition.
-
-**For production:** Create a custom tool:
-1. Go to **Tools** → **Create Tool**
-2. Name: `select_question`
-3. Method: POST
-4. URL: Your webhook endpoint
-5. Body schema:
-   ```json
-   {
-     "examiner_id": 1,
-     "seen_ids": [],
-     "categories": ["PHYSIOLOGY", "PHARMACOLOGY"]
-   }
-   ```
-
-### Node 3: Examiner 1
+### Node 1: Examiner 1
 
 - **Type:** Subagent
 - **Name:** `examiner_1`
@@ -84,26 +44,12 @@ In the agent editor, switch to **Workflow** mode (not single-prompt mode).
   - Style: 0.30 (low expressiveness = poker face)
   - Speaker Boost: ON
 - **System prompt:** Paste contents of `prompts/examiner-1.md`
-- **Dynamic variables:** 
-  - `{{candidate_surname}}` — from welcome node
-  - `{{current_question}}` — from question select
+- **Dynamic variables:**
+  - `{{candidate_name}}` — from session start (webapp)
+  - `{{scenario_1_topic}}`, `{{scenario_1_opening}}`, etc. — from session start (webapp)
 - **First message:** Leave blank (the system prompt instructs the examiner to open with the stem question)
 
-### Node 4: Question Select (Examiner 1, Topic 2)
-
-- Same as Node 2 but pass `seen_ids` containing the first question's ID
-- Select from remaining PHYSIOLOGY/PHARMACOLOGY questions
-
-### Node 5: Examiner 1 (Topic 2)
-
-- Same subagent as Node 3, new question context
-- **Alternative PoC simplification:** Keep Examiner 1 as a single node and include 2 questions in the system prompt, instructing them to cover both sequentially
-
-### Node 6: Question Select (Examiner 2)
-
-- Same tool, but `examiner_id: 2`, categories: `["PHYSICS", "EQUIPMENT", "ANATOMY"]`
-
-### Node 7: Examiner 2
+### Node 2: Examiner 2
 
 - **Type:** Subagent
 - **Name:** `examiner_2`
@@ -114,36 +60,18 @@ In the agent editor, switch to **Workflow** mode (not single-prompt mode).
   - Style: 0.20 (minimal expressiveness)
   - Speaker Boost: ON
 - **System prompt:** Paste contents of `prompts/examiner-2.md`
+- **Dynamic variables:**
+  - `{{candidate_name}}` — from session start (webapp)
+  - `{{scenario_2_topic}}`, `{{scenario_2_opening}}`, etc. — from session start (webapp)
 
-### Node 8: Assessment
+### Node 3: END
 
-- **Type:** Subagent (silent processing)
-- **Name:** `assessment`
-- **Voice:** None (this node doesn't speak — it processes and passes data)
-- **System prompt:**
-  ```
-  You are an assessment engine. You have received the full conversation 
-  transcript of a Primary FRCA viva. Mark each question independently on
-  the RCoA per-question scale: 2=Pass, 1=Borderline, 0=Fail.
-  
-  Output a JSON object with: question_1_mark, question_2_mark (each 0/1/2
-  with justification), topic_summaries (with gaps and strengths for each),
-  notable_moments (2-3 specific exchanges), and recommendations.
-  Reference the expected points from the question bank.
-  
-  Do not speak to the candidate. Output structured data only.
-  ```
-- **Transition:** Immediate edge to Debrief with assessment payload
-
-### Node 9: Debrief
-
-- **Type:** Subagent
-- **Name:** `debrief`
-- **Voice:** `Rachel` (same as Welcome — warm continuity)
-  - Stability: 0.65
-  - Clarity + Similarity: 0.85
-  - Style: 0.50 (warmer, more expressive for feedback)
-- **System prompt:** Paste contents of `prompts/debrief.md`
+- **Type:** End call
+- **Name:** `end`
+- No voice, prompt, or LLM configuration needed — this node simply
+  terminates the WebRTC/WebSocket connection when reached.
+- Mirrors real life: the viva ends and the candidate leaves the room.
+  Post-call data collection runs automatically after the call closes.
 
 ---
 
@@ -153,16 +81,8 @@ In the workflow canvas, draw edges between nodes:
 
 | From | To | Condition |
 |------|----|-----------|
-| welcome | select_q_e1t1 | LLM: "Candidate has provided surname and confirmed ready" |
-| select_q_e1t1 | examiner_1 | Auto (tool completes) |
-| examiner_1 | select_q_e1t2 | LLM: "Examiner has said 'let's move on' after covering first topic adequately (~5 min)" |
-| select_q_e1t2 | examiner_1_t2 | Auto |
-| examiner_1_t2 | select_q_e2t1 | LLM: "Examiner has concluded with 'my colleague will continue' or similar handover" |
-| select_q_e2t1 | examiner_2 | Auto |
-| examiner_2 | select_q_e2t2 | LLM: "Examiner has moved on from first topic after ~5 minutes" |
-| select_q_e2t2 | examiner_2_t2 | Auto |
-| examiner_2_t2 | assessment | LLM: "Examiner has said 'that's my section complete'" |
-| assessment | debrief | Auto (assessment processing complete) |
+| examiner_1 | examiner_2 | LLM: "Examiner has covered the clinical scenario sufficiently and is ready to hand over" |
+| examiner_2 | END | LLM: "Examiner has completed the scenario and is closing" |
 
 ### LLM Condition Tips
 - Keep conditions short and specific
@@ -183,49 +103,75 @@ In the workflow canvas, draw edges between nodes:
 
 ## Step 5: PoC Simplification (Recommended for Monday Demo)
 
-For the Monday demo, simplify to reduce failure points:
+For the Monday demo, the target workflow **is** the simplified version —
+just two examiner nodes with an LLM condition edge between them:
 
-### Simplified 4-Node Workflow
 ```
-WELCOME → EXAMINER 1 → EXAMINER 2 → DEBRIEF
+EXAMINER 1 → EXAMINER 2 → END
 ```
 
-- **Embed questions directly** in each examiner's system prompt (pick 2 questions each)
-- **Skip the question select tool** — hardcode the questions
-- **Skip the assessment tool** — have the debrief node assess the transcript itself
-- **Use LLM conditions** for transitions between examiners
-
-### Minimal System Prompt Template for PoC Examiners
-Include at the bottom of each examiner prompt:
-```
-## Questions for This Session
-
-### Topic 1: [Topic Name]
-Stem: "[stem question]"
-Key points to listen for: [list]
-Follow-ups: [list]
-
-### Topic 2: [Topic Name]
-Stem: "[stem question]"  
-Key points to listen for: [list]
-Follow-ups: [list]
-
-Start with Topic 1. After approximately 5 minutes, transition to Topic 2.
-```
+- **Scenario data** is injected at session start via dynamic variables (selected by the webapp)
+- **Scoring** uses post-call data collection (already configured in `data_collection.json`)
+- **No webhooks or external servers needed**
 
 ---
 
-## Step 6: Voice Testing
+## Step 6: Realism Configuration
+
+The following config files are synced to ElevenLabs via `agent_push.py`:
+
+### Turn & Conversation Flow (`agent_config/conversation_flow.json`)
+- **Turn timeout:** 18 seconds (candidates need time to think — far more than the default 7s)
+- **Turn eagerness:** `"patient"` — never cuts off a thinking candidate
+- **Soft timeout:** Disabled (`-1`) — no automatic filler prompts during silence
+- **Client events:** Includes `"interruption"` — candidate can interrupt if needed
+- **Max duration:** 25 minutes total
+
+### System Tools (`agent_config/tools.json`)
+- **`skip_turn`** — allows the examiner to stay completely silent while the candidate thinks (critical for realism — real examiners don't fill silence)
+- **`end_call`** — graceful conversation termination
+
+### Multi-Voice (`agent_config/supported_voices.json`)
+- **DrWhitmore** (George voice) — for Examiner 1
+- **DrHarris** (Charlie voice) — for Examiner 2
+- The system prompt uses `<DrWhitmore>...</DrWhitmore>` and `<DrHarris>...</DrHarris>` voice tags
+
+### ASR Keywords (`agent_config/settings.json → asr.keywords`)
+- 50+ anaesthetic terms (suxamethonium, rocuronium, cricothyroidotomy, etc.)
+- Helps ElevenLabs' speech recognition accurately transcribe medical terminology
+
+### Pronunciation Dictionary (`agent_config/pronunciation_dictionary.pls`)
+Upload the PLS file to ElevenLabs:
+1. Go to **Speech** → **Pronunciation Dictionaries** (or agent Voice tab → Pronunciation)
+2. Upload `pronunciation_dictionary.pls`
+3. Copy the dictionary ID and version ID
+4. Paste into `agent_config/pronunciation_locator.json`
+5. Run `agent_push.py` to attach the dictionary to the agent
+
+> **Note:** Uses alias tags (not phoneme tags) for compatibility with
+> `eleven_v3_conversational`. Phoneme tags only work with Flash/Turbo models.
+
+### Evaluation Criteria (`agent_config/evaluation_criteria.json`)
+5 criteria for automated post-call evaluation:
+- Examiner character maintained
+- Three question blocks per examiner
+- Correct SOE stem delivery
+- Appropriate timing
+- Clean examiner handover
+
+---
+
+## Step 7: Voice Testing
 
 Before the demo, test each voice:
 
-1. Go to **Voice Lab** → test `George` / `Charlie` / `Rachel` with sample examiner lines:
+1. Go to **Voice Lab** → test `George` / `Charlie` with sample examiner lines:
    - "I see. Can you tell me about the factors affecting cardiac output?"
    - "Are you sure about that?"
    - "Mm-hmm. What else?"
    - "Let's move on."
 2. Adjust stability/similarity if they sound too expressive or too robotic
-3. Lower **Style** for examiners (poker face), higher for debrief (warm)
+3. Lower **Style** for examiners (poker face)
 
 ### Voice Alternatives (if defaults don't sound right)
 
@@ -233,18 +179,17 @@ Before the demo, test each voice:
 |------|---------|----------|----------|
 | Examiner 1 | George | Daniel | Adam |
 | Examiner 2 | Charlie | Liam | Callum |
-| Welcome/Debrief | Rachel | Charlotte | Lily |
 
 ---
 
-## Step 7: Test the Full Flow
+## Step 8: Test the Full Flow
 
 1. **Test each node in isolation** first — use the "Test" button on each subagent
 2. Test that voice switching works between nodes
 3. Run a full end-to-end session yourself, playing the candidate
 4. Time each section — aim for 5 min per topic
 5. Check edge transitions fire correctly
-6. Verify the debrief references specific things you said
+6. Verify post-call results appear correctly in the webapp
 
 ### Common Issues & Fixes
 
@@ -253,7 +198,7 @@ Before the demo, test each voice:
 | Examiner sounds too friendly | Lower Style to 0.1–0.2, add "Never express warmth" to prompt |
 | Transitions don't fire | Simplify LLM condition text, add explicit trigger phrases to examiner prompts |
 | Variables don't pass between nodes | Check dynamic_variables are correctly named and mapped |
-| Debrief is generic | Ensure transcript context passes through; for PoC, the LLM should have conversation history |
+| Post-call results missing | Check data_collection.json fields match the analysis API response |
 | Voice latency too high | Use Turbo v2.5 voice model, set `optimize_streaming_latency` to 3 |
 
 --

@@ -1,0 +1,19 @@
+{
+  "turn": {
+    "turn_timeout": 18,
+    "silence_end_call_timeout": -1,
+    "soft_timeout_config": {
+      "timeout_seconds": -1,
+      "message": "",
+      "use_llm_generated_message": false
+    },
+    "turn_eagerness": "patient"
+  },
+  "conversation": {
+    "max_duration_seconds": 1500,
+    "client_events": [
+      "audio",
+      "interruption"
+    ]
+  }
+}

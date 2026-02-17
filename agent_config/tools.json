@@ -1,0 +1,12 @@
+[
+  {
+    "type": "system",
+    "name": "end_call",
+    "description": "End the viva when the candidate explicitly asks to stop, or after both examiners have completed their scenarios and the closing statement has been delivered."
+  },
+  {
+    "type": "system",
+    "name": "skip_turn",
+    "description": "When the candidate is clearly thinking or formulating an answer, remain completely silent and wait. Do not fill silence with filler words, grunts, or acknowledgements. Real FRCA examiners routinely allow candidates 10-15 seconds of silence to think."
+  }
+]

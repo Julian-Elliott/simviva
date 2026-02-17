@@ -1,271 +1,189 @@
 # FRCA SOE Viva Simulator — ElevenLabs Workflow Architecture
 
+> **Status:** Target architecture. The current PoC uses a single agent with
+> one voice — see `agent_config/README.md` for the PoC vs Target comparison.
+
 ## Overview
 
-A multi-node ElevenLabs Conversational AI workflow simulating a Primary FRCA Structured Oral Examination. Two AI examiners conduct a 20-minute viva across physiology, pharmacology, physics, clinical measurement, equipment, and applied anatomy, followed by automated scoring and debrief.
+An ElevenLabs **Workflow** (visual graph-based conversation flow)
+simulating a Primary FRCA Structured Oral Examination. A single base
+agent is extended by **subagent nodes** that override its config
+(system prompt, voice, LLM, tools, knowledge base) at each
+conversation phase — they are not independent agents.
+
+Two AI examiners conduct a ~14-minute viva across physiology,
+pharmacology, physics, clinical measurement, equipment, and applied
+anatomy. Scenario data is injected as dynamic variables at session
+start — just as real examiners receive their questions beforehand.
+Scoring happens post-call via ElevenLabs data collection, and the
+candidate receives feedback via the webapp afterwards.
 
 ---
 
 ## Workflow Diagram
 
 ```
-┌─────────────┐
-│   WELCOME    │  (Subagent node)
-│  Get name,   │
-│  set context │
-└──────┬───────┘
-       │ candidate_name extracted
-       ▼
 ┌─────────────────┐
-│ QUESTION SELECT  │  (Dispatch tool)
-│ Pick topic +     │
-│ question for E1  │
+│   EXAMINER 1     │  Subagent node — Voice: George
+│  3 question       │  scenario_1_* dynamic vars
+│  blocks, ~7 min  │  injected at session start
 └──────┬──────────┘
-       │ question payload
+       │ LLM condition: "scenario sufficiently covered"
        ▼
 ┌─────────────────┐
-│   EXAMINER 1     │  (Subagent node — Voice A)
-│ Physiology /     │
-│ Pharmacology     │
-│ 2 × 4-min topics│
+│   EXAMINER 2     │  Subagent node — Voice: Charlie
+│  3 question       │  scenario_2_* dynamic vars
+│  blocks, ~7 min  │  injected at session start
 └──────┬──────────┘
-       │ LLM condition: "8 minutes elapsed OR 2 topics completed"
+       │ LLM condition: "scenario completed"
        ▼
 ┌─────────────────┐
-│ QUESTION SELECT  │  (Dispatch tool — reused)
-│ Pick topic +     │
-│ question for E2  │
-└──────┬──────────┘
-       │ question payload
-       ▼
-┌─────────────────┐
-│   EXAMINER 2     │  (Subagent node — Voice B)
-│ Physics / Equip /│
-│ Applied Anatomy  │
-│ 2 × 4-min topics│
-└──────┬──────────┘
-       │ LLM condition: "8 minutes elapsed OR 2 topics completed"
-       ▼
-┌─────────────────┐
-│   ASSESSMENT     │  (Dispatch tool)
-│ Score transcript │
-│ vs model answers │
-└──────┬──────────┘
-       │ scores + feedback payload
-       ▼
-┌─────────────────┐
-│    DEBRIEF       │  (Subagent node — Voice C)
-│ Deliver feedback │
-│ RCoA 0/1/2 per-  │
-│ question marks    │
+│      END         │  End call node
 └─────────────────┘
 ```
+
+> **Design rationale:** In a real FRCA viva, examiners receive their
+> questions before the candidate enters — nothing is selected mid-exam.
+> Only the two examiners interact with the candidate. There is no
+> coordinator, no in-room debrief. The candidate leaves and receives
+> results separately. This workflow mirrors that experience exactly.
+> Scenario data is injected at session start via dynamic variables
+> (selected by the webapp). Scoring happens post-call via ElevenLabs
+> data collection, and the webapp displays results afterwards.
 
 ---
 
 ## Node Specifications
 
-### 1. WELCOME (Subagent Node)
+### 1. EXAMINER 1 (Subagent Node)
 
-**Purpose:** Greet candidate, obtain surname for formal address, explain format.
+**Type:** Subagent node — overrides base agent config.
 
-**Voice:** `Rachel` (ElevenLabs preset) — warm, professional, British female.
+**Purpose:** Conduct the first short-case scenario (~7 minutes, 3 question blocks).
 
-**System prompt summary:**
-- Introduce yourself as the exam coordinator
-- Ask: "May I have your surname, please?"
-- Extract and store `candidate_surname` in session state
-- Brief the candidate: "You will face two examiners, each covering two topics over approximately four minutes each. The examiners will not indicate whether your answers are correct or incorrect — this is normal exam procedure. Shall we begin?"
+**Overrides applied:**
+- **System prompt:** Append examiner 1 instructions (see `agent_config/nodes/examiner_1/prompt.md` when created)
+- **Voice:** `George` (ElevenLabs) — deep, measured, authoritative British male. Stability: 0.7, Similarity: 0.8, Style: 0.3
+- **LLM:** May upgrade to a more capable model for complex clinical reasoning
+- **Tools:** Include global tools + any examiner-specific tools
+- **Knowledge base:** Include global KB; optionally add examiner-specific clinical references
 
-**Output variables:**
-- `candidate_surname` (string)
+**Dynamic variables available:**
+- `candidate_name` (from session start)
+- `scenario_1_topic`, `scenario_1_opening`, `scenario_1_points`, etc. (from session start)
 
-**Edge → QUESTION SELECT:**
-- Condition: `candidate_surname` is non-empty AND candidate confirms ready
+**Forward edges (LLM conditions):**
 
-**Timing:** ~60 seconds max.
-
----
-
-### 2. QUESTION SELECT (Dispatch Tool / Custom Function)
-
-**Purpose:** Select an unseen question from the question bank for the current examiner.
-
-**Implementation:** Custom tool (server-sent or webhook) that:
-1. Receives `examiner_id` (1 or 2), `seen_question_ids` (array)
-2. Filters `primary-bank.json` by examiner's category pool
-3. Randomly selects an unseen question
-4. Returns full question object (stem, expected points, follow-ups, timing)
-
-**Tool definition (ElevenLabs format):**
-```json
-{
-  "name": "select_question",
-  "description": "Select the next unseen question for the specified examiner",
-  "parameters": {
-    "examiner_id": { "type": "integer", "enum": [1, 2] },
-    "seen_ids": { "type": "array", "items": { "type": "string" } }
-  }
-}
-```
-
-**For the PoC:** Can be simplified — embed the question bank as knowledge base text and let the LLM pick. For production, use a proper tool endpoint.
-
-**Edge → EXAMINER 1 or EXAMINER 2:**
-- Direct pass-through with question payload injected into examiner's context
+| Label | LLM Condition | Target |
+|-------|--------------|--------|
+| Scenario complete | `"The examiner has covered three question blocks on the clinical scenario and is ready to hand over."` | → EXAMINER 2 |
+| Candidate requests stop | `"The candidate has explicitly requested to stop the examination."` | → END |
 
 ---
 
-### 3. EXAMINER 1 (Subagent Node)
+### 2. EXAMINER 2 (Subagent Node)
 
-**Purpose:** Conduct physiology and pharmacology viva.
+**Type:** Subagent node — overrides base agent config.
 
-**Voice:** `George` (ElevenLabs) — deep, measured, authoritative British male. Stability: 0.7, Similarity: 0.8, Style: 0.3.
+**Purpose:** Conduct the second short-case scenario (~7 minutes, 3 question blocks).
 
-**System prompt:** See `prompts/examiner-1.md`
+**Overrides applied:**
+- **System prompt:** Append examiner 2 instructions (see `agent_config/nodes/examiner_2/prompt.md` when created)
+- **Voice:** `Charlie` (ElevenLabs) — clipped, precise British male. Stability: 0.8, Similarity: 0.75, Style: 0.2
+- **LLM:** Same as Examiner 1 (or base)
+- **Tools:** Include global tools
+- **Knowledge base:** Include global KB
 
-**Input variables:**
-- `candidate_surname`
-- `current_question` (from dispatch)
-- `topic_number` (1 or 2)
+**Dynamic variables available:**
+- `candidate_name`
+- `scenario_2_topic`, `scenario_2_opening`, `scenario_2_points`, etc.
 
-**Internal state tracking:**
-- Topics covered count
-- Time elapsed (use ElevenLabs conversation duration or token count as proxy)
-- Follow-up triggers matched
+**Forward edges (LLM conditions):**
 
-**Edge conditions (LLM-evaluated):**
-| Condition | Target |
-|-----------|--------|
-| First topic complete (~5 min), second topic not started | → QUESTION SELECT (for topic 2) |
-| Both topics complete OR ~8 min elapsed | → QUESTION SELECT (for Examiner 2) |
-| Candidate requests to stop | → ASSESSMENT |
-
-**LLM condition prompt for topic transition:**
-```
-Has the examiner covered the current topic sufficiently (at least 3-4 exchanges) 
-AND has approximately 5 minutes of conversation occurred on this topic? 
-If yes, transition. If the candidate is completely stuck after a rescue question, 
-also transition.
-```
+| Label | LLM Condition | Target |
+|-------|--------------|--------|
+| Scenario complete | `"The examiner has covered three question blocks and is closing the scenario."` | → END |
+| Candidate requests stop | `"The candidate has explicitly requested to stop."` | → END |
 
 ---
 
-### 4. EXAMINER 2 (Subagent Node)
+### 3. END (End Call Node)
 
-**Purpose:** Conduct physics, equipment, clinical measurement, and applied anatomy viva.
+**Type:** End call node — graceful conversation termination.
 
-**Voice:** `Charlie` (ElevenLabs) — clipped, precise British male. Stability: 0.8, Similarity: 0.75, Style: 0.2.
+Terminates the WebRTC/WebSocket connection after Examiner 2 completes.
+Mirrors real life — the viva simply ends, and the candidate receives
+results separately. The `end_call` system tool can also be triggered
+from within any subagent node if needed (e.g. candidate requests to
+stop early).
 
-**System prompt:** See `prompts/examiner-2.md`
-
-**Same structure as Examiner 1** but with different topic categories and voice.
-
-**Edge conditions:** Same pattern — two topics, then → ASSESSMENT.
-
----
-
-### 5. ASSESSMENT (Dispatch Tool)
-
-**Purpose:** Analyse the full transcript and score against model answers.
-
-**Implementation:** Custom tool or LLM-as-judge prompt that:
-1. Receives full conversation transcript
-2. Compares candidate responses against `expectedPoints` for each question
-3. Assigns each question a per-question mark on the RCoA 0/1/2 scale
-4. Generates structured feedback
-
-**Tool definition:**
-```json
-{
-  "name": "assess_performance",
-  "description": "Score the candidate's viva performance against model answers",
-  "parameters": {
-    "transcript": { "type": "string" },
-    "questions_asked": { "type": "array", "items": { "type": "object" } }
-  }
-}
-```
-
-**Output payload:**
-```json
-{
-  "overall_score": 3,
-  "topic_scores": [
-    { "topic": "Cardiovascular Physiology", "score": 3, "key_gaps": [...], "strengths": [...] }
-  ],
-  "notable_moments": [...],
-  "recommendations": [...]
-}
-```
-
-**For the PoC:** Use a subagent with a scoring system prompt instead of a real tool. The subagent silently processes and passes structured JSON to the Debrief node.
-
-**Edge → DEBRIEF:** Direct pass-through with scores payload.
-
----
-
-### 6. DEBRIEF (Subagent Node)
-
-**Purpose:** Deliver warm, constructive feedback with specific scores and recommendations.
-
-**Voice:** `Rachel` (same as Welcome) — continuity, warm closure.
-
-**System prompt:** See `prompts/debrief.md`
-
-**Input variables:**
-- `candidate_surname`
-- `assessment_payload` (scores, gaps, strengths, notable moments)
-
-**No outgoing edge** — conversation ends here.
+**Post-call scoring:** After the call ends, ElevenLabs' built-in
+**data collection** (defined in `agent_config/data_collection.json`)
+extracts structured scores and feedback from the conversation
+transcript. The webapp fetches these via the results API.
 
 ---
 
 ## Timing Budget
 
-| Node | Target Duration |
-|------|----------------|
-| Welcome | 1 min |
-| Question Select 1 | <1 sec (tool call) |
-| Examiner 1, Topic 1 | 5 min |
-| Question Select 2 | <1 sec |
-| Examiner 1, Topic 2 | 5 min |
-| Question Select 3 | <1 sec |
-| Examiner 2, Topic 1 | 5 min |
-| Question Select 4 | <1 sec |
-| Examiner 2, Topic 2 | 5 min |
-| Assessment | 2-3 sec (processing) |
-| Debrief | 3-4 min |
-| **Total** | **~24-26 min** |
+| Node | Type | Target Duration |
+|------|------|----------------|
+| Examiner 1 (3 blocks) | Subagent | ~7 min |
+| Examiner 2 (3 blocks) | Subagent | ~7 min |
+| End | End call | instant |
+| **Total** | | **~14 min** |
 
 ---
 
-## ElevenLabs Dashboard Configuration Notes
+## ElevenLabs Configuration Notes
 
-### Global Agent Settings
-- **Model:** GPT-4o or Claude Sonnet (whichever ElevenLabs supports for your tier)
+### Base Agent Settings (inherited by all subagent nodes)
+- **Model:** Claude Sonnet 4.5 (current PoC) — can be overridden per subagent node
 - **Language:** English (British)
-- **Max conversation duration:** 25 minutes (buffer)
-- **First message:** Handled by Welcome node
+- **Max conversation duration:** 25 minutes (buffer for full workflow)
+- **First message:** Handled by the first examiner's subagent node (greeting + scenario stem)
+
+### Realism Settings (configured in `agent_config/`)
+
+| Feature | File | Setting | Effect |
+|---------|------|---------|--------|
+| **Turn timeout** | `conversation_flow.json` | `turn.turn_timeout: 18` | Candidate has 18 seconds to respond (vs default 7) |
+| **Turn eagerness** | `conversation_flow.json` | `turn.turn_eagerness: "patient"` | Agent waits patiently, never cuts off thinking candidates |
+| **Soft timeout** | `conversation_flow.json` | `turn.soft_timeout_config.timeout_seconds: -1` | Disabled — no filler prompts during silence |
+| **Interruptions** | `conversation_flow.json` | `conversation.client_events: ["audio", "interruption"]` | Candidate can interrupt (rare in vivas, but realistic) |
+| **Skip turn** | `tools.json` | System tool `skip_turn` | Agent can stay completely silent while candidate thinks |
+| **End call** | `tools.json` | System tool `end_call` | Agent can end the viva gracefully |
+| **Multi-voice** | `supported_voices.json` | DrWhitmore + DrHarris voice labels | Two distinct voices for two examiners |
+| **Voice speed** | `settings.json` | `voice.speed: 0.95` | Slightly slower for clarity (real examiners speak deliberately) |
+| **ASR keywords** | `settings.json` | `asr.keywords: [...]` | 50+ medical terms for accurate speech recognition |
+| **Pronunciation** | `pronunciation_dictionary.pls` | PLS alias tags | Correct pronunciation of suxamethonium, rocuronium, etc. |
+| **Evaluation** | `evaluation_criteria.json` | 5 success criteria | Post-call automated assessment of examiner performance |
 
 ### Edge Configuration
-- Use **LLM conditions** (not keyword matching) for all transitions
-- The LLM condition evaluator receives the last N messages and decides routing
+- Use **LLM conditions** (natural language evaluated by the LLM) for
+  all transitions — not expressions or keyword matching
+- The LLM condition evaluator receives conversation context and decides routing
 - Keep condition prompts specific and unambiguous
 
-### State/Variables
-- Use ElevenLabs' `dynamic_variables` or `custom_llm_extra_body` to pass:
-  - `candidate_surname`
-  - `current_question_id`
-  - `seen_question_ids`
-  - `topic_count`
+### Dynamic Variables Pipeline
+- All scenario data injected at session start by the webapp: `candidate_name`, `scenario_1_*`, `scenario_2_*`
+- System variables auto-populated: `system__conversation_id`, `system__call_duration_secs`, `system__time_utc`
+- Dynamic variables persist across all nodes in the workflow
+- No mid-conversation tool calls needed — mirrors real life where examiners have questions beforehand
 
-### Knowledge Base
-- Upload `primary-bank.json` as a knowledge base document
-- Reference it in examiner system prompts
-- For PoC, can inline key questions directly in prompts
+### Knowledge Base Strategy
+- **Global KB:** Upload scenario bank as a knowledge base document — available to all nodes
+- **Node-specific KB:** Examiner nodes can attach additional clinical reference documents
+- Toggle "Include Global Knowledge Base" per subagent node
+- For PoC, question data is inlined via dynamic variables in the prompt
+
+### Versioning
+- ElevenLabs supports **agent versioning** with branches and traffic deployment
+- Each version snapshots: `conversation_config`, `platform_settings`, `workflow`
+- Use branches for A/B testing different prompts or workflow structures
+- Local config sync (`agent_push.py`/`agent_pull.py`) complements ElevenLabs versioning
 
 ### Latency Optimisation
-- Set `optimize_streaming_latency` to 3 (aggressive)
-- Use Turbo v2.5 voice models for lowest latency
-- Keep system prompts under 2000 tokens each
+- Set `optimize_streaming_latency` to 1 (balanced)
+- Use `eleven_v3_conversational` voice model (lowest latency, expressive mode built-in)
+- Keep system prompts under 2000 tokens per subagent node

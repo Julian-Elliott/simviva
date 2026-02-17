@@ -1,0 +1,5 @@
+{
+  "_note": "After uploading pronunciation_dictionary.pls to ElevenLabs (Dashboard → Voice tab → Pronunciation dictionary), paste the dictionary ID and version ID here. The push script includes this locator in the agent TTS config.",
+  "pronunciation_dictionary_id": null,
+  "version_id": null
+}

@@ -162,3 +162,194 @@ def extract_dynamic_variables(agent: dict) -> dict:
         return dv.get("dynamic_variable_placeholders") or {}
     except (KeyError, TypeError):
         return {}
+
+
+def extract_turn(agent: dict) -> dict:
+    """Pull out turn configuration (timeout, eagerness, soft timeout)."""
+    try:
+        turn = agent["conversation_config"].get("turn", {})
+        if not turn:
+            return {}
+        result = {}
+        for key in ("turn_timeout", "silence_end_call_timeout",
+                     "soft_timeout_config", "turn_eagerness"):
+            if key in turn:
+                result[key] = turn[key]
+        return result
+    except (KeyError, TypeError):
+        return {}
+
+
+def extract_conversation(agent: dict) -> dict:
+    """Pull out conversation settings (client events, max duration)."""
+    try:
+        conv = agent["conversation_config"].get("conversation", {})
+        if not conv:
+            return {}
+        result = {}
+        for key in ("max_duration_seconds", "client_events"):
+            if key in conv:
+                result[key] = conv[key]
+        return result
+    except (KeyError, TypeError):
+        return {}
+
+
+def extract_tools(agent: dict) -> list:
+    """Pull out tools list (system tools like skip_turn, end_call)."""
+    try:
+        tools = agent["conversation_config"]["agent"]["prompt"].get("tools", [])
+        return tools or []
+    except (KeyError, TypeError):
+        return []
+
+
+def extract_supported_voices(agent: dict) -> list:
+    """Pull out multi-voice configuration."""
+    try:
+        voices = agent["conversation_config"]["tts"].get("supported_voices", [])
+        return voices or []
+    except (KeyError, TypeError):
+        return []
+
+
+def extract_pronunciation_locators(agent: dict) -> list:
+    """Pull out pronunciation dictionary locators."""
+    try:
+        locs = agent["conversation_config"]["tts"].get(
+            "pronunciation_dictionary_locators", [])
+        return locs or []
+    except (KeyError, TypeError):
+        return []
+
+
+def extract_evaluation_criteria(agent: dict) -> list:
+    """Pull out success evaluation criteria."""
+    try:
+        ev = agent.get("platform_settings", {}).get("evaluation", {})
+        return ev.get("criteria", []) or []
+    except (KeyError, TypeError):
+        return []
+
+
+def extract_asr(agent: dict) -> dict:
+    """Pull out ASR (speech recognition) config including keywords."""
+    try:
+        asr = agent["conversation_config"].get("asr", {})
+        if not asr:
+            return {}
+        result = {}
+        for key in ("quality", "provider", "keywords"):
+            if key in asr:
+                result[key] = asr[key]
+        return result
+    except (KeyError, TypeError):
+        return {}
+
+
+# ── Workflow helpers ──
+
+PROMPT_FILE_PREFIX = "__PROMPT_FILE__:"
+
+
+def safe_resolve(config_dir: str, rel: str) -> str:
+    """Resolve *rel* inside *config_dir*, rejecting path traversal.
+
+    Raises ValueError if the resolved path escapes *config_dir*
+    (e.g. via '../' segments or absolute paths).
+    """
+    if os.path.isabs(rel):
+        raise ValueError(
+            "Absolute path in prompt-file marker is not allowed: {}".format(rel)
+        )
+    resolved = os.path.realpath(os.path.join(config_dir, rel))
+    root = os.path.realpath(config_dir)
+    # commonpath raises ValueError if paths are on different drives (Windows)
+    try:
+        common = os.path.commonpath([resolved, root])
+    except ValueError:
+        common = ""
+    if common != root:
+        raise ValueError(
+            "Path traversal detected — '{}' resolves outside config dir".format(rel)
+        )
+    return resolved
+
+
+def extract_workflow(agent: dict):
+    """Extract the workflow definition (nodes + edges) if one exists.
+
+    Returns the workflow dict, or None when the agent has no workflow
+    (single-agent mode).
+    """
+    wf = agent.get("workflow")
+    if not wf or not isinstance(wf, dict):
+        return None
+    # Treat empty workflow structures as absent
+    if not wf.get("nodes") and not wf.get("edges"):
+        return None
+    return wf
+
+
+def node_slug(node: dict) -> str:
+    """Derive a filesystem-safe slug from a workflow node's name or id.
+
+    Examples: "WELCOME" -> "welcome", "EXAMINER 1" -> "examiner_1"
+    """
+    raw = node.get("name", "") or node.get("id", "unknown")
+    slug = raw.lower().strip()
+    slug = "".join(c if c.isalnum() or c == "_" else "_" for c in slug)
+    while "__" in slug:
+        slug = slug.replace("__", "_")
+    return slug.strip("_") or "unnamed"
+
+
+# Candidate key-paths where a subagent node's prompt text might live
+# in the ElevenLabs API response.  We try each in order.
+_NODE_PROMPT_PATHS = (
+    ("data", "agent", "prompt", "prompt"),
+    ("data", "prompt", "prompt"),
+    ("data", "system_prompt"),
+    ("config", "agent", "prompt", "prompt"),
+    ("config", "prompt", "prompt"),
+    ("config", "system_prompt"),
+    ("agent_config_override", "prompt", "prompt"),
+    ("agent_config_override", "system_prompt"),
+)
+
+
+def _walk_path(obj, path):
+    """Navigate a nested dict by a tuple of keys.  Returns None on miss."""
+    for key in path:
+        if isinstance(obj, dict) and key in obj:
+            obj = obj[key]
+        else:
+            return None
+    return obj
+
+
+def _set_path(obj, path, value):
+    """Set a value inside a nested dict, creating intermediate dicts."""
+    for key in path[:-1]:
+        if key not in obj or not isinstance(obj.get(key), dict):
+            obj[key] = {}
+        obj = obj[key]
+    obj[path[-1]] = value
+
+
+def find_node_prompt(node: dict):
+    """Locate the system-prompt override inside a workflow node.
+
+    Returns (prompt_text, key_path) or (None, None).
+    The *key_path* can be reused with set_node_prompt().
+    """
+    for path in _NODE_PROMPT_PATHS:
+        val = _walk_path(node, path)
+        if isinstance(val, str) and val.strip():
+            return val, path
+    return None, None
+
+
+def set_node_prompt(node: dict, path: tuple, text: str):
+    """Write *text* into a node at the given key *path*."""
+    _set_path(node, path, text)

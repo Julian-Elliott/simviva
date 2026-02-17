@@ -13,8 +13,33 @@
     "stability": 0.5,
     "similarity_boost": 0.8,
     "style": null,
-    "speed": 1.0,
+    "speed": 0.95,
     "optimize_streaming_latency": 1
+  },
+  "asr": {
+    "quality": "high",
+    "provider": "elevenlabs",
+    "keywords": [
+      "suxamethonium", "thiopentone", "propofol", "remifentanil",
+      "rocuronium", "sugammadex", "neostigmine", "atracurium",
+      "cisatracurium", "vecuronium", "pancuronium",
+      "ketamine", "midazolam", "etomidate", "thiopental",
+      "sevoflurane", "desflurane", "isoflurane", "entonox",
+      "bupivacaine", "levobupivacaine", "ropivacaine",
+      "lignocaine", "lidocaine", "prilocaine",
+      "fentanyl", "alfentanil", "sufentanil",
+      "dantrolene", "glycopyrrolate", "atropine",
+      "ephedrine", "metaraminol", "noradrenaline",
+      "ondansetron", "dexamethasone", "tranexamic",
+      "cricothyroidotomy", "tracheostomy", "laryngoscopy",
+      "bronchoscopy", "capnography",
+      "pneumothorax", "haemothorax", "pneumoperitoneum",
+      "tamponade", "anaphylaxis", "malignant hyperthermia",
+      "laryngospasm", "bronchospasm",
+      "cricoid", "epiglottis", "bougie",
+      "FRCA", "SOE", "RCoA", "AAGBI", "RSI", "APLS", "ATLS",
+      "TIVA", "CPAP", "PEEP", "ABG", "CVP", "MAC", "ASA"
+    ]
   },
   "dynamic_variables": {
     "candidate_name": "Doctor",
