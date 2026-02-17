@@ -76,6 +76,9 @@ export interface Prompt {
  * mapped as:
  *   opening → stem, points → prompts[].expectedKeyFacts,
  *   probes → prompts[].text, facts → keyFacts, rescue → rescuePrompt
+ *
+ * Template variable: Use {{candidate_name}} in stems for the candidate's surname.
+ * This matches the ElevenLabs agent's dynamic variable naming convention.
  */
 
 /**

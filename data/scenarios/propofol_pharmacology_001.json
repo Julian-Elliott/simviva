@@ -13,7 +13,7 @@
     "patientGender": "male"
   },
 
-  "stem": "Dr. {{surname}}, tell me about propofol.",
+  "stem": "Dr. {{candidate_name}}, tell me about propofol.",
 
   "prompts": [
     {

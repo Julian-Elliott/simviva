@@ -13,7 +13,7 @@
     "patientGender": "female"
   },
 
-  "stem": "Dr. {{surname}}, you are called to the ward where a patient with a recent tracheostomy is in respiratory distress. The nursing staff tell you the tracheostomy tube appears displaced. How would you manage this situation?",
+  "stem": "Dr. {{candidate_name}}, you are called to the ward where a patient with a recent tracheostomy is in respiratory distress. The nursing staff tell you the tracheostomy tube appears displaced. How would you manage this situation?",
 
   "prompts": [
     {

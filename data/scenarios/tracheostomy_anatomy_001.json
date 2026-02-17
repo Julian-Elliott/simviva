@@ -13,7 +13,7 @@
     "patientGender": "female"
   },
 
-  "stem": "Dr. {{surname}}, describe the surgical anatomy relevant to performing a tracheostomy.",
+  "stem": "Dr. {{candidate_name}}, describe the surgical anatomy relevant to performing a tracheostomy.",
 
   "prompts": [
     {

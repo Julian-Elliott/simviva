@@ -216,9 +216,37 @@
             console.log(`Loaded ${scenarios.length} scenarios`);
         });
 
+        /**
+         * Select two scenarios respecting domain constraints and case pairing.
+         * Examiner 1 (Dr Whitmore): physiology, pharmacology, clinical_anaesthesia
+         * Examiner 2 (Dr Harris):   physics, equipment, anatomy, clinical_measurement
+         * If a caseId pair exists (clinical + science), prefer the pair.
+         */
         function pickTwo() {
-            const shuffled = [...scenarios].sort(() => Math.random() - 0.5);
-            return [shuffled[0], shuffled[1]];
+            const e1Domains = new Set(['physiology', 'pharmacology', 'clinical_anaesthesia', 'critical_care', 'pain_medicine',
+                'obstetric_anaesthesia', 'paediatric_anaesthesia', 'neuroanaesthesia', 'cardiothoracic', 'general_principles']);
+            const e2Domains = new Set(['physics', 'clinical_measurement', 'equipment', 'anatomy', 'regional_anaesthesia']);
+
+            const pool1 = scenarios.filter(s => e1Domains.has(s.domain));
+            const pool2 = scenarios.filter(s => e2Domains.has(s.domain));
+
+            // Fallback: if either pool is empty, just split randomly
+            if (pool1.length === 0 || pool2.length === 0) {
+                const shuffled = [...scenarios].sort(() => Math.random() - 0.5);
+                return [shuffled[0], shuffled[1] || shuffled[0]];
+            }
+
+            const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+            const s1 = shuffle(pool1)[0];
+
+            // Try to find a case-paired scenario in pool2
+            let s2 = null;
+            if (s1.caseId) {
+                s2 = shuffle(pool2).find(s => s.caseId === s1.caseId && s.id !== s1.id);
+            }
+            if (!s2) s2 = shuffle(pool2)[0];
+
+            return [s1, s2];
         }
 
         // ── UI helpers ──
@@ -309,17 +337,26 @@
 
             let html = '';
 
-            // Grade card
+            // Grade card — supports both RCoA 4-point (4/3/2/1) and legacy text grades
             const grade = (dc.candidate_grade || '').trim();
             const gradeWord = grade.split(/[\s.,:—-]/)[0].toUpperCase();
-            const gradeClass = gradeWord === 'DISTINCTION' ? 'distinction' :
-                               gradeWord === 'PASS' ? 'pass' :
-                               gradeWord === 'BORDERLINE' ? 'borderline' :
-                               gradeWord === 'FAIL' ? 'fail' : '';
+            // Map RCoA numeric or text to display
+            const rcoaMap = {
+                '4': { label: '4 — Pass+', css: 'distinction' },
+                '3': { label: '3 — Pass', css: 'pass' },
+                '2': { label: '2 — Borderline', css: 'borderline' },
+                '1': { label: '1 — Fail', css: 'fail' },
+                'PASS+': { label: '4 — Pass+', css: 'distinction' },
+                'DISTINCTION': { label: '4 — Pass+', css: 'distinction' },
+                'PASS': { label: '3 — Pass', css: 'pass' },
+                'BORDERLINE': { label: '2 — Borderline', css: 'borderline' },
+                'FAIL': { label: '1 — Fail', css: 'fail' }
+            };
+            const mapped = rcoaMap[gradeWord] || { label: gradeWord, css: '' };
             if (grade) {
                 html += `<div class="grade-card">
-                    <div class="grade-label">Overall Grade</div>
-                    <div class="grade-value ${gradeClass}">${gradeWord}</div>
+                    <div class="grade-label">Overall Grade (RCoA Scale)</div>
+                    <div class="grade-value ${mapped.css}">${mapped.label}</div>
                     <div class="grade-justification">${grade.replace(gradeWord, '').replace(/^[\s.,:—-]+/, '')}</div>
                 </div>`;
             }
@@ -378,10 +415,12 @@
                     `<div class="topic-item">${i === 0 ? 'Dr Whitmore' : 'Dr Harris'}: ${s.topic}</div>`
                 ).join('');
 
-            // Log session data
+            // Log session data (future: persist to tracking API)
             const sessionData = {
                 scenarioIds: selectedScenarios.map(s => s.id),
                 topics: selectedScenarios.map(s => s.topic),
+                domains: selectedScenarios.map(s => s.domain),
+                caseIds: selectedScenarios.map(s => s.caseId),
                 duration: seconds,
                 exchanges: exchangeCount,
                 transcript: transcriptHistory,
@@ -427,20 +466,43 @@
             const s1 = selectedScenarios[0];
             const s2 = selectedScenarios[1];
 
+            // Build structured prompt block for each scenario
+            function formatPromptsBlock(scenario) {
+                if (!scenario.prompts || scenario.prompts.length === 0) {
+                    // Fallback: old-style flat data
+                    return scenario.probes.join('; ');
+                }
+                return scenario.prompts.map((p, i) => {
+                    const tier = (p.tier || 'general').toUpperCase();
+                    const time = p.timeBudgetSec ? ` (~${p.timeBudgetSec}s)` : '';
+                    const facts = (p.expectedKeyFacts || []).join('; ');
+                    return `[${tier}${time}] ${p.text}\nExpected: ${facts}`;
+                }).join('\n\n');
+            }
+
+            function formatScoring(sg) {
+                if (!sg) return '';
+                return `Pass+(4): ${sg.pass_plus}\nPass(3): ${sg.pass}\nBorderline(2): ${sg.borderline}\nFail(1): ${sg.fail}`;
+            }
+
             const dynamicVars = {
                 candidate_name: name.split(' ').pop(),
+                // Scenario 1 — Dr Whitmore
                 scenario_1_topic: s1.topic,
                 scenario_1_opening: s1.opening,
                 scenario_1_points: s1.points.join('; '),
-                scenario_1_probes: s1.probes.join('; '),
+                scenario_1_probes: formatPromptsBlock(s1),
                 scenario_1_facts: s1.facts.join('; '),
                 scenario_1_rescue: s1.rescue || 'Simplify the question',
+                scenario_1_scoring: formatScoring(s1.scoringGuidance),
+                // Scenario 2 — Dr Harris
                 scenario_2_topic: s2.topic,
                 scenario_2_opening: s2.opening,
                 scenario_2_points: s2.points.join('; '),
-                scenario_2_probes: s2.probes.join('; '),
+                scenario_2_probes: formatPromptsBlock(s2),
                 scenario_2_facts: s2.facts.join('; '),
-                scenario_2_rescue: s2.rescue || 'Simplify the question'
+                scenario_2_rescue: s2.rescue || 'Simplify the question',
+                scenario_2_scoring: formatScoring(s2.scoringGuidance)
             };
 
             try {
