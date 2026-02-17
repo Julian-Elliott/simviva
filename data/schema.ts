@@ -283,7 +283,7 @@ export interface FormatSection {
  * No schema migration, no code change. The app reads the active format at runtime.
  *
  * Current formats:
- *   - primary_soe_2024: 2 examiners × 2 topics × 4 min
+ *   - primary_soe_2024: 2 SOE parts × 2 examiners × 3 questions × 5 min
  *   - final_soe1_2024:  2 sections × 2 short cases × (7 min clinical + 5 min science)
  *
  * Future formats (add when RCoA publishes details):

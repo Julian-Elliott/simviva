@@ -137,14 +137,14 @@ A multi-node ElevenLabs Conversational AI workflow simulating a Primary FRCA Str
 **Edge conditions (LLM-evaluated):**
 | Condition | Target |
 |-----------|--------|
-| First topic complete (~4 min), second topic not started | → QUESTION SELECT (for topic 2) |
+| First topic complete (~5 min), second topic not started | → QUESTION SELECT (for topic 2) |
 | Both topics complete OR ~8 min elapsed | → QUESTION SELECT (for Examiner 2) |
 | Candidate requests to stop | → ASSESSMENT |
 
 **LLM condition prompt for topic transition:**
 ```
 Has the examiner covered the current topic sufficiently (at least 3-4 exchanges) 
-AND has approximately 4 minutes of conversation occurred on this topic? 
+AND has approximately 5 minutes of conversation occurred on this topic? 
 If yes, transition. If the candidate is completely stuck after a rescue question, 
 also transition.
 ```
@@ -227,16 +227,16 @@ also transition.
 |------|----------------|
 | Welcome | 1 min |
 | Question Select 1 | <1 sec (tool call) |
-| Examiner 1, Topic 1 | 4 min |
+| Examiner 1, Topic 1 | 5 min |
 | Question Select 2 | <1 sec |
-| Examiner 1, Topic 2 | 4 min |
+| Examiner 1, Topic 2 | 5 min |
 | Question Select 3 | <1 sec |
-| Examiner 2, Topic 1 | 4 min |
+| Examiner 2, Topic 1 | 5 min |
 | Question Select 4 | <1 sec |
-| Examiner 2, Topic 2 | 4 min |
+| Examiner 2, Topic 2 | 5 min |
 | Assessment | 2-3 sec (processing) |
 | Debrief | 3-4 min |
-| **Total** | **~20-22 min** |
+| **Total** | **~24-26 min** |
 
 ---
 

@@ -113,7 +113,7 @@
 <body>
     <!-- ═══ SCREEN 1: Entry ═══ -->
     <div class="screen entry-screen active" id="entryScreen">
-        <div class="badge">Proof of Concept — Final FRCA SOE</div>
+        <div class="badge">Proof of Concept — Primary FRCA SOE</div>
         <div class="logo">🩺</div>
         <h1>FRCA SOE Viva Simulator</h1>
         <p class="subtitle">AI-powered structured oral examination practice</p>
@@ -124,10 +124,18 @@
             <div class="mic-notice" id="micNotice">⚠ Microphone access is required</div>
             <div class="error-notice" id="errorNotice"></div>
         </div>
+        <div class="soe-selector" style="display:flex;gap:1.5rem;margin-top:1.5rem;margin-bottom:0.5rem;">
+            <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;color:#bbb;font-size:0.95rem;">
+                <input type="radio" name="soePart" value="soe1" checked style="accent-color:#5ba3e6;"> SOE 1 — Pharmacology & Physiology
+            </label>
+            <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;color:#bbb;font-size:0.95rem;">
+                <input type="radio" name="soePart" value="soe2"> SOE 2 — Clinical & Physics
+            </label>
+        </div>
         <div class="instructions-brief">
-            <strong>How it works:</strong> Two examiners — Dr Whitmore and Dr Harris — will each present a clinical scenario.
-            Speak naturally as you would in a real Final FRCA viva. The examiners maintain a neutral, poker-face approach.
-            A live transcript appears on screen. The station lasts approximately 15 minutes.
+            <strong>How it works:</strong> Two examiners will each cover one topic for five minutes, mirroring one question from each section of the real Primary FRCA SOE.
+            Speak naturally as you would in the exam. The examiners maintain a neutral, poker-face approach — no feedback during the viva is normal.
+            A live transcript appears on screen.
         </div>
     </div>
 
@@ -136,7 +144,7 @@
         <div class="exam-header">
             <div>
                 <span class="candidate-name" id="displayName"></span>
-                <span class="exam-title"> — Final FRCA SOE</span>
+                <span class="exam-title" id="examTitle"> — Primary FRCA SOE 1</span>
             </div>
             <div class="examiner-indicator">
                 <span class="examiner-badge" id="examinerBadge">Dr Whitmore</span>
@@ -180,7 +188,7 @@
 
         <div class="end-note">
             <strong>Note:</strong> Grades are AI-generated estimates based on examiner interaction.
-            The neutral examiner demeanour mirrors the real Final FRCA SOE — no feedback during the exam is normal.
+            The neutral examiner demeanour mirrors the real Primary FRCA SOE — no feedback during the viva is normal.
         </div>
         <p style="margin-top:1.5rem"><a href="https://databased.business" class="footer-link">databased.business</a></p>
     </div>
@@ -217,36 +225,76 @@
         });
 
         /**
-         * Select two scenarios respecting domain constraints and case pairing.
-         * Examiner 1 (Dr Whitmore): physiology, pharmacology, clinical_anaesthesia
-         * Examiner 2 (Dr Harris):   physics, equipment, anatomy, clinical_measurement
-         * If a caseId pair exists (clinical + science), prefer the pair.
+         * Domain pools matching the official RCoA Primary FRCA SOE structure.
+         *
+         * SOE 1 (morning): Examiner A = Pharmacology, Examiner B = Physiology
+         * SOE 2 (afternoon): Examiner C = Clinical Anaesthesia, Examiner D = Physics/CM/Equipment/Safety
+         *
+         * Anatomy is NOT a standalone SOE section — it appears cross-cuttingly
+         * within physiology, clinical and physics questions. Scenarios tagged
+         * 'anatomy' are placed in the physics/equipment pool for SOE 2.
+         *
+         * Source: RCoA Guide to the FRCA Examination — The Primary, 4th ed.
          */
-        function pickTwo() {
-            const e1Domains = new Set(['physiology', 'pharmacology', 'clinical_anaesthesia', 'critical_care', 'pain_medicine',
-                'obstetric_anaesthesia', 'paediatric_anaesthesia', 'neuroanaesthesia', 'cardiothoracic', 'general_principles']);
-            const e2Domains = new Set(['physics', 'clinical_measurement', 'equipment', 'anatomy', 'regional_anaesthesia']);
+        const SOE_POOLS = {
+            soe1: {
+                label: 'SOE 1 — Pharmacology & Physiology',
+                examinerA: {
+                    name: 'Dr Whitmore',
+                    section: 'Pharmacology',
+                    domains: new Set(['pharmacology'])
+                },
+                examinerB: {
+                    name: 'Dr Harris',
+                    section: 'Physiology',
+                    domains: new Set(['physiology'])
+                }
+            },
+            soe2: {
+                label: 'SOE 2 — Clinical & Physics',
+                examinerA: {
+                    name: 'Dr Whitmore',
+                    section: 'Clinical Anaesthesia',
+                    domains: new Set(['clinical_anaesthesia', 'critical_care', 'pain_medicine',
+                        'critical_incidents', 'obstetric_anaesthesia', 'paediatric_anaesthesia',
+                        'neuroanaesthesia', 'cardiothoracic'])
+                },
+                examinerB: {
+                    name: 'Dr Harris',
+                    section: 'Physics, Clinical Measurement, Equipment & Safety',
+                    domains: new Set(['physics', 'clinical_measurement', 'equipment',
+                        'anatomy', 'regional_anaesthesia'])
+                }
+            }
+        };
 
-            const pool1 = scenarios.filter(s => e1Domains.has(s.domain));
-            const pool2 = scenarios.filter(s => e2Domains.has(s.domain));
+        function getSelectedSOEPart() {
+            const radio = document.querySelector('input[name="soePart"]:checked');
+            return radio ? radio.value : 'soe1';
+        }
+
+        function pickTwo(soePart) {
+            const pools = SOE_POOLS[soePart];
+            const poolA = scenarios.filter(s => pools.examinerA.domains.has(s.domain));
+            const poolB = scenarios.filter(s => pools.examinerB.domains.has(s.domain));
 
             // Fallback: if either pool is empty, just split randomly
-            if (pool1.length === 0 || pool2.length === 0) {
+            if (poolA.length === 0 || poolB.length === 0) {
                 const shuffled = [...scenarios].sort(() => Math.random() - 0.5);
-                return [shuffled[0], shuffled[1] || shuffled[0]];
+                return { scenarios: [shuffled[0], shuffled[1] || shuffled[0]], pools };
             }
 
             const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
-            const s1 = shuffle(pool1)[0];
+            const s1 = shuffle(poolA)[0];
 
-            // Try to find a case-paired scenario in pool2
+            // Try to find a case-paired scenario in poolB
             let s2 = null;
             if (s1.caseId) {
-                s2 = shuffle(pool2).find(s => s.caseId === s1.caseId && s.id !== s1.id);
+                s2 = shuffle(poolB).find(s => s.caseId === s1.caseId && s.id !== s1.id);
             }
-            if (!s2) s2 = shuffle(pool2)[0];
+            if (!s2) s2 = shuffle(poolB)[0];
 
-            return [s1, s2];
+            return { scenarios: [s1, s2], pools };
         }
 
         // ── UI helpers ──
@@ -378,15 +426,17 @@
             }
 
             // Topic summaries
+            // Use dynamic section labels from active SOE pools
+            const activeSOE = SOE_POOLS[getSelectedSOEPart()];
             if (dc.topic_1_summary) {
                 html += `<div class="topic-card">
-                    <h4>Dr Whitmore's Section</h4>
+                    <h4>${activeSOE.examinerA.name} — ${activeSOE.examinerA.section}</h4>
                     <p>${dc.topic_1_summary}</p>
                 </div>`;
             }
             if (dc.topic_2_summary) {
                 html += `<div class="topic-card">
-                    <h4>Dr Harris's Section</h4>
+                    <h4>${activeSOE.examinerB.name} — ${activeSOE.examinerB.section}</h4>
                     <p>${dc.topic_2_summary}</p>
                 </div>`;
             }
@@ -410,13 +460,17 @@
             document.getElementById('endExchanges').textContent = exchangeCount;
 
             const topicsEl = document.getElementById('endTopics');
+            const soePart = getSelectedSOEPart();
+            const pools = SOE_POOLS[soePart];
             topicsEl.innerHTML = '<h3>Topics Examined</h3>' +
-                selectedScenarios.map((s, i) =>
-                    `<div class="topic-item">${i === 0 ? 'Dr Whitmore' : 'Dr Harris'}: ${s.topic}</div>`
-                ).join('');
+                selectedScenarios.map((s, i) => {
+                    const ex = i === 0 ? pools.examinerA : pools.examinerB;
+                    return `<div class="topic-item">${ex.name} (${ex.section}): ${s.topic}</div>`;
+                }).join('');
 
             // Log session data (future: persist to tracking API)
             const sessionData = {
+                soePart: getSelectedSOEPart(),
                 scenarioIds: selectedScenarios.map(s => s.id),
                 topics: selectedScenarios.map(s => s.topic),
                 domains: selectedScenarios.map(s => s.domain),
@@ -462,7 +516,10 @@
                 btn.disabled = false; btn.textContent = 'Begin Examination'; return;
             }
 
-            selectedScenarios = pickTwo();
+            const soePart = getSelectedSOEPart();
+            const pick = pickTwo(soePart);
+            selectedScenarios = pick.scenarios;
+            const activePools = pick.pools;
             const s1 = selectedScenarios[0];
             const s2 = selectedScenarios[1];
 
@@ -487,7 +544,11 @@
 
             const dynamicVars = {
                 candidate_name: name.split(' ').pop(),
-                // Scenario 1 — Dr Whitmore
+                // SOE part context
+                soe_part: soePart === 'soe1' ? 'SOE 1 — Pharmacology & Physiology' : 'SOE 2 — Clinical Anaesthesia, Physics & Equipment',
+                examiner_1_section: activePools.examinerA.section,
+                examiner_2_section: activePools.examinerB.section,
+                // Scenario 1 — Examiner A
                 scenario_1_topic: s1.topic,
                 scenario_1_opening: s1.opening,
                 scenario_1_points: s1.points.join('; '),
@@ -495,7 +556,7 @@
                 scenario_1_facts: s1.facts.join('; '),
                 scenario_1_rescue: s1.rescue || 'Simplify the question',
                 scenario_1_scoring: formatScoring(s1.scoringGuidance),
-                // Scenario 2 — Dr Harris
+                // Scenario 2 — Examiner B
                 scenario_2_topic: s2.topic,
                 scenario_2_opening: s2.opening,
                 scenario_2_points: s2.points.join('; '),
@@ -556,12 +617,16 @@
                 document.getElementById('transcript').innerHTML = '';
                 document.getElementById('resultsPanel').innerHTML = '<div class="results-loading" id="resultsLoading"><span class="spinner"></span> Generating your performance report...</div>';
 
+                // Update exam header to reflect selected SOE part
+                document.getElementById('examTitle').textContent = ' — Primary FRCA ' + activePools.label;
+
                 timerInterval = setInterval(() => {
                     seconds++;
                     const el = document.getElementById('timer');
                     el.textContent = fmt(seconds);
-                    if (seconds >= 840) { el.classList.add('critical'); el.classList.remove('warning'); }
-                    else if (seconds >= 600) { el.classList.add('warning'); }
+                    // 5 min per topic × 2 = 10 min session; warn at 8 min, critical at 9:30
+                    if (seconds >= 570) { el.classList.add('critical'); el.classList.remove('warning'); }
+                    else if (seconds >= 480) { el.classList.add('warning'); }
                 }, 1000);
             } catch (e) {
                 console.error('Start failed:', e);

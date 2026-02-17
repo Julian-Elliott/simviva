@@ -154,11 +154,11 @@ In the workflow canvas, draw edges between nodes:
 |------|----|-----------|
 | welcome | select_q_e1t1 | LLM: "Candidate has provided surname and confirmed ready" |
 | select_q_e1t1 | examiner_1 | Auto (tool completes) |
-| examiner_1 | select_q_e1t2 | LLM: "Examiner has said 'let's move on' after covering first topic adequately (~4 min)" |
+| examiner_1 | select_q_e1t2 | LLM: "Examiner has said 'let's move on' after covering first topic adequately (~5 min)" |
 | select_q_e1t2 | examiner_1_t2 | Auto |
 | examiner_1_t2 | select_q_e2t1 | LLM: "Examiner has concluded with 'my colleague will continue' or similar handover" |
 | select_q_e2t1 | examiner_2 | Auto |
-| examiner_2 | select_q_e2t2 | LLM: "Examiner has moved on from first topic after ~4 minutes" |
+| examiner_2 | select_q_e2t2 | LLM: "Examiner has moved on from first topic after ~5 minutes" |
 | select_q_e2t2 | examiner_2_t2 | Auto |
 | examiner_2_t2 | assessment | LLM: "Examiner has said 'that's my section complete'" |
 | assessment | debrief | Auto (assessment processing complete) |
@@ -209,7 +209,7 @@ Stem: "[stem question]"
 Key points to listen for: [list]
 Follow-ups: [list]
 
-Start with Topic 1. After approximately 4 minutes, transition to Topic 2.
+Start with Topic 1. After approximately 5 minutes, transition to Topic 2.
 ```
 
 ---
@@ -241,7 +241,7 @@ Before the demo, test each voice:
 1. **Test each node in isolation** first — use the "Test" button on each subagent
 2. Test that voice switching works between nodes
 3. Run a full end-to-end session yourself, playing the candidate
-4. Time each section — aim for 4 min per topic
+4. Time each section — aim for 5 min per topic
 5. Check edge transitions fire correctly
 6. Verify the debrief references specific things you said
 
