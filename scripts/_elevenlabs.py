@@ -159,6 +159,6 @@ def extract_dynamic_variables(agent: dict) -> dict:
     try:
         dv = agent["conversation_config"]["agent"].get("dynamic_variables", {}) or {}
         # API wraps in {"dynamic_variable_placeholders": {…}} — unwrap
-        return dv.get("dynamic_variable_placeholders", dv)
+        return dv.get("dynamic_variable_placeholders") or {}
     except (KeyError, TypeError):
         return {}
