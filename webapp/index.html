@@ -33,6 +33,13 @@
         .error-notice { color: #e65b5b; font-size: 0.8rem; margin-top: 0.5rem; display: none; }
         .mic-notice { color: #e6a35b; font-size: 0.8rem; margin-top: 0.5rem; display: none; }
 
+        /* ── SOE Part Selector ── */
+        .soe-selector { display: flex; gap: 1.5rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .soe-option label { display: flex; align-items: center; gap: 0.4rem; cursor: pointer; color: #bbb; font-size: 0.95rem; }
+        .soe-option label.disabled { opacity: 0.4; cursor: not-allowed; }
+        .soe-option input[type="radio"] { accent-color: #5ba3e6; }
+        .pool-notice { color: #e88; font-size: 0.8rem; margin-left: 1.8rem; margin-top: 0.15rem; }
+
         /* ── Exam Screen ── */
         .exam-screen { flex-direction: column; height: 100vh; }
         .exam-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: #111; border-bottom: 1px solid #222; }
@@ -78,7 +85,6 @@
         .grade-card { background: #1a1a1a; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
         .grade-label { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
         .grade-value { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem; }
-        .grade-value.distinction { color: #5be67a; }
         .grade-value.pass { color: #5ba3e6; }
         .grade-value.borderline { color: #e6a35b; }
         .grade-value.fail { color: #e65b5b; }
@@ -113,7 +119,7 @@
 <body>
     <!-- ═══ SCREEN 1: Entry ═══ -->
     <div class="screen entry-screen active" id="entryScreen">
-        <div class="badge">Proof of Concept — Final FRCA SOE</div>
+        <div class="badge">Proof of Concept — Primary FRCA SOE</div>
         <div class="logo">🩺</div>
         <h1>FRCA SOE Viva Simulator</h1>
         <p class="subtitle">AI-powered structured oral examination practice</p>
@@ -124,10 +130,22 @@
             <div class="mic-notice" id="micNotice">⚠ Microphone access is required</div>
             <div class="error-notice" id="errorNotice"></div>
         </div>
+        <div class="soe-selector">
+            <div class="soe-option">
+                <label>
+                    <input type="radio" name="soePart" value="soe1" checked> SOE 1 — Physiology &amp; Pharmacology
+                </label>
+            </div>
+            <div class="soe-option">
+                <label>
+                    <input type="radio" name="soePart" value="soe2"> SOE 2 — Clinical &amp; Physics
+                </label>
+            </div>
+        </div>
         <div class="instructions-brief">
-            <strong>How it works:</strong> Two examiners — Dr Whitmore and Dr Harris — will each present a clinical scenario.
-            Speak naturally as you would in a real Final FRCA viva. The examiners maintain a neutral, poker-face approach.
-            A live transcript appears on screen. The station lasts approximately 15 minutes.
+            <strong>How it works:</strong> Two examiners will each cover one topic for five minutes, mirroring one question from each section of the real Primary FRCA SOE.
+            Speak naturally as you would in the exam. The examiners maintain a neutral, poker-face approach — no feedback during the viva is normal.
+            A live transcript appears on screen.
         </div>
     </div>
 
@@ -136,7 +154,7 @@
         <div class="exam-header">
             <div>
                 <span class="candidate-name" id="displayName"></span>
-                <span class="exam-title"> — Final FRCA SOE</span>
+                <span class="exam-title" id="examTitle"> — Primary FRCA SOE 1</span>
             </div>
             <div class="examiner-indicator">
                 <span class="examiner-badge" id="examinerBadge">Dr Whitmore</span>
@@ -180,7 +198,7 @@
 
         <div class="end-note">
             <strong>Note:</strong> Grades are AI-generated estimates based on examiner interaction.
-            The neutral examiner demeanour mirrors the real Final FRCA SOE — no feedback during the exam is normal.
+            The neutral examiner demeanour mirrors the real Primary FRCA SOE — no feedback during the viva is normal.
         </div>
         <p style="margin-top:1.5rem"><a href="https://databased.business" class="footer-link">databased.business</a></p>
     </div>
@@ -210,15 +228,153 @@
         let examinerSwitched = false;
         let firstMessageReceived = false;
 
+        /**
+         * Domain pools matching the official RCoA Primary FRCA SOE structure.
+         *
+         * SOE 1 (morning): Examiner A = Pharmacology, Examiner B = Physiology
+         * SOE 2 (afternoon): Examiner C = Clinical Anaesthesia, Examiner D = Physics/CM/Equipment/Safety
+         *
+         * Anatomy is NOT a standalone SOE section — it appears cross-cuttingly
+         * within physiology, clinical and physics questions. Scenarios tagged
+         * 'anatomy' are placed in the physics/equipment pool for SOE 2.
+         *
+         * Source: RCoA Guide to the FRCA Examination — The Primary, 4th ed.
+         */
+        const SOE_POOLS = {
+            soe1: {
+                label: 'SOE 1 — Physiology & Pharmacology',
+                examinerA: {
+                    name: 'Dr Whitmore',
+                    section: 'Pharmacology',
+                    domains: new Set(['pharmacology'])
+                },
+                examinerB: {
+                    name: 'Dr Harris',
+                    section: 'Physiology',
+                    domains: new Set(['physiology'])
+                }
+            },
+            soe2: {
+                label: 'SOE 2 — Clinical & Physics',
+                examinerA: {
+                    name: 'Dr Whitmore',
+                    section: 'Clinical Anaesthesia',
+                    domains: new Set(['clinical_anaesthesia', 'critical_care', 'pain_medicine',
+                        'critical_incidents', 'obstetric_anaesthesia', 'paediatric_anaesthesia',
+                        'neuroanaesthesia', 'cardiothoracic', 'regional_anaesthesia'])
+                },
+                examinerB: {
+                    name: 'Dr Harris',
+                    section: 'Physics, Clinical Measurement, Equipment & Safety',
+                    domains: new Set(['physics', 'clinical_measurement', 'equipment',
+                        'anatomy'])
+                }
+            }
+        };
+
         // ── Load scenario bank ──
         fetch('/scenarios.json').then(r => r.json()).then(data => {
             scenarios = data;
             console.log(`Loaded ${scenarios.length} scenarios`);
+            checkPoolCoverage();
         });
 
-        function pickTwo() {
-            const shuffled = [...scenarios].sort(() => Math.random() - 0.5);
-            return [shuffled[0], shuffled[1]];
+        /**
+         * Validate that every SOE part has at least one scenario in each
+         * examiner pool. Disable radio buttons for any part that cannot
+         * field both examiners, and auto-select the first available part.
+         */
+        function checkPoolCoverage() {
+            let firstAvailable = null;
+            let currentDisabled = false;
+
+            for (const [key, pool] of Object.entries(SOE_POOLS)) {
+                const radio = document.querySelector(`input[name="soePart"][value="${key}"]`);
+                const label = radio?.closest('label');
+                const wrapper = radio?.closest('.soe-option');
+                if (!radio || !label || !wrapper) continue;
+
+                const poolAEmpty = !scenarios.some(s => pool.examinerA.domains.has(s.domain));
+                const poolBEmpty = !scenarios.some(s => pool.examinerB.domains.has(s.domain));
+
+                // Remove any previous availability notice
+                const prev = wrapper.querySelector('.pool-notice[data-soe="' + key + '"]');
+                if (prev) prev.remove();
+
+                if (poolAEmpty || poolBEmpty) {
+                    radio.disabled = true;
+                    label.classList.add('disabled');
+                    if (radio.checked) currentDisabled = true;
+
+                    const missing = [];
+                    if (poolAEmpty) missing.push(pool.examinerA.section);
+                    if (poolBEmpty) missing.push(pool.examinerB.section);
+
+                    const notice = document.createElement('div');
+                    notice.className = 'pool-notice';
+                    notice.setAttribute('data-soe', key);
+                    notice.textContent = `No ${missing.join(' or ')} scenarios available`;
+                    wrapper.appendChild(notice);
+                } else {
+                    radio.disabled = false;
+                    label.classList.remove('disabled');
+                    if (!firstAvailable) firstAvailable = key;
+                }
+            }
+
+            // If the currently checked part was disabled, switch to the first available
+            if (currentDisabled && firstAvailable) {
+                const fallbackRadio = document.querySelector(`input[name="soePart"][value="${firstAvailable}"]`);
+                if (fallbackRadio) fallbackRadio.checked = true;
+            }
+
+            // If NO part is available, disable the Begin button entirely
+            const anyAvailable = document.querySelector('input[name="soePart"]:not(:disabled)');
+            const beginBtn = document.getElementById('beginBtn');
+            const errEl = document.getElementById('errorNotice');
+            if (!anyAvailable) {
+                beginBtn.disabled = true;
+                errEl.textContent = '⚠ No SOE part has full domain coverage. Add scenarios to enable practice.';
+                errEl.style.display = 'block';
+            } else {
+                // Clear error only if it was set by us (not by something else)
+                if (errEl.textContent.includes('No SOE part has full domain coverage')) {
+                    errEl.style.display = 'none';
+                }
+            }
+        }
+
+        function getSelectedSOEPart() {
+            const radio = document.querySelector('input[name="soePart"]:checked');
+            return radio ? radio.value : 'soe1';
+        }
+
+        function pickTwo(soePart) {
+            const pools = SOE_POOLS[soePart];
+            const poolA = scenarios.filter(s => pools.examinerA.domains.has(s.domain));
+            const poolB = scenarios.filter(s => pools.examinerB.domains.has(s.domain));
+
+            // Fail fast: never silently cross domains
+            if (poolA.length === 0 || poolB.length === 0) {
+                const empty = [];
+                if (poolA.length === 0) empty.push(pools.examinerA.section);
+                if (poolB.length === 0) empty.push(pools.examinerB.section);
+                throw new Error(
+                    `Cannot start ${pools.label}: no scenarios available for ${empty.join(' or ')}.`
+                );
+            }
+
+            const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+            const s1 = shuffle(poolA)[0];
+
+            // Try to find a case-paired scenario in poolB
+            let s2 = null;
+            if (s1.caseId) {
+                s2 = shuffle(poolB).find(s => s.caseId === s1.caseId && s.id !== s1.id);
+            }
+            if (!s2) s2 = shuffle(poolB)[0];
+
+            return { scenarios: [s1, s2], pools };
         }
 
         // ── UI helpers ──
@@ -309,20 +465,47 @@
 
             let html = '';
 
-            // Grade card
-            const grade = (dc.candidate_grade || '').trim();
-            const gradeWord = grade.split(/[\s.,:—-]/)[0].toUpperCase();
-            const gradeClass = gradeWord === 'DISTINCTION' ? 'distinction' :
-                               gradeWord === 'PASS' ? 'pass' :
-                               gradeWord === 'BORDERLINE' ? 'borderline' :
-                               gradeWord === 'FAIL' ? 'fail' : '';
-            if (grade) {
-                html += `<div class="grade-card">
-                    <div class="grade-label">Overall Grade</div>
-                    <div class="grade-value ${gradeClass}">${gradeWord}</div>
-                    <div class="grade-justification">${grade.replace(gradeWord, '').replace(/^[\s.,:—-]+/, '')}</div>
+            // Per-question grade cards — RCoA 0/1/2 marking
+            // The agent returns "2 — justification", "1 — …", "0 — …" per question.
+            function mapQuestionMark(raw) {
+                if (!raw) return null;
+                const s = raw.trim();
+                // Primary match: leading digit 0–2
+                const numMatch = s.match(/^([0-2])\b/);
+                if (numMatch) {
+                    const n = numMatch[1];
+                    return { '2': { label: '2 — Pass',       css: 'pass' },
+                             '1': { label: '1 — Borderline', css: 'borderline' },
+                             '0': { label: '0 — Fail',       css: 'fail' } }[n];
+                }
+                // Fallback: first word may be a grade label (case-insensitive)
+                const word = s.split(/[\s.,:;\u2014\u2013+/-]+/)[0].toUpperCase();
+                const textMap = {
+                    'PASS':       { label: '2 — Pass',       css: 'pass' },
+                    'BORDERLINE': { label: '1 — Borderline', css: 'borderline' },
+                    'FAIL':       { label: '0 — Fail',       css: 'fail' },
+                };
+                return textMap[word] || null;
+            }
+            function renderQuestionCard(raw, label) {
+                if (!raw) return '';
+                const mapped = mapQuestionMark(raw);
+                const display = mapped || { label: raw, css: '' };
+                // Strip the matched mark token from the start to isolate justification
+                const justification = mapped
+                    ? raw.replace(/^[0-2]\s*[\u2014\u2013\-—]\s*/, '')
+                         .replace(/^(pass|borderline|fail)\s*[\u2014\u2013\-—:.\s]*/i, '')
+                    : '';
+                return `<div class="grade-card">
+                    <div class="grade-label">${label}</div>
+                    <div class="grade-value ${display.css}">${display.label}</div>
+                    ${justification ? `<div class="grade-justification">${justification}</div>` : ''}
                 </div>`;
             }
+            const q1Raw = (dc.question_1_mark || '').trim();
+            const q2Raw = (dc.question_2_mark || '').trim();
+            html += renderQuestionCard(q1Raw, 'Question 1 — Dr Whitmore (RCoA mark)');
+            html += renderQuestionCard(q2Raw, 'Question 2 — Dr Harris (RCoA mark)');
 
             // Evaluation criteria grid
             if (eval_ && Object.keys(eval_).length > 0) {
@@ -341,15 +524,17 @@
             }
 
             // Topic summaries
+            // Use dynamic section labels from active SOE pools
+            const activeSOE = SOE_POOLS[getSelectedSOEPart()];
             if (dc.topic_1_summary) {
                 html += `<div class="topic-card">
-                    <h4>Dr Whitmore's Section</h4>
+                    <h4>${activeSOE.examinerA.name} — ${activeSOE.examinerA.section}</h4>
                     <p>${dc.topic_1_summary}</p>
                 </div>`;
             }
             if (dc.topic_2_summary) {
                 html += `<div class="topic-card">
-                    <h4>Dr Harris's Section</h4>
+                    <h4>${activeSOE.examinerB.name} — ${activeSOE.examinerB.section}</h4>
                     <p>${dc.topic_2_summary}</p>
                 </div>`;
             }
@@ -373,15 +558,21 @@
             document.getElementById('endExchanges').textContent = exchangeCount;
 
             const topicsEl = document.getElementById('endTopics');
+            const soePart = getSelectedSOEPart();
+            const pools = SOE_POOLS[soePart];
             topicsEl.innerHTML = '<h3>Topics Examined</h3>' +
-                selectedScenarios.map((s, i) =>
-                    `<div class="topic-item">${i === 0 ? 'Dr Whitmore' : 'Dr Harris'}: ${s.topic}</div>`
-                ).join('');
+                selectedScenarios.map((s, i) => {
+                    const ex = i === 0 ? pools.examinerA : pools.examinerB;
+                    return `<div class="topic-item">${ex.name} (${ex.section}): ${s.topic}</div>`;
+                }).join('');
 
-            // Log session data
+            // Log session data (future: persist to tracking API)
             const sessionData = {
+                soePart: getSelectedSOEPart(),
                 scenarioIds: selectedScenarios.map(s => s.id),
                 topics: selectedScenarios.map(s => s.topic),
+                domains: selectedScenarios.map(s => s.domain),
+                caseIds: selectedScenarios.map(s => s.caseId),
                 duration: seconds,
                 exchanges: exchangeCount,
                 transcript: transcriptHistory,
@@ -423,24 +614,63 @@
                 btn.disabled = false; btn.textContent = 'Begin Examination'; return;
             }
 
-            selectedScenarios = pickTwo();
+            const soePart = getSelectedSOEPart();
+            let pick;
+            try {
+                pick = pickTwo(soePart);
+            } catch (e) {
+                errEl.textContent = '⚠ ' + e.message;
+                errEl.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Begin Examination';
+                return;
+            }
+            selectedScenarios = pick.scenarios;
+            const activePools = pick.pools;
             const s1 = selectedScenarios[0];
             const s2 = selectedScenarios[1];
 
+            // Build structured prompt block for each scenario
+            function formatPromptsBlock(scenario) {
+                if (!scenario.prompts || scenario.prompts.length === 0) {
+                    // Fallback: old-style flat data, or empty if neither exists
+                    return scenario.probes ? scenario.probes.join('; ') : '';
+                }
+                return scenario.prompts.map((p, i) => {
+                    const tier = (p.tier || 'general').toUpperCase();
+                    const time = p.timeBudgetSec ? ` (~${p.timeBudgetSec}s)` : '';
+                    const facts = (p.expectedKeyFacts || []).join('; ');
+                    return `[${tier}${time}] ${p.text}\nExpected: ${facts}`;
+                }).join('\n\n');
+            }
+
+            function formatScoring(sg) {
+                if (!sg) return '';
+                return `Pass(2): ${sg.pass}\nBorderline(1): ${sg.borderline}\nFail(0): ${sg.fail}`;
+            }
+
             const dynamicVars = {
                 candidate_name: name.split(' ').pop(),
+                // SOE part context
+                soe_part: soePart === 'soe1' ? 'SOE 1 — Physiology & Pharmacology' : 'SOE 2 — Clinical Anaesthesia, Physics & Equipment',
+                examiner_1_section: activePools.examinerA.section,
+                examiner_2_section: activePools.examinerB.section,
+                // Scenario 1 — Examiner A
                 scenario_1_topic: s1.topic,
                 scenario_1_opening: s1.opening,
                 scenario_1_points: s1.points.join('; '),
-                scenario_1_probes: s1.probes.join('; '),
+                scenario_1_probes: formatPromptsBlock(s1),
                 scenario_1_facts: s1.facts.join('; '),
                 scenario_1_rescue: s1.rescue || 'Simplify the question',
+                scenario_1_scoring: formatScoring(s1.scoringGuidance),
+                // Scenario 2 — Examiner B
                 scenario_2_topic: s2.topic,
                 scenario_2_opening: s2.opening,
                 scenario_2_points: s2.points.join('; '),
-                scenario_2_probes: s2.probes.join('; '),
+                scenario_2_probes: formatPromptsBlock(s2),
                 scenario_2_facts: s2.facts.join('; '),
-                scenario_2_rescue: s2.rescue || 'Simplify the question'
+                scenario_2_rescue: s2.rescue || 'Simplify the question',
+                scenario_2_scoring: formatScoring(s2.scoringGuidance)
             };
 
             try {
@@ -494,12 +724,16 @@
                 document.getElementById('transcript').innerHTML = '';
                 document.getElementById('resultsPanel').innerHTML = '<div class="results-loading" id="resultsLoading"><span class="spinner"></span> Generating your performance report...</div>';
 
+                // Update exam header to reflect selected SOE part
+                document.getElementById('examTitle').textContent = ' — Primary FRCA ' + activePools.label;
+
                 timerInterval = setInterval(() => {
                     seconds++;
                     const el = document.getElementById('timer');
                     el.textContent = fmt(seconds);
-                    if (seconds >= 840) { el.classList.add('critical'); el.classList.remove('warning'); }
-                    else if (seconds >= 600) { el.classList.add('warning'); }
+                    // 5 min per topic × 2 = 10 min session; warn at 8 min, critical at 9:30
+                    if (seconds >= 570) { el.classList.add('critical'); el.classList.remove('warning'); }
+                    else if (seconds >= 480) { el.classList.add('warning'); }
                 }, 1000);
             } catch (e) {
                 console.error('Start failed:', e);

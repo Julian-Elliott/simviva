@@ -1,0 +1,108 @@
+{
+  "id": "tracheostomy_anatomy_001",
+  "updatedAt": "2026-02-17T00:00:00Z",
+
+  "domain": "anatomy",
+  "topicTagIds": ["tracheostomy", "airway_anatomy", "neck_anatomy"],
+  "caseId": "tracheostomy_001",
+  "slotType": "science",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "female"
+  },
+
+  "stem": "Dr. {{candidate_name}}, describe the surgical anatomy relevant to performing a tracheostomy.",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "What are the surface landmarks you would identify before starting?",
+      "expectedKeyFacts": [
+        "Cricoid cartilage — palpable landmark",
+        "Sternal notch — inferior limit",
+        "Tracheal rings palpable between these landmarks",
+        "Midline identification"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "Describe the structures you would encounter from skin to trachea.",
+      "expectedKeyFacts": [
+        "Skin and subcutaneous fat",
+        "Platysma",
+        "Investing layer of deep cervical fascia",
+        "Strap muscles (sternohyoid, sternothyroid) — separated in midline",
+        "Pretracheal fascia",
+        "Thyroid isthmus — overlies tracheal rings 2-4",
+        "Trachea — target rings 2-3"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "What vascular structures are at risk, and how would you manage unexpected bleeding?",
+      "expectedKeyFacts": [
+        "Anterior jugular veins — laterally in superficial layers",
+        "Thyroid ima artery — present in ~10%, midline ascending vessel",
+        "Inferior thyroid veins",
+        "Brachiocephalic artery — at risk in children or low tracheostomy",
+        "Management: direct pressure, diathermy, ligate, call for surgical help"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "Why is the second or third tracheal ring preferred over the first ring or the cricothyroid membrane?",
+      "expectedKeyFacts": [
+        "First ring — risk of subglottic stenosis from proximity to cricoid",
+        "Cricothyroid membrane — reserved for emergency, risk of vocal cord damage",
+        "Rings 2-3 provide good access with minimal stenosis risk",
+        "Below isthmus in most patients",
+        "Sufficient distance from both cricoid and brachiocephalic artery"
+      ],
+      "timeBudgetSec": 60
+    }
+  ],
+
+  "rescuePrompt": "Can you describe the tracheal rings and their relationship to the thyroid gland?",
+
+  "keyFacts": [
+    "Skin → platysma → strap muscles → thyroid isthmus → trachea",
+    "Performed at 2nd-3rd tracheal ring",
+    "Thyroid isthmus overlies rings 2-4",
+    "Anterior jugular veins laterally",
+    "Thyroid ima artery — midline variant (~10%)",
+    "Brachiocephalic artery at risk in children and low tracheostomy",
+    "Recurrent laryngeal nerves in tracheo-oesophageal groove",
+    "Posterior tracheal wall is membranous — risk of oesophageal injury",
+    "C-shaped cartilaginous rings, open posteriorly"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Correctly describes the major layers, identifies isthmus position, aware of anterior jugular veins and brachiocephalic artery risk, knows preferred ring level; stronger candidates may give a layer-by-layer description unprompted and name variant vessels such as the ima artery",
+    "borderline": "Incomplete layer description, may miss isthmus relationship or confuse ring levels, vague on vascular risks",
+    "fail": "Cannot describe basic layers, unaware of thyroid isthmus position, does not identify major vascular risks"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-17T10:20:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["BJA_Surgical_Tracheostomy_2017", "TeachMeAnatomy_Trachea"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1016/j.bjae.2019.08.002",
+    "https://teachmeanatomy.info/neck/viscera/trachea/"
+  ],
+  "isActive": true
+}

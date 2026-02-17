@@ -5,7 +5,8 @@ Goal: Most realistic FRCA viva simulation — ElevenLabs voice agents + workflow
 Target: Primary and Final FRCA SOE candidates.
 
 ## Exam Structure
-- Primary: 2 stations × 30 min (4 examiners). Topics: Pharmacology, Physiology, Physics/Clinical Measurement, Equipment, Applied Anatomy
+- Primary SOE 1 (morning, 30 min): Examiner A = Pharmacology (3×5 min), Examiner B = Physiology (3×5 min)
+- Primary SOE 2 (afternoon, 30 min): Examiner C = Clinical Anaesthesia (3×5 min), Examiner D = Physics/CM/Equipment/Safety (3×5 min)
 - Final: SOE1 (clinical subspecialties), SOE2 (clinical scenarios + critical incidents)
 
 ## Question Progression
@@ -28,9 +29,9 @@ Target: Primary and Final FRCA SOE candidates.
 - Formal: "Dr. [Surname], could you explain..."
 
 ## Timing
-- 4-minute blocks per topic stem
-- Warning at 3:30, end at 4:00 (hard transition)
-- Total station: 15-20 minutes
+- 5-minute blocks per topic question (matching real exam)
+- Warning at 4:30, end at 5:00 (hard transition)
+- Total SOE part: 30 minutes (2 examiners × 15 minutes)
 
 ## Silence Protocol
 - 0-3s: Wait silently
@@ -44,11 +45,16 @@ Triggers: verbose >30s, off-topic, repetition, time expiring, candidate seeks co
 Phrases: "That's fine. Let's move on...", "Coming back to the case...", "Let me stop you there..."
 Rescue: ONE simplified alternative, same neutral tone, then move on
 
-## Scoring (RCoA 4-Point)
-4 = Pass+ (exceeds standard)
-3 = Pass (meets standard)
-2 = Borderline (gaps)
-1 = Fail (significant gaps, unsafe)
+## Scoring (RCoA SOE Marking)
+Per-question: fail (0) / borderline (1) / pass (2)
+All 4 examiners mark all 6 questions independently in their SOE part.
+Total: 48 marks, pass threshold: 37.
+
+SimViva uses the same per-question 0/1/2 scale. The AI assigns a separate
+mark for each of the 2 questions in a session, matching the authentic RCoA
+scheme. These marks are formative — they are not official RCoA scores, but
+they use the real marking criteria so candidates practise against the actual
+standard.
 
 ## Post-Session Feedback
 - Score per topic

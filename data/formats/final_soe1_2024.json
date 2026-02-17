@@ -1,0 +1,63 @@
+{
+  "id": "final_soe1_2024",
+  "name": "Final FRCA SOE 1 (Current)",
+  "validFrom": "2024-01-01",
+  "validUntil": "2028-06-30",
+  "interactionMode": "viva",
+  "sections": [
+    {
+      "label": "Section A — Examiner Pair 1",
+      "slots": [
+        {
+          "label": "Short Case 1 — Clinical Scenario",
+          "durationSec": 420,
+          "slotType": "clinical"
+        },
+        {
+          "label": "Short Case 1 — Science Question",
+          "durationSec": 300,
+          "slotType": "science"
+        },
+        {
+          "label": "Short Case 2 — Clinical Scenario",
+          "durationSec": 420,
+          "slotType": "clinical"
+        },
+        {
+          "label": "Short Case 2 — Science Question",
+          "durationSec": 300,
+          "slotType": "science"
+        }
+      ],
+      "changeoverSec": 60
+    },
+    {
+      "label": "Section B — Examiner Pair 2",
+      "slots": [
+        {
+          "label": "Short Case 1 — Clinical Scenario",
+          "durationSec": 420,
+          "slotType": "clinical"
+        },
+        {
+          "label": "Short Case 1 — Science Question",
+          "durationSec": 300,
+          "slotType": "science"
+        },
+        {
+          "label": "Short Case 2 — Clinical Scenario",
+          "durationSec": 420,
+          "slotType": "clinical"
+        },
+        {
+          "label": "Short Case 2 — Science Question",
+          "durationSec": 300,
+          "slotType": "science"
+        }
+      ],
+      "changeoverSec": 0
+    }
+  ],
+  "totalDurationSec": 3180,
+  "notes": "2 sections × 2 short cases × (7 min clinical + 5 min science) + 1 min changeover. Each short case pairs a clinical scenario with a linked science question (e.g. tracheostomy management + tracheostomy anatomy). Legacy format available until June 2028 for partial-pass candidates."
+}

@@ -1,0 +1,147 @@
+{
+  "id": "primary_soe_2024",
+  "name": "Primary FRCA SOE (Current Format)",
+  "validFrom": "2024-01-01",
+  "validUntil": "2028-06-30",
+  "interactionMode": "viva",
+  "source": "RCoA Guide to the FRCA Examination — The Primary, 4th edition (2013, updated 2025)",
+  "overview": "The SOE is in two parts. Each part consists of six questions examined by two examiners. Each question lasts five minutes so each SOE part lasts 30 minutes.",
+  "sections": [
+    {
+      "id": "soe1",
+      "label": "SOE 1 — Physiology & Pharmacology",
+      "scheduledTime": "morning",
+      "examiners": [
+        {
+          "order": 1,
+          "label": "Examiner A — Pharmacology",
+          "role": "questioner_then_scribe",
+          "domain": "pharmacology",
+          "durationSec": 900,
+          "slots": [
+            {
+              "label": "Pharmacology Q1 — Anaesthetic Pharmacology",
+              "durationSec": 300,
+              "slotType": "any",
+              "notes": "Inhalational & IV agents, analgesics, NMBs, local anaesthetics"
+            },
+            {
+              "label": "Pharmacology Q2 — Principles of Pharmacology",
+              "durationSec": 300,
+              "slotType": "any",
+              "notes": "Drug handling (absorption, distribution, metabolism, excretion), pharmacogenetics, statistics"
+            },
+            {
+              "label": "Pharmacology Q3 — General Pharmacology",
+              "durationSec": 300,
+              "slotType": "any",
+              "notes": "Drug groups (e.g. beta-blockers), drugs for conditions (e.g. oral hypoglycaemics), specific drugs (e.g. antibiotics), NICE guidelines"
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "label": "Examiner B — Physiology",
+          "role": "scribe_then_questioner",
+          "domain": "physiology",
+          "durationSec": 900,
+          "slots": [
+            {
+              "label": "Physiology Q1 — Core Physiology",
+              "durationSec": 300,
+              "slotType": "any",
+              "notes": "Cardiorespiratory, cell physiology, biochemistry"
+            },
+            {
+              "label": "Physiology Q2 — Control Systems",
+              "durationSec": 300,
+              "slotType": "any",
+              "notes": "Renal, endocrine, gastrointestinal and other curriculum control systems"
+            },
+            {
+              "label": "Physiology Q3 — Applied Physiology",
+              "durationSec": 300,
+              "slotType": "any",
+              "notes": "Nerve & muscle, body fluids, or cardiorespiratory if not previously tested. May include inter-relationships and stress responses (trauma, exercise, environment)."
+            }
+          ]
+        }
+      ],
+      "changeoverSec": 0,
+      "notes": "Always starts with pharmacology. Both examiners mark independently: fail (0), borderline (1), pass (2) per question."
+    },
+    {
+      "id": "soe2",
+      "label": "SOE 2 — Clinical Anaesthesia, Physics, Clinical Measurement, Equipment & Safety",
+      "scheduledTime": "afternoon",
+      "examiners": [
+        {
+          "order": 1,
+          "label": "Examiner C — Clinical Anaesthesia",
+          "role": "questioner_then_scribe",
+          "domain": "clinical_anaesthesia",
+          "durationSec": 900,
+          "slots": [
+            {
+              "label": "Clinical Q1 — History & Co-morbidities",
+              "durationSec": 300,
+              "slotType": "clinical",
+              "notes": "Case scenario on laminated sheet. Relevant aspects of history and associated medical problems."
+            },
+            {
+              "label": "Clinical Q2 — Anaesthetic Management / Critical Incident",
+              "durationSec": 300,
+              "slotType": "clinical",
+              "notes": "Problem-solving scenario or critical incident within the clinical case."
+            },
+            {
+              "label": "Clinical Q3 — Further Management",
+              "durationSec": 300,
+              "slotType": "clinical",
+              "notes": "Post-operative care, analgesia options, ongoing management."
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "label": "Examiner D — Physics, Clinical Measurement, Equipment & Safety",
+          "role": "scribe_then_questioner",
+          "domain": "physics",
+          "durationSec": 900,
+          "slots": [
+            {
+              "label": "Physics/Equipment Q1",
+              "durationSec": 300,
+              "slotType": "science",
+              "notes": "Topics from Clinical Measurement, Physics, Equipment and Safety curriculum. Opening question may be clinically contextualised."
+            },
+            {
+              "label": "Physics/Equipment Q2",
+              "durationSec": 300,
+              "slotType": "science",
+              "notes": "Same three questions asked in same order at each examiner's table."
+            },
+            {
+              "label": "Physics/Equipment Q3",
+              "durationSec": 300,
+              "slotType": "science",
+              "notes": "May include diagrams, photographs, or graphs as supporting material."
+            }
+          ]
+        }
+      ],
+      "changeoverSec": 0,
+      "notes": "Always starts with clinical. Candidates receive laminated case sheet 10 min before entering. Clinical cases pitched at CT2 level."
+    }
+  ],
+  "scoring": {
+    "perQuestion": "fail (0) / borderline (1) / pass (2)",
+    "totalQuestions": 12,
+    "examiners": 4,
+    "maxScore": 48,
+    "passThreshold": 37,
+    "method": "Both examiners in each SOE part mark all 6 questions independently. Total scores of all 4 examiners aggregated."
+  },
+  "totalDurationSec": 3600,
+  "notes": "2 SOE parts × 30 min = 60 min total. SOE 1 in morning, SOE 2 in afternoon. Questions reused for two cohorts then changed. Anatomy questions appear within physiology, clinical and physics sections — not as a standalone domain. Legacy format available until June 2028 for candidates with partial pass."
+}

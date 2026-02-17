@@ -123,12 +123,13 @@ In the agent editor, switch to **Workflow** mode (not single-prompt mode).
 - **System prompt:**
   ```
   You are an assessment engine. You have received the full conversation 
-  transcript of a Primary FRCA viva. Score each topic on the RCoA 4-point 
-  scale (4=Pass+, 3=Pass, 2=Borderline, 1=Fail). 
+  transcript of a Primary FRCA viva. Mark each question independently on
+  the RCoA per-question scale: 2=Pass, 1=Borderline, 0=Fail.
   
-  Output a JSON object with: overall_score, topic_scores (with gaps and 
-  strengths for each), notable_moments (2-3 specific exchanges), and 
-  recommendations. Reference the expected points from the question bank.
+  Output a JSON object with: question_1_mark, question_2_mark (each 0/1/2
+  with justification), topic_summaries (with gaps and strengths for each),
+  notable_moments (2-3 specific exchanges), and recommendations.
+  Reference the expected points from the question bank.
   
   Do not speak to the candidate. Output structured data only.
   ```
@@ -154,11 +155,11 @@ In the workflow canvas, draw edges between nodes:
 |------|----|-----------|
 | welcome | select_q_e1t1 | LLM: "Candidate has provided surname and confirmed ready" |
 | select_q_e1t1 | examiner_1 | Auto (tool completes) |
-| examiner_1 | select_q_e1t2 | LLM: "Examiner has said 'let's move on' after covering first topic adequately (~4 min)" |
+| examiner_1 | select_q_e1t2 | LLM: "Examiner has said 'let's move on' after covering first topic adequately (~5 min)" |
 | select_q_e1t2 | examiner_1_t2 | Auto |
 | examiner_1_t2 | select_q_e2t1 | LLM: "Examiner has concluded with 'my colleague will continue' or similar handover" |
 | select_q_e2t1 | examiner_2 | Auto |
-| examiner_2 | select_q_e2t2 | LLM: "Examiner has moved on from first topic after ~4 minutes" |
+| examiner_2 | select_q_e2t2 | LLM: "Examiner has moved on from first topic after ~5 minutes" |
 | select_q_e2t2 | examiner_2_t2 | Auto |
 | examiner_2_t2 | assessment | LLM: "Examiner has said 'that's my section complete'" |
 | assessment | debrief | Auto (assessment processing complete) |
@@ -209,7 +210,7 @@ Stem: "[stem question]"
 Key points to listen for: [list]
 Follow-ups: [list]
 
-Start with Topic 1. After approximately 4 minutes, transition to Topic 2.
+Start with Topic 1. After approximately 5 minutes, transition to Topic 2.
 ```
 
 ---
@@ -241,7 +242,7 @@ Before the demo, test each voice:
 1. **Test each node in isolation** first — use the "Test" button on each subagent
 2. Test that voice switching works between nodes
 3. Run a full end-to-end session yourself, playing the candidate
-4. Time each section — aim for 4 min per topic
+4. Time each section — aim for 5 min per topic
 5. Check edge transitions fire correctly
 6. Verify the debrief references specific things you said
 
