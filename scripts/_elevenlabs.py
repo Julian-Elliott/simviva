@@ -7,6 +7,7 @@ Used by agent_push.py and agent_pull.py.
 import json
 import os
 import urllib.error
+import urllib.parse
 import urllib.request
 
 API_KEY = os.environ.get("ELEVENLABS_API_KEY", "").strip()
@@ -31,30 +32,44 @@ def agent_url() -> str:
     return f"https://api.elevenlabs.io/v1/convai/agents/{AGENT_ID}"
 
 
-def get_agent() -> dict:
-    """GET the full agent configuration from ElevenLabs."""
+def get_agent(branch_id=None) -> dict:
+    """GET the full agent configuration from ElevenLabs.
+
+    When *branch_id* is given, retrieves the branch tip instead of the
+    default (main) version.
+    """
     require_env()
-    req = urllib.request.Request(agent_url(), headers={"xi-api-key": API_KEY})
+    url = agent_url()
+    if branch_id:
+        url += "?" + urllib.parse.urlencode({"branch_id": branch_id})
+    req = urllib.request.Request(url, headers={"xi-api-key": API_KEY})
     try:
         resp = urllib.request.urlopen(req, timeout=30)
     except urllib.error.HTTPError as e:
         body = e.read().decode(errors="replace")
         raise SystemExit(
-            f"GET {agent_url()} failed ({e.code} {e.reason})\n{body}"
+            "GET {} failed ({} {})\n{}".format(url, e.code, e.reason, body)
         ) from None
     except urllib.error.URLError as e:
         raise SystemExit(
-            f"GET {agent_url()} — network error: {e.reason}"
+            "GET {} — network error: {}".format(url, e.reason)
         ) from None
     return json.loads(resp.read())
 
 
-def patch_agent(payload: dict) -> dict:
-    """PATCH the agent with the given payload and return the updated config."""
+def patch_agent(payload: dict, branch_id=None) -> dict:
+    """PATCH the agent with the given payload and return the updated config.
+
+    When *branch_id* is given, the changes are committed to that branch
+    (creating a new version) instead of the default (main) branch.
+    """
     require_env()
+    url = agent_url()
+    if branch_id:
+        url += "?" + urllib.parse.urlencode({"branch_id": branch_id})
     data = json.dumps(payload).encode()
     req = urllib.request.Request(
-        agent_url(),
+        url,
         data=data,
         headers={"xi-api-key": API_KEY, "Content-Type": "application/json"},
         method="PATCH",
@@ -64,11 +79,11 @@ def patch_agent(payload: dict) -> dict:
     except urllib.error.HTTPError as e:
         body = e.read().decode(errors="replace")
         raise SystemExit(
-            f"PATCH {agent_url()} failed ({e.code} {e.reason})\n{body}"
+            "PATCH {} failed ({} {})\n{}".format(url, e.code, e.reason, body)
         ) from None
     except urllib.error.URLError as e:
         raise SystemExit(
-            f"PATCH {agent_url()} — network error: {e.reason}"
+            "PATCH {} — network error: {}".format(url, e.reason)
         ) from None
     return json.loads(resp.read())
 
@@ -353,3 +368,60 @@ def find_node_prompt(node: dict):
 def set_node_prompt(node: dict, path: tuple, text: str):
     """Write *text* into a node at the given key *path*."""
     _set_path(node, path, text)
+
+
+# ── Versioning helpers ──
+
+def _branches_url():
+    """URL for the branches sub-resource."""
+    return "{}/branches".format(agent_url())
+
+
+def _api_request(method, url, body=None):
+    """Generic ElevenLabs API request.  Returns parsed JSON."""
+    require_env()
+    headers = {"xi-api-key": API_KEY}
+    data = None
+    if body is not None:
+        data = json.dumps(body).encode()
+        headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(url, data=data, headers=headers, method=method)
+    try:
+        resp = urllib.request.urlopen(req, timeout=30)
+    except urllib.error.HTTPError as e:
+        resp_body = e.read().decode(errors="replace")
+        raise SystemExit(
+            "{} {} failed ({} {})\n{}".format(method, url, e.code, e.reason, resp_body)
+        ) from None
+    except urllib.error.URLError as e:
+        raise SystemExit(
+            "{} {} — network error: {}".format(method, url, e.reason)
+        ) from None
+    return json.loads(resp.read())
+
+
+def list_branches():
+    """List all branches for the agent.
+
+    Returns a list of branch dicts (each with at least 'id' and 'name').
+    Raises SystemExit if the agent does not have versioning enabled.
+    """
+    data = _api_request("GET", _branches_url())
+    return data.get("results", data.get("branches", []))
+
+
+def get_branch(branch_id):
+    """GET details for a single branch, including its versions list."""
+    url = "{}/{}".format(_branches_url(), branch_id)
+    return _api_request("GET", url)
+
+
+def create_branch(parent_version_id, name, description=""):
+    """Create a new branch from a version on the main branch.
+
+    Returns a dict with 'created_branch_id' and 'created_version_id'.
+    """
+    body = {"parent_version_id": parent_version_id, "name": name}
+    if description:
+        body["description"] = description
+    return _api_request("POST", _branches_url(), body)

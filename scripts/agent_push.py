@@ -21,6 +21,8 @@ Config files (optional):
 Usage:
   source .env && python3 scripts/agent_push.py
   source .env && python3 scripts/agent_push.py --dry-run
+  source .env && python3 scripts/agent_push.py --branch <name>
+  source .env && python3 scripts/agent_push.py --branch <name> --dry-run
 """
 
 import json
@@ -175,6 +177,10 @@ def build_payload(config: dict) -> dict:
     # Turn settings (from conversation_flow.json)
     turn = conversation_flow.get("turn", {})
     if turn:
+        # Strip disabled soft_timeout_config — the API rejects empty strings
+        soft = turn.get("soft_timeout_config", {})
+        if soft and soft.get("timeout_seconds", -1) == -1:
+            turn = {k: v for k, v in turn.items() if k != "soft_timeout_config"}
         conversation_config["turn"] = turn
 
     # Conversation settings — client events, max duration
@@ -276,6 +282,17 @@ def summarise_payload(config: dict):
 def main():
     dry_run = "--dry-run" in sys.argv
 
+    # Parse --branch <name> argument
+    branch_name = None
+    if "--branch" in sys.argv:
+        idx = sys.argv.index("--branch")
+        if idx + 1 >= len(sys.argv):
+            raise SystemExit(
+                "--branch requires a branch name argument.\n"
+                "Usage: agent_push.py [--dry-run] [--branch <name>]"
+            )
+        branch_name = sys.argv[idx + 1]
+
     print("Reading agent_config/...")
     config = read_config()
 
@@ -289,13 +306,63 @@ def main():
         print(json.dumps(payload, indent=2, ensure_ascii=False)[:2000])
         return
 
-    print("\nPushing to ElevenLabs...")
-    result = api.patch_agent(payload)
+    # ── Resolve or create branch ──
+    branch_id = None
+    if branch_name:
+        print("\nPreparing branch '{}'...".format(branch_name))
+        print("  Enabling versioning (if not already enabled)...")
+        api.patch_agent({"enable_versioning_if_not_enabled": True})
+
+        branches = api.list_branches()
+        existing = None
+        for b in branches:
+            if b.get("name") == branch_name:
+                existing = b
+                break
+
+        if existing:
+            branch_id = existing["id"]
+            print("  Found existing branch: {}".format(branch_id))
+        else:
+            # Find Main branch and its latest version
+            main_branch = None
+            for b in branches:
+                if b.get("name") == "Main":
+                    main_branch = b
+                    break
+            if not main_branch:
+                raise SystemExit("Could not find Main branch.")
+
+            main_details = api.get_branch(main_branch["id"])
+            versions = (main_details.get("most_recent_versions")
+                        or main_details.get("versions", []))
+            if not versions:
+                raise SystemExit("Main branch has no versions.")
+
+            parent_id = versions[0].get("id") or versions[0].get("version_id")
+            if not parent_id:
+                raise SystemExit(
+                    "Cannot determine Main branch tip version ID.\n"
+                    "Response: {}".format(json.dumps(versions[0])[:200]))
+
+            print("  Creating from Main tip ({})...".format(parent_id[:20]))
+            result = api.create_branch(parent_id, branch_name,
+                                       "Created by agent_push.py")
+            branch_id = result.get("created_branch_id")
+            if not branch_id:
+                raise SystemExit(
+                    "Branch creation returned no ID.\n"
+                    "Response: {}".format(json.dumps(result)[:500]))
+            print("  Branch created: {}".format(branch_id))
+
+    target = " (branch: {})".format(branch_name) if branch_name else ""
+    print("\nPushing to ElevenLabs{}...".format(target))
+    result = api.patch_agent(payload, branch_id=branch_id)
     print("  Agent '{}' updated successfully.".format(result.get("name", "?")))
 
     # Quick verification
     print("\nVerifying...")
-    updated = api.get_agent()
+    updated = api.get_agent(branch_id=branch_id)
     live_dc = api.extract_data_collection(updated)
     live_prompt = api.extract_prompt(updated)
 

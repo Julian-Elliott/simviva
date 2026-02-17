@@ -6,8 +6,10 @@ Fetches the current agent state and overwrites the local config files so
 they reflect reality.  Use --diff to compare without changing anything.
 
 Usage:
-  source .env && python3 scripts/agent_pull.py          # overwrite local files
-  source .env && python3 scripts/agent_pull.py --diff    # diff only, no writes
+  source .env && python3 scripts/agent_pull.py                    # overwrite local files
+  source .env && python3 scripts/agent_pull.py --diff              # diff only, no writes
+  source .env && python3 scripts/agent_pull.py --branch <name>    # pull from branch
+  source .env && python3 scripts/agent_pull.py --list-branches    # show branches
 """
 
 import copy
@@ -378,8 +380,44 @@ def diff_against_local(agent: dict):
 def main():
     diff_only = "--diff" in sys.argv
 
-    print("Fetching agent config from ElevenLabs...")
-    agent = api.get_agent()
+    # ── --list-branches: show available branches and exit ──
+    if "--list-branches" in sys.argv:
+        branches = api.list_branches()
+        if not branches:
+            print("No branches found.")
+            return
+        print("Branches:")
+        for b in branches:
+            print("  {:<24s} {}".format(b.get("id", "?"), b.get("name", "?")))
+        return
+
+    # ── --branch <name|id>: resolve to branch_id ──
+    branch_ref = None
+    if "--branch" in sys.argv:
+        idx = sys.argv.index("--branch")
+        if idx + 1 >= len(sys.argv):
+            raise SystemExit(
+                "--branch requires a branch name or ID.\n"
+                "Usage: agent_pull.py [--diff] [--branch <name>]"
+            )
+        branch_ref = sys.argv[idx + 1]
+
+    branch_id = None
+    if branch_ref:
+        branches = api.list_branches()
+        for b in branches:
+            if b.get("name") == branch_ref or b.get("id") == branch_ref:
+                branch_id = b["id"]
+                break
+        if not branch_id:
+            names = [b.get("name", "?") for b in branches]
+            raise SystemExit(
+                "Branch '{}' not found.\n"
+                "Available: {}".format(branch_ref, ", ".join(names)))
+
+    suffix = " (branch: {})".format(branch_ref) if branch_ref else ""
+    print("Fetching agent config from ElevenLabs{}...".format(suffix))
+    agent = api.get_agent(branch_id=branch_id)
     print("  Agent: {}\n".format(agent.get("name", "?")))
 
     if diff_only:
