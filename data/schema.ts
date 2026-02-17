@@ -77,12 +77,61 @@ export interface Prompt {
  *   opening → stem, points → prompts[].expectedKeyFacts,
  *   probes → prompts[].text, facts → keyFacts, rescue → rescuePrompt
  */
+
+/**
+ * Records the governance and audit trail for AI-generated content.
+ * Complies with the SimViva AI Governance Framework (docs/AI_GOVERNANCE.md).
+ */
+export interface AIProvenance {
+  /** The specific model version used for generation (e.g., "Claude-3-Sonnet-20240229") */
+  generatedBy: string;
+  /** ISO 8601 timestamp of generation */
+  generatedAt: string;
+  /** Version identifier of the system prompt used */
+  promptVersion: string;
+  /** 
+   * List of unique identifiers for source material (e.g., "BJA_Sepsis_2023").
+   * Ensures the "Factual Firewall" principle: facts are extracted, expression is generated.
+   */
+  sourceMaterial: string[];
+  
+  /**
+   * Quality Assurance Record based on the ACI Framework (Kung et al., 2023).
+   * All content must pass human verification before release.
+   */
+  validation: {
+    /** Full name or ID of the qualified human reviewer (FRCA or equivalent) */
+    reviewedBy: string;
+    /** ISO 8601 timestamp of review */
+    reviewedAt: string;
+    /** Current governance status */
+    status: 'draft' | 'pending_review' | 'approved' | 'rejected';
+    
+    // Quality Metrics (0.0 - 1.0 Scale)
+    /** 
+     * accuracy: Correctness of medical facts. MUST begin with 1.0 for approval.
+     * Any inaccuracy is an immediate hard fail.
+     */
+    accuracy?: number;
+    /** concordance: Logical consistency between stem, prompt, and key facts. Target > 0.9 */
+    concordance?: number;
+    /** insight: Educational value / "novelty" of the clinical reasoning. Target > 0.75 */
+    insight?: number;
+    
+    /** Specific notes on required remediation or approval justification */
+    notes?: string;
+  };
+}
+
 export interface Scenario {
   /** Unique ID, e.g. "tracheostomy_management_001" */
   id: string;
 
   /** ISO 8601 timestamp — tracks content freshness without full versioning overhead */
   updatedAt: string;
+
+  // ── Ethical / Source Tracking ──
+  provenance?: AIProvenance;
 
   // ── What it covers ──
 
@@ -154,8 +203,8 @@ export interface Scenario {
 
   /** Free-text author attribution */
   author?: string;
-  /** URLs to BJA Education, Miller, RCoA curriculum references */
-  sourceReferences?: string[];
+  /** URLs for candidate further reading — BJA Education, textbooks, guidelines */
+  furtherReading?: string[];
   /** Soft-delete / draft control */
   isActive: boolean;
 }

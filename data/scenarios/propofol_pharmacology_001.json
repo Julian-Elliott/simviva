@@ -1,0 +1,111 @@
+{
+  "id": "propofol_pharmacology_001",
+  "updatedAt": "2026-02-17T00:00:00Z",
+
+  "domain": "pharmacology",
+  "topicTagIds": ["iv_anaesthetics", "pharmacokinetics", "pharmacodynamics"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "stem": "Dr. {{surname}}, tell me about propofol.",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "Can you describe the basic pharmacology of propofol?",
+      "expectedKeyFacts": [
+        "2,6-diisopropylphenol",
+        "Presented as 1% or 2% lipid emulsion (soya bean oil, egg lecithin, glycerol)",
+        "pKa 11 — virtually entirely un-ionised at physiological pH",
+        "Highly protein-bound (~98%)",
+        "GABA-A receptor agonist"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "How does propofol produce unconsciousness? And can you describe its pharmacokinetics?",
+      "expectedKeyFacts": [
+        "Enhances GABA-A mediated chloride conductance — neuronal hyperpolarisation",
+        "Rapid onset (one arm-brain circulation time, ~30s)",
+        "Three-compartment model",
+        "Initial rapid distribution (t½α ~2-4 min)",
+        "Elimination half-life 4-12 hours but context-sensitive half-time is short",
+        "Hepatic metabolism (glucuronidation) + extrahepatic metabolism (lungs)",
+        "Clearance exceeds hepatic blood flow — extrahepatic sites confirmed"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "How would you modify your propofol dose in an elderly patient with cardiac failure? Why?",
+      "expectedKeyFacts": [
+        "Reduce induction dose (1-1.5 mg/kg vs 2-2.5 mg/kg)",
+        "Slower arm-brain circulation — delayed onset, risk of stacking doses",
+        "Reduced cardiac output prolongs redistribution",
+        "Reduced protein binding in elderly — higher free fraction",
+        "Exaggerated cardiovascular depression — hypotension, reduced SVR"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "A colleague asks why you use propofol rather than thiopentone for a patient requiring a short procedure. How would you justify your choice?",
+      "expectedKeyFacts": [
+        "Propofol: shorter context-sensitive half-time — faster recovery",
+        "Less hangover effect, clear-headed recovery",
+        "Antiemetic properties — advantageous for day surgery",
+        "Suppresses airway reflexes — better for LMA insertion",
+        "Thiopentone: longer recovery, no antiemetic effect, cumulative with repeated doses",
+        "Acknowledge thiopentone advantages: more haemodynamically stable at induction, useful in specific contexts (status epilepticus)"
+      ],
+      "timeBudgetSec": 60
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the side effects of propofol — what do you see clinically when you give an induction dose?",
+
+  "keyFacts": [
+    "2,6-diisopropylphenol in lipid emulsion",
+    "GABA-A receptor agonist",
+    "Rapid onset, rapid offset due to redistribution",
+    "Three-compartment pharmacokinetic model",
+    "Context-sensitive half-time remains short even after prolonged infusion",
+    "Hepatic and extrahepatic metabolism",
+    "Cardiovascular depression — reduced SVR, negative inotropy",
+    "Respiratory depression — apnoea common at induction",
+    "Suppresses airway reflexes",
+    "Antiemetic at sub-hypnotic doses",
+    "Pain on injection — lipid formulation reduces but doesn't eliminate",
+    "Propofol infusion syndrome (PRIS) with prolonged high-dose infusions"
+  ],
+
+  "scoringGuidance": {
+    "pass_plus": "Structured pharmacological approach, explains three-compartment model, context-sensitive half-time concept, discusses clinical dose adjustments with reasoning, balanced comparison with alternatives",
+    "pass": "Correct mechanism (GABA-A), describes rapid onset/offset, aware of cardiovascular depression, can modify dose for elderly, knows basic advantages over thiopentone",
+    "borderline": "Knows propofol is an IV anaesthetic and causes hypotension but mechanism unclear, vague on pharmacokinetics, dose adjustment without reasoning",
+    "fail": "Cannot describe mechanism of action, unaware of significant cardiovascular effects, no understanding of dose modification in vulnerable patients"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude 3.5 Sonnet",
+    "generatedAt": "2024-02-18T10:00:00Z",
+    "promptVersion": "v1.0.0-pharmacology",
+    "sourceMaterial": ["BJA_Propofol_Pharmacology_2018", "RCoA_Propofol_Guideline"],
+    "validation": {
+      "reviewedBy": "Dr. Sarah Admin, FRCA",
+      "reviewedAt": "2024-02-19T14:30:00Z",
+      "status": "approved",
+      "accuracy": 1.0,
+      "concordance": 0.95,
+      "insight": 0.8,
+      "notes": "Excellent clinical context on elderly dosing."
+    }
+  },
+  "furtherReading": [
+    "https://bjaed.org/article/S2058-5349(18)30054-7/fulltext"
+  ],
+  "isActive": true
+}
