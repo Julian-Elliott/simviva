@@ -68,23 +68,24 @@ def build_payload(prompt: str, data_collection: dict, settings: dict) -> dict:
                     "dynamic_variable_placeholders": settings.get("dynamic_variables", {}),
                 },
             },
+            # Only include TTS fields that have explicit values —
+            # the API may reject or misinterpret null for optional fields.
             "tts": {
-                "voice_id": voice.get("voice_id"),
-                "model_id": voice.get("model_id"),
-                "stability": voice.get("stability"),
-                "similarity_boost": voice.get("similarity_boost"),
-                "speed": voice.get("speed"),
-                "optimize_streaming_latency": voice.get("optimize_streaming_latency"),
+                k: v for k, v in {
+                    "voice_id": voice.get("voice_id"),
+                    "model_id": voice.get("model_id"),
+                    "stability": voice.get("stability"),
+                    "similarity_boost": voice.get("similarity_boost"),
+                    "style": voice.get("style"),
+                    "speed": voice.get("speed"),
+                    "optimize_streaming_latency": voice.get("optimize_streaming_latency"),
+                }.items() if v is not None
             },
         },
         "platform_settings": {
             "data_collection": data_collection,
         },
     }
-
-    # Include style only if explicitly set (null/None means omit)
-    if voice.get("style") is not None:
-        payload["conversation_config"]["tts"]["style"] = voice["style"]
 
     return payload
 
