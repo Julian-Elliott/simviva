@@ -64,6 +64,15 @@ In the agent editor, switch to **Workflow** mode (not single-prompt mode).
   - `{{candidate_name}}` — from session start (webapp)
   - `{{scenario_2_topic}}`, `{{scenario_2_opening}}`, etc. — from session start (webapp)
 
+### Node 3: END
+
+- **Type:** End call
+- **Name:** `end`
+- No voice, prompt, or LLM configuration needed — this node simply
+  terminates the WebRTC/WebSocket connection when reached.
+- Mirrors real life: the viva ends and the candidate leaves the room.
+  Post-call data collection runs automatically after the call closes.
+
 ---
 
 ## Step 3: Configure Edges
