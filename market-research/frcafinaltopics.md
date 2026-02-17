@@ -158,7 +158,6 @@
 - Smoke inhalation injury
 - Splaying of the carinal angle
 - Surfactant
-- Tension pneumothorax
 - Thoracic and thoracoabdominal aneurysms
 - Thoracic surgery pre-assessment
 - Treatment of pulmonary Oedema Postoperatively
@@ -224,7 +223,7 @@
 - Emergency LSCS
 - Fetal circulation
 - Fetal erythropoiesis
-- Fetal haemtopoiesis
+- Fetal haematopoiesis
 - G4P3, 20/40, in labour
 - GA for LSCS
 - Intra-uterine fetal death
@@ -709,7 +708,7 @@
 - Flutter valve drains
 - FONA (Front of Neck Access)
 - Foot Nerves & Ankle Block
-- GIves off axillary nerve
+- Gives off axillary nerve
 - Grave's disease in pregnancy, antibodies and placenta
 - Great vessels
 - Greater petrosal nerve (lacrimal secretomotor)
@@ -812,7 +811,7 @@
 - Placenta abruption
 - Placenta praevia/accreta
 - Placental circulation (fetal-maternal)
-- Pleural cavities are potetial spaces
+- Pleural cavities are potential spaces
 - Pleural Space
 - Pneumothorax, diaphragmatic impairment, failure
 - Popliteal fossa / sciatic
@@ -846,7 +845,7 @@
 - Spleen
 - Status epilepticus
 - Stellate Ganglion
-- Stridor / airway obstructure
+- Stridor / airway obstruction
 - Structure (Amide/Ester)
 - Subarachnoid space
 - Subclavian vein
@@ -956,7 +955,7 @@
 - Hypoventilation
 - Hypoxia with LMA
 - Hypoxia/Hypercapnia
-- Hysocine and secretions
+- Hyoscine and secretions
 - Immune response
 - Immunological function
 - Intracranial Pressure
@@ -1423,7 +1422,7 @@
 - Pharmacology of Anaesthetic agents
 - Pharmacology of local anaesthetics
 - Physics of ultrasound
-- Physiology of Valsala and effects
+- Physiology of Valsalva and effects
 - Plasma volume, tissue oedema, starling principle
 - Point of Care Tests (and ROTEM)
 - Post-operative monitoring
