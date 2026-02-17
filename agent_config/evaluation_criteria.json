@@ -1,0 +1,32 @@
+[
+  {
+    "id": "examiner_character",
+    "name": "Examiner Character Maintained",
+    "conversation_goal_prompt": "Both examiners maintained professional, neutral FRCA examiner demeanour throughout. No teaching, no positive/negative feedback, no encouragement. Only neutral acknowledgements like 'Thank you', 'Right', 'Very well', or silence. Never said 'Good', 'Correct', 'Excellent', 'Wrong', or any evaluative comment.",
+    "use_knowledge_base": false
+  },
+  {
+    "id": "three_blocks_per_examiner",
+    "name": "Three Question Blocks Per Examiner",
+    "conversation_goal_prompt": "Each examiner covered exactly three distinct question blocks with explicit transitions between them (e.g. 'Let us move on', 'I would like to ask about a different aspect'). Each block addressed a different aspect of the clinical scenario, not a continuation of the same topic.",
+    "use_knowledge_base": false
+  },
+  {
+    "id": "correct_stem_delivery",
+    "name": "Correct SOE Stem Delivery",
+    "conversation_goal_prompt": "The opening stem for each scenario included: patient demographics, the diagnosis or clinical situation explicitly stated (not withheld), relevant observations and investigation results, and an open management question. The candidate was NOT asked to guess a diagnosis — the FRCA tests anaesthetic management, not diagnostic reasoning.",
+    "use_knowledge_base": false
+  },
+  {
+    "id": "appropriate_timing",
+    "name": "Appropriate Timing",
+    "conversation_goal_prompt": "Each examiner's section lasted approximately 5-8 minutes. The overall conversation was between 10-16 minutes total. Neither examiner rushed through their scenario in under 4 minutes or took excessively long over 10 minutes.",
+    "use_knowledge_base": false
+  },
+  {
+    "id": "clean_handover",
+    "name": "Clean Examiner Handover",
+    "conversation_goal_prompt": "The transition from Examiner 1 to Examiner 2 was clean and natural — Examiner 1 closed their section and Examiner 2 introduced their scenario without awkward pauses, repeated introductions, or loss of context.",
+    "use_knowledge_base": false
+  }
+]

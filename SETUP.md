@@ -107,7 +107,52 @@ EXAMINER 1 → EXAMINER 2 → END
 
 ---
 
-## Step 6: Voice Testing
+## Step 6: Realism Configuration
+
+The following config files are synced to ElevenLabs via `agent_push.py`:
+
+### Turn & Conversation Flow (`agent_config/conversation_flow.json`)
+- **Turn timeout:** 18 seconds (candidates need time to think — far more than the default 7s)
+- **Turn eagerness:** `"patient"` — never cuts off a thinking candidate
+- **Soft timeout:** Disabled (`-1`) — no automatic filler prompts during silence
+- **Client events:** Includes `"interruption"` — candidate can interrupt if needed
+- **Max duration:** 25 minutes total
+
+### System Tools (`agent_config/tools.json`)
+- **`skip_turn`** — allows the examiner to stay completely silent while the candidate thinks (critical for realism — real examiners don't fill silence)
+- **`end_call`** — graceful conversation termination
+
+### Multi-Voice (`agent_config/supported_voices.json`)
+- **DrWhitmore** (George voice) — for Examiner 1
+- **DrHarris** (Charlie voice) — for Examiner 2
+- The system prompt uses `<DrWhitmore>...</DrWhitmore>` and `<DrHarris>...</DrHarris>` voice tags
+
+### ASR Keywords (`agent_config/settings.json → asr.keywords`)
+- 50+ anaesthetic terms (suxamethonium, rocuronium, cricothyroidotomy, etc.)
+- Helps ElevenLabs' speech recognition accurately transcribe medical terminology
+
+### Pronunciation Dictionary (`agent_config/pronunciation_dictionary.pls`)
+Upload the PLS file to ElevenLabs:
+1. Go to **Speech** → **Pronunciation Dictionaries** (or agent Voice tab → Pronunciation)
+2. Upload `pronunciation_dictionary.pls`
+3. Copy the dictionary ID and version ID
+4. Paste into `agent_config/pronunciation_locator.json`
+5. Run `agent_push.py` to attach the dictionary to the agent
+
+> **Note:** Uses alias tags (not phoneme tags) for compatibility with
+> `eleven_v3_conversational`. Phoneme tags only work with Flash/Turbo models.
+
+### Evaluation Criteria (`agent_config/evaluation_criteria.json`)
+5 criteria for automated post-call evaluation:
+- Examiner character maintained
+- Three question blocks per examiner
+- Correct SOE stem delivery
+- Appropriate timing
+- Clean examiner handover
+
+---
+
+## Step 7: Voice Testing
 
 Before the demo, test each voice:
 
@@ -128,7 +173,7 @@ Before the demo, test each voice:
 
 ---
 
-## Step 7: Test the Full Flow
+## Step 8: Test the Full Flow
 
 1. **Test each node in isolation** first — use the "Test" button on each subagent
 2. Test that voice switching works between nodes

@@ -164,6 +164,89 @@ def extract_dynamic_variables(agent: dict) -> dict:
         return {}
 
 
+def extract_turn(agent: dict) -> dict:
+    """Pull out turn configuration (timeout, eagerness, soft timeout)."""
+    try:
+        turn = agent["conversation_config"].get("turn", {})
+        if not turn:
+            return {}
+        result = {}
+        for key in ("turn_timeout", "silence_end_call_timeout",
+                     "soft_timeout_config", "turn_eagerness"):
+            if key in turn:
+                result[key] = turn[key]
+        return result
+    except (KeyError, TypeError):
+        return {}
+
+
+def extract_conversation(agent: dict) -> dict:
+    """Pull out conversation settings (client events, max duration)."""
+    try:
+        conv = agent["conversation_config"].get("conversation", {})
+        if not conv:
+            return {}
+        result = {}
+        for key in ("max_duration_seconds", "client_events"):
+            if key in conv:
+                result[key] = conv[key]
+        return result
+    except (KeyError, TypeError):
+        return {}
+
+
+def extract_tools(agent: dict) -> list:
+    """Pull out tools list (system tools like skip_turn, end_call)."""
+    try:
+        tools = agent["conversation_config"]["agent"]["prompt"].get("tools", [])
+        return tools or []
+    except (KeyError, TypeError):
+        return []
+
+
+def extract_supported_voices(agent: dict) -> list:
+    """Pull out multi-voice configuration."""
+    try:
+        voices = agent["conversation_config"]["tts"].get("supported_voices", [])
+        return voices or []
+    except (KeyError, TypeError):
+        return []
+
+
+def extract_pronunciation_locators(agent: dict) -> list:
+    """Pull out pronunciation dictionary locators."""
+    try:
+        locs = agent["conversation_config"]["tts"].get(
+            "pronunciation_dictionary_locators", [])
+        return locs or []
+    except (KeyError, TypeError):
+        return []
+
+
+def extract_evaluation_criteria(agent: dict) -> list:
+    """Pull out success evaluation criteria."""
+    try:
+        ev = agent.get("platform_settings", {}).get("evaluation", {})
+        return ev.get("criteria", []) or []
+    except (KeyError, TypeError):
+        return []
+
+
+def extract_asr(agent: dict) -> dict:
+    """Pull out ASR (speech recognition) config including keywords."""
+    try:
+        asr = agent["conversation_config"].get("asr", {})
+        if not asr:
+            return {}
+        result = {}
+        for key in ("quality", "provider", "keywords"):
+            if key in asr:
+                result[key] = asr[key]
+        return result
+    except (KeyError, TypeError):
+        return {}
+
+
 # ── Workflow helpers ──
 
 PROMPT_FILE_PREFIX = "__PROMPT_FILE__:"

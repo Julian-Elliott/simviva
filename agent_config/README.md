@@ -97,11 +97,17 @@ nodes inherit unless explicitly overridden.
 
 ## Files
 
-| File | What it controls |
-|------|-----------------|
-| `system_prompt.md` | The full system prompt sent to the LLM (base agent config) |
-| `data_collection.json` | Post-conversation data extraction fields (7 fields) |
-| `settings.json` | Voice, LLM, first message, agent name, language, dynamic variables |
+| File | What it controls | API path |
+|------|-----------------|----------|
+| `system_prompt.md` | Full system prompt sent to the LLM | `conversation_config.agent.prompt.prompt` |
+| `data_collection.json` | Post-conversation data extraction fields (7 fields) | `platform_settings.data_collection` |
+| `settings.json` | Voice, LLM, first message, agent name, language, dynamic variables, ASR keywords | `conversation_config.agent.*`, `conversation_config.tts.*`, `conversation_config.asr` |
+| `conversation_flow.json` | Turn timeout (18s), turn eagerness (patient), soft timeout (disabled), interruptions | `conversation_config.turn`, `conversation_config.conversation` |
+| `tools.json` | System tools — `skip_turn` (examiner silence), `end_call` | `conversation_config.agent.prompt.tools` |
+| `supported_voices.json` | Multi-voice — Dr Whitmore (George) + Dr Harris (Charlie) | `conversation_config.tts.supported_voices` |
+| `evaluation_criteria.json` | Post-call success evaluation criteria (5 criteria) | `platform_settings.evaluation.criteria` |
+| `pronunciation_dictionary.pls` | PLS lexicon for medical term pronunciation (alias tags) | Uploaded separately, referenced via locator |
+| `pronunciation_locator.json` | Pronunciation dictionary ID reference (after manual upload) | `conversation_config.tts.pronunciation_dictionary_locators` |
 
 ---
 

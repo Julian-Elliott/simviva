@@ -140,9 +140,24 @@ transcript. The webapp fetches these via the results API.
 ### Base Agent Settings (inherited by all subagent nodes)
 - **Model:** Claude Sonnet 4.5 (current PoC) — can be overridden per subagent node
 - **Language:** English (British)
-- **Max conversation duration:** 20 minutes (buffer for full workflow)
+- **Max conversation duration:** 25 minutes (buffer for full workflow)
 - **First message:** Handled by the first examiner's subagent node (greeting + scenario stem)
-- **Turn eagerness:** Patient (gives candidates time to formulate answers)
+
+### Realism Settings (configured in `agent_config/`)
+
+| Feature | File | Setting | Effect |
+|---------|------|---------|--------|
+| **Turn timeout** | `conversation_flow.json` | `turn.turn_timeout: 18` | Candidate has 18 seconds to respond (vs default 7) |
+| **Turn eagerness** | `conversation_flow.json` | `turn.turn_eagerness: "patient"` | Agent waits patiently, never cuts off thinking candidates |
+| **Soft timeout** | `conversation_flow.json` | `turn.soft_timeout_config.timeout_seconds: -1` | Disabled — no filler prompts during silence |
+| **Interruptions** | `conversation_flow.json` | `conversation.client_events: ["audio", "interruption"]` | Candidate can interrupt (rare in vivas, but realistic) |
+| **Skip turn** | `tools.json` | System tool `skip_turn` | Agent can stay completely silent while candidate thinks |
+| **End call** | `tools.json` | System tool `end_call` | Agent can end the viva gracefully |
+| **Multi-voice** | `supported_voices.json` | DrWhitmore + DrHarris voice labels | Two distinct voices for two examiners |
+| **Voice speed** | `settings.json` | `voice.speed: 0.95` | Slightly slower for clarity (real examiners speak deliberately) |
+| **ASR keywords** | `settings.json` | `asr.keywords: [...]` | 50+ medical terms for accurate speech recognition |
+| **Pronunciation** | `pronunciation_dictionary.pls` | PLS alias tags | Correct pronunciation of suxamethonium, rocuronium, etc. |
+| **Evaluation** | `evaluation_criteria.json` | 5 success criteria | Post-call automated assessment of examiner performance |
 
 ### Edge Configuration
 - Use **LLM conditions** (natural language evaluated by the LLM) for
@@ -170,5 +185,5 @@ transcript. The webapp fetches these via the results API.
 
 ### Latency Optimisation
 - Set `optimize_streaming_latency` to 1 (balanced)
-- Use `eleven_v3_conversational` voice model for lowest latency
+- Use `eleven_v3_conversational` voice model (lowest latency, expressive mode built-in)
 - Keep system prompts under 2000 tokens per subagent node
