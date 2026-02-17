@@ -221,7 +221,21 @@ def pull_to_local(agent: dict):
             f.write("\n")
         print("  workflow.json  ({} nodes, {} prompt files)".format(node_count, prompt_count))
     else:
-        print("  No workflow (single-agent mode)")
+        # No live workflow — clean up any stale local workflow artefacts
+        wf_path = os.path.join(CONFIG_DIR, "workflow.json")
+        nodes_dir = os.path.join(CONFIG_DIR, "nodes")
+        removed = []
+        if os.path.exists(wf_path):
+            os.remove(wf_path)
+            removed.append("workflow.json")
+        if os.path.isdir(nodes_dir):
+            shutil.rmtree(nodes_dir)
+            removed.append("nodes/")
+        if removed:
+            print("  No workflow (single-agent mode) — removed stale {}".format(
+                ", ".join(removed)))
+        else:
+            print("  No workflow (single-agent mode)")
 
 
 def _diff_json(local_obj, live_obj, label: str, any_diff_ref: list) -> None:
