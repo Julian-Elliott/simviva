@@ -14,6 +14,7 @@ import copy
 import difflib
 import json
 import os
+import shutil
 import sys
 from datetime import datetime, timezone
 
@@ -174,6 +175,20 @@ def pull_to_local(agent: dict):
     if workflow:
         wf = copy.deepcopy(workflow)
         nodes_dir = os.path.join(CONFIG_DIR, "nodes")
+
+        # Build the set of slugs we expect to write so we can prune stale dirs
+        expected_slugs = set()
+        for node in wf.get("nodes", []):
+            expected_slugs.add(api.node_slug(node))
+
+        # Remove node directories that no longer exist in the live workflow
+        if os.path.isdir(nodes_dir):
+            for entry in os.listdir(nodes_dir):
+                entry_path = os.path.join(nodes_dir, entry)
+                if os.path.isdir(entry_path) and entry not in expected_slugs:
+                    shutil.rmtree(entry_path)
+                    print("  removed stale nodes/{}/".format(entry))
+
         node_count = 0
         prompt_count = 0
         for node in wf.get("nodes", []):
