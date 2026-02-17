@@ -20,7 +20,7 @@ Output shape per scenario:
   "facts":     string[],        ← master keyFacts list
   "rescue":    string,          ← rescuePrompt
   "prompts":   Prompt[],        ← full structured prompts (new)
-  "scoringGuidance": object,    ← pass_plus/pass/borderline/fail (new)
+  "scoringGuidance": object,    ← pass/borderline/fail keyed to RCoA 2/1/0 (new)
   "demographics": object | null ← patient demographics (new)
 }
 

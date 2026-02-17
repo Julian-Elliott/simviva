@@ -4,7 +4,7 @@ update_agent.py — Patch the ElevenLabs agent to align with the new data model.
 
 Changes:
   1. System prompt: adds {{scenario_X_scoring}} variable references
-  2. Data collection: updates candidate_grade to use RCoA 4-point scale
+  2. Data collection: per-question marks (question_1_mark, question_2_mark) on RCoA 0/1/2 scale
   3. Adds key_facts_covered and key_facts_missed data collection fields
 
 Usage:
@@ -72,9 +72,13 @@ def main():
 
     # ── 1. Inject scoring guidance blocks into the system prompt ──
     scoring_block = """
-## SCORING GUIDANCE (SimViva Session Grade)
+## SCORING GUIDANCE (RCoA Per-Question Marking)
 
 Use the scenario-specific scoring rubric below when assessing the candidate.
+Mark each question INDEPENDENTLY on the official RCoA 3-point scale:
+- 2 = Pass (meets or exceeds the expected standard)
+- 1 = Borderline (approaches but does not reliably meet the standard)
+- 0 = Fail (significantly below the expected standard)
 
 ### Dr Whitmore's Scenario Scoring:
 {{scenario_1_scoring}}
@@ -82,15 +86,9 @@ Use the scenario-specific scoring rubric below when assessing the candidate.
 ### Dr Harris's Scenario Scoring:
 {{scenario_2_scoring}}
 
-After the viva, grade the candidate's OVERALL session on this 4-point scale:
-- 4 = Pass+ (exceeds the expected standard)
-- 3 = Pass (meets the expected standard)
-- 2 = Borderline (approaches but does not meet the standard)
-- 1 = Fail (significantly below the expected standard)
-
-Note: The real RCoA SOE uses per-question marks (0/1/2) across 12 questions.
-SimViva covers only 2 questions, so this holistic grade is a formative estimate,
-not a real exam score.
+After the viva, assign a SEPARATE mark (0, 1, or 2) for each question.
+Do NOT average them — each question is marked independently, exactly as
+in the real Primary FRCA SOE.
 """
 
     # Check if scoring block is already present
@@ -110,19 +108,38 @@ not a real exam score.
 
     # ── 2. Update data_collection to use RCoA scale ──
     new_data_collection = {
-        "candidate_grade": {
+        "question_1_mark": {
             "type": "string",
             "description": (
-                "You are the chief examiner. Based on the ENTIRE conversation and the "
-                "SCORING GUIDANCE provided for each scenario, give the candidate a holistic "
-                "session grade on the SimViva 4-point scale. Output ONLY the number first "
-                "(4, 3, 2, or 1), then a dash, then one sentence justification.\n"
-                "4 = Pass+ (exceeds expected standard — structured answers, depth, anticipated follow-ups)\n"
-                "3 = Pass (meets expected standard — correct core knowledge, minor gaps only)\n"
-                "2 = Borderline (approaches but does not meet — partial knowledge, significant gaps, needed rescue)\n"
-                "1 = Fail (significantly below — major errors, unable to answer core questions, unsafe)\n"
-                "Example: '3 — Candidate demonstrated adequate knowledge of propofol pharmacology "
-                "with correct mechanism and dosing but lacked depth on context-sensitive half-time.'"
+                "You are the chief examiner. Based on the candidate's performance during "
+                "Dr Whitmore's scenario and the SCORING GUIDANCE for that scenario, assign "
+                "a mark on the RCoA per-question scale. Output ONLY the number first "
+                "(0, 1, or 2), then a dash, then one sentence justification.\n"
+                "2 = Pass (meets or exceeds expected standard — correct core knowledge, "
+                "structured answer, good depth)\n"
+                "1 = Borderline (approaches but does not reliably meet the standard — "
+                "partial knowledge, significant gaps, needed rescue)\n"
+                "0 = Fail (significantly below — major errors, unable to answer core "
+                "questions, unsafe statements)\n"
+                "Example: '2 — Candidate demonstrated clear understanding of propofol "
+                "pharmacology with correct mechanism, dosing, and context-sensitive half-time.'"
+            ),
+        },
+        "question_2_mark": {
+            "type": "string",
+            "description": (
+                "You are the chief examiner. Based on the candidate's performance during "
+                "Dr Harris's scenario and the SCORING GUIDANCE for that scenario, assign "
+                "a mark on the RCoA per-question scale. Output ONLY the number first "
+                "(0, 1, or 2), then a dash, then one sentence justification.\n"
+                "2 = Pass (meets or exceeds expected standard — correct core knowledge, "
+                "structured answer, good depth)\n"
+                "1 = Borderline (approaches but does not reliably meet the standard — "
+                "partial knowledge, significant gaps, needed rescue)\n"
+                "0 = Fail (significantly below — major errors, unable to answer core "
+                "questions, unsafe statements)\n"
+                "Example: '1 — Candidate had partial knowledge of tracheostomy anatomy "
+                "but could not describe the blood supply or innervation reliably.'"
             ),
         },
         "topic_1_summary": {
@@ -192,7 +209,10 @@ not a real exam score.
     print(f"  Data collection fields: {list(dc.keys())}")
     sp = updated["conversation_config"]["agent"]["prompt"]["prompt"]
     print(f"  System prompt contains scoring block: {'{{scenario_1_scoring}}' in sp}")
-    print("\n✅ Agent aligned with new data model.")
+    has_q1 = "question_1_mark" in dc
+    has_q2 = "question_2_mark" in dc
+    print(f"  Per-question marks: q1={has_q1}, q2={has_q2}")
+    print("\n✅ Agent aligned with RCoA per-question marking.")
 
 
 if __name__ == "__main__":

@@ -76,7 +76,7 @@ A scenario doesn't know which exam format it belongs to. It only knows:
 | `prompts[].expectedKeyFacts` | What the candidate should cover for this specific prompt |
 | `rescuePrompt` | ONE simplified alternative when the candidate is stuck |
 | `keyFacts` | Master list across all prompts — used for scoring |
-| `scoringGuidance` | RCoA 4-point descriptors specific to this scenario |
+| `scoringGuidance` | RCoA per-question mark descriptors (pass/borderline/fail → 2/1/0) |
 | `isActive` | Soft delete / draft control |
 
 **Naming convention:** `{topic}_{type}_{number}.json`

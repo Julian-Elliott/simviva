@@ -56,8 +56,8 @@ A multi-node ElevenLabs Conversational AI workflow simulating a Primary FRCA Str
 ┌─────────────────┐
 │    DEBRIEF       │  (Subagent node — Voice C)
 │ Deliver feedback │
-│ RCoA 4-point     │
-│ scale scores     │
+│ RCoA 0/1/2 per-  │
+│ question marks    │
 └─────────────────┘
 ```
 
@@ -172,7 +172,7 @@ also transition.
 **Implementation:** Custom tool or LLM-as-judge prompt that:
 1. Receives full conversation transcript
 2. Compares candidate responses against `expectedPoints` for each question
-3. Scores each topic on RCoA 4-point scale
+3. Assigns each question a per-question mark on the RCoA 0/1/2 scale
 4. Generates structured feedback
 
 **Tool definition:**

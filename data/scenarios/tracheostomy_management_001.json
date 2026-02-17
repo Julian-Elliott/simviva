@@ -80,8 +80,7 @@
   ],
 
   "scoringGuidance": {
-    "pass_plus": "Systematic NTSP algorithm approach, clear on fresh vs mature tracheostomy distinction, appropriate escalation, articulates risk of false passage, considers fibreoptic guidance",
-    "pass": "Covers ABC approach, removes inner cannula, attempts suction catheter, aware of reinsertion risks in fresh tracheostomy, mentions oral intubation as fallback",
+    "pass": "Covers ABC approach, removes inner cannula, attempts suction catheter, aware of reinsertion risks in fresh tracheostomy, mentions oral intubation as fallback; stronger candidates will follow the NTSP algorithm systematically, distinguish fresh vs mature, and consider fibreoptic guidance",
     "borderline": "Some structure but gaps — may not distinguish fresh from mature tracheostomy, or misses suction catheter step, vague on when to remove tube entirely",
     "fail": "No structured approach, attempts blind reinsertion of fresh tracheostomy, does not apply oxygen to both face and stoma, unaware of NTSP algorithm"
   },

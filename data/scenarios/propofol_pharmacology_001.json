@@ -87,8 +87,7 @@
   ],
 
   "scoringGuidance": {
-    "pass_plus": "Structured pharmacological approach, explains three-compartment model, context-sensitive half-time concept, discusses clinical dose adjustments with reasoning, balanced comparison with alternatives",
-    "pass": "Correct mechanism (GABA-A), describes rapid onset/offset, aware of cardiovascular depression, can modify dose for elderly, knows basic advantages over thiopentone",
+    "pass": "Correct mechanism (GABA-A), describes rapid onset/offset, aware of cardiovascular depression, can modify dose for elderly, knows basic advantages over thiopentone; stronger candidates may also explain the three-compartment model and context-sensitive half-time",
     "borderline": "Knows propofol is an IV anaesthetic and causes hypotension but mechanism unclear, vague on pharmacokinetics, dose adjustment without reasoning",
     "fail": "Cannot describe mechanism of action, unaware of significant cardiovascular effects, no understanding of dose modification in vulnerable patients"
   },

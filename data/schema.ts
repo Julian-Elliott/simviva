@@ -198,18 +198,15 @@ export interface Scenario {
 
   // ── Scoring guidance ──
 
-  /** What each SimViva session grade looks like for THIS scenario.
-   *  These descriptors inform the AI's holistic 4-point formative grade
-   *  (Pass+ / Pass / Borderline / Fail). They are NOT the real RCoA
-   *  per-question marks (0/1/2). */
+  /** What each RCoA per-question mark (0/1/2) looks like for THIS scenario.
+   *  These descriptors tell the AI how to assign 0, 1, or 2 for the
+   *  question — matching the real Primary FRCA SOE marking scheme. */
   scoringGuidance: {
-    /** 4 = Pass+ (exceeds expected standard) */
-    pass_plus: string;
-    /** 3 = Pass (meets expected standard) */
+    /** 2 = Pass (meets or exceeds the expected standard) */
     pass: string;
-    /** 2 = Borderline (approaches but does not meet) */
+    /** 1 = Borderline (approaches but does not reliably meet) */
     borderline: string;
-    /** 1 = Fail (significantly below expected standard) */
+    /** 0 = Fail (significantly below expected standard) */
     fail: string;
   };
 
@@ -343,7 +340,19 @@ export interface ExamBlueprint {
 // LAYER 3: TRACKING — How the user is doing
 // ═══════════════════════════════════════════════════════════════
 
-export type Score = 1 | 2 | 3 | 4;
+/**
+ * RCoA per-question mark — the real SOE marking scale.
+ *
+ *   0 = Fail       (significantly below expected standard)
+ *   1 = Borderline (approaches but does not reliably meet the standard)
+ *   2 = Pass       (meets or exceeds the expected standard)
+ *
+ * In the real Primary FRCA SOE each examiner marks every question on
+ * this 0/1/2 scale.  SimViva covers 2 questions per session, so the
+ * AI returns one QuestionMark per question — exactly matching the
+ * authentic RCoA scheme.
+ */
+export type QuestionMark = 0 | 1 | 2;
 
 export interface User {
   id: string;
@@ -410,9 +419,12 @@ export interface ScenarioAttempt {
   /** How far through the prompt progression they got */
   promptTiersReached: PromptTier[];
 
-  // ── Scoring ──
+  // ── Scoring (RCoA per-question marks) ──
 
-  score: Score;
+  /** Mark for question 1 (Dr Whitmore's scenario) — 0/1/2 */
+  question1Mark: QuestionMark;
+  /** Mark for question 2 (Dr Harris's scenario) — 0/1/2 */
+  question2Mark: QuestionMark;
   keyFactsCovered: string[];
   keyFactsMissed: string[];
 
@@ -467,11 +479,13 @@ export interface TopicMastery {
   /** Rolling history for trend calculation */
   history: {
     attemptId: string;
-    score: Score;
+    /** RCoA per-question mark for the question that covered this topic */
+    mark: QuestionMark;
     date: string;
   }[];
 
-  averageScore: number;
+  /** Mean of QuestionMark values (0-2 scale) for this topic */
+  averageMark: number;
   trend: "improving" | "stable" | "declining";
   lastAttemptDate: string;
 }

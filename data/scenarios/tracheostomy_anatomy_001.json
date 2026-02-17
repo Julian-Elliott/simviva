@@ -82,8 +82,7 @@
   ],
 
   "scoringGuidance": {
-    "pass_plus": "Layer-by-layer description without prompting, names variant vessels (ima artery), explains rationale for ring 2-3 selection, mentions posterior membranous wall risk",
-    "pass": "Correctly describes the major layers, identifies isthmus position, aware of anterior jugular veins and brachiocephalic artery risk, knows preferred ring level",
+    "pass": "Correctly describes the major layers, identifies isthmus position, aware of anterior jugular veins and brachiocephalic artery risk, knows preferred ring level; stronger candidates may give a layer-by-layer description unprompted and name variant vessels such as the ima artery",
     "borderline": "Incomplete layer description, may miss isthmus relationship or confuse ring levels, vague on vascular risks",
     "fail": "Cannot describe basic layers, unaware of thyroid isthmus position, does not identify major vascular risks"
   },

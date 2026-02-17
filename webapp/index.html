@@ -85,7 +85,6 @@
         .grade-card { background: #1a1a1a; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
         .grade-label { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
         .grade-value { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.25rem; }
-        .grade-value.distinction { color: #5be67a; }
         .grade-value.pass { color: #5ba3e6; }
         .grade-value.borderline { color: #e6a35b; }
         .grade-value.fail { color: #e65b5b; }
@@ -466,49 +465,47 @@
 
             let html = '';
 
-            // Grade card — SimViva 4-point session grade
-            // The agent is prompted to return "4 — justification", "3 — …", etc.
-            // We normalise defensively in case the model prefixes a word instead.
-            const grade = (dc.candidate_grade || '').trim();
-            function mapRcoaGrade(raw) {
+            // Per-question grade cards — RCoA 0/1/2 marking
+            // The agent returns "2 — justification", "1 — …", "0 — …" per question.
+            function mapQuestionMark(raw) {
                 if (!raw) return null;
                 const s = raw.trim();
-                // Primary match: leading digit 1–4
-                const numMatch = s.match(/^([1-4])\b/);
+                // Primary match: leading digit 0–2
+                const numMatch = s.match(/^([0-2])\b/);
                 if (numMatch) {
                     const n = numMatch[1];
-                    return { '4': { label: '4 — Pass+',      css: 'distinction' },
-                             '3': { label: '3 — Pass',       css: 'pass' },
-                             '2': { label: '2 — Borderline', css: 'borderline' },
-                             '1': { label: '1 — Fail',       css: 'fail' } }[n];
+                    return { '2': { label: '2 — Pass',       css: 'pass' },
+                             '1': { label: '1 — Borderline', css: 'borderline' },
+                             '0': { label: '0 — Fail',       css: 'fail' } }[n];
                 }
                 // Fallback: first word may be a grade label (case-insensitive)
                 const word = s.split(/[\s.,:;\u2014\u2013+/-]+/)[0].toUpperCase();
                 const textMap = {
-                    'PASS':       { label: '3 — Pass',       css: 'pass' },
-                    'BORDERLINE': { label: '2 — Borderline', css: 'borderline' },
-                    'FAIL':       { label: '1 — Fail',       css: 'fail' },
+                    'PASS':       { label: '2 — Pass',       css: 'pass' },
+                    'BORDERLINE': { label: '1 — Borderline', css: 'borderline' },
+                    'FAIL':       { label: '0 — Fail',       css: 'fail' },
                 };
-                // "PASS+" is a two-char sequence; check the raw uppercase start
-                if (s.toUpperCase().startsWith('PASS+') || word === 'PASS+') {
-                    return { label: '4 — Pass+', css: 'distinction' };
-                }
                 return textMap[word] || null;
             }
-            const mapped = mapRcoaGrade(grade);
-            if (grade) {
-                const display = mapped || { label: grade, css: '' };
-                // Strip the matched grade token from the start to isolate justification
+            function renderQuestionCard(raw, label) {
+                if (!raw) return '';
+                const mapped = mapQuestionMark(raw);
+                const display = mapped || { label: raw, css: '' };
+                // Strip the matched mark token from the start to isolate justification
                 const justification = mapped
-                    ? grade.replace(/^[1-4]\s*[\u2014\u2013\-—]\s*/, '')
-                           .replace(/^(pass\+?|borderline|fail)\s*[\u2014\u2013\-—:.\s]*/i, '')
+                    ? raw.replace(/^[0-2]\s*[\u2014\u2013\-—]\s*/, '')
+                         .replace(/^(pass|borderline|fail)\s*[\u2014\u2013\-—:.\s]*/i, '')
                     : '';
-                html += `<div class="grade-card">
-                    <div class="grade-label">Session Grade (formative, not official RCoA marking)</div>
+                return `<div class="grade-card">
+                    <div class="grade-label">${label}</div>
                     <div class="grade-value ${display.css}">${display.label}</div>
                     ${justification ? `<div class="grade-justification">${justification}</div>` : ''}
                 </div>`;
             }
+            const q1Raw = (dc.question_1_mark || '').trim();
+            const q2Raw = (dc.question_2_mark || '').trim();
+            html += renderQuestionCard(q1Raw, 'Question 1 — Dr Whitmore (RCoA mark)');
+            html += renderQuestionCard(q2Raw, 'Question 2 — Dr Harris (RCoA mark)');
 
             // Evaluation criteria grid
             if (eval_ && Object.keys(eval_).length > 0) {
@@ -649,7 +646,7 @@
 
             function formatScoring(sg) {
                 if (!sg) return '';
-                return `Pass+(4): ${sg.pass_plus}\nPass(3): ${sg.pass}\nBorderline(2): ${sg.borderline}\nFail(1): ${sg.fail}`;
+                return `Pass(2): ${sg.pass}\nBorderline(1): ${sg.borderline}\nFail(0): ${sg.fail}`;
             }
 
             const dynamicVars = {
