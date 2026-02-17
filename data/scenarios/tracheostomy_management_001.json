@@ -1,0 +1,90 @@
+{
+  "id": "tracheostomy_management_001",
+  "updatedAt": "2026-02-17T00:00:00Z",
+
+  "domain": "clinical_anaesthesia",
+  "topicTagIds": ["tracheostomy", "airway_management", "cant_intubate"],
+  "caseId": "tracheostomy_001",
+  "slotType": "clinical",
+  "caseOrder": 0,
+
+  "stem": "Dr. {{surname}}, you are called to the ward where a patient with a recent tracheostomy is in respiratory distress. The nursing staff tell you the tracheostomy tube appears displaced. How would you manage this situation?",
+
+  "prompts": [
+    {
+      "tier": "application",
+      "text": "Talk me through your immediate actions at the bedside.",
+      "expectedKeyFacts": [
+        "Call for help — anaesthetic emergency",
+        "Apply high-flow oxygen to face AND stoma simultaneously",
+        "Assess patency: look, listen, feel at mouth and stoma",
+        "Remove inner cannula"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "The inner tube is clear but you still cannot ventilate through the tracheostomy. What now?",
+      "expectedKeyFacts": [
+        "Pass suction catheter through tracheostomy — if it passes, tube is patent and in trachea",
+        "If catheter does not pass — tube is displaced or blocked",
+        "Remove the tracheostomy tube entirely",
+        "Cover the stoma and attempt oral bag-mask ventilation"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "You have removed the tracheostomy tube and are ventilating orally. The surgeon asks you to re-insert the tube. What are your concerns?",
+      "expectedKeyFacts": [
+        "Fresh tracheostomy (<7 days) — tract not mature, do NOT blindly re-insert",
+        "Risk of creating false passage",
+        "Maintain oral intubation as the safe airway",
+        "If reinsertion needed, use fibreoptic guidance or surgical reinsertion",
+        "For mature tracheostomy (>7 days), reinsertion through established tract is safer"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "Why might you choose to intubate orally rather than attempt front-of-neck re-access in this scenario?",
+      "expectedKeyFacts": [
+        "Oral intubation is a familiar, reliable technique",
+        "Fresh stoma is oedematous, bleeding risk",
+        "Avoids false passage creation",
+        "Buys time for senior surgical involvement",
+        "Risk-benefit: known technique vs uncertain anatomy"
+      ],
+      "timeBudgetSec": 90
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could talk me through the NTSP emergency tracheostomy algorithm — what are the key steps?",
+
+  "keyFacts": [
+    "Call for help early — anaesthetic emergency",
+    "Apply oxygen to face AND stoma",
+    "Remove inner cannula first",
+    "Use suction catheter to assess patency",
+    "Use capnography to confirm ventilation route",
+    "If fresh tracheostomy (<7 days) — do NOT blindly re-insert",
+    "Cover stoma and ventilate from above if needed",
+    "NTSP emergency tracheostomy algorithm",
+    "Fibreoptic-guided reinsertion for mature stomas",
+    "Escalate to surgical team for definitive management"
+  ],
+
+  "scoringGuidance": {
+    "pass_plus": "Systematic NTSP algorithm approach, clear on fresh vs mature tracheostomy distinction, appropriate escalation, articulates risk of false passage, considers fibreoptic guidance",
+    "pass": "Covers ABC approach, removes inner cannula, attempts suction catheter, aware of reinsertion risks in fresh tracheostomy, mentions oral intubation as fallback",
+    "borderline": "Some structure but gaps — may not distinguish fresh from mature tracheostomy, or misses suction catheter step, vague on when to remove tube entirely",
+    "fail": "No structured approach, attempts blind reinsertion of fresh tracheostomy, does not apply oxygen to both face and stoma, unaware of NTSP algorithm"
+  },
+
+  "author": "SimViva Team",
+  "furtherReading": [
+    "https://www.tracheostomy.org.uk/storage/files/NTSP%20Emergency%20Algorithm.pdf",
+    "https://bjaed.org/article/S2058-5349(21)00003-3/fulltext"
+  ],
+  "isActive": true
+}
