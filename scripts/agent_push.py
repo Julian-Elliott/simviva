@@ -291,7 +291,12 @@ def main():
                 "--branch requires a branch name argument.\n"
                 "Usage: agent_push.py [--dry-run] [--branch <name>]"
             )
-        branch_name = sys.argv[idx + 1]
+        branch_name = sys.argv[idx + 1].strip()
+        if not branch_name:
+            raise SystemExit(
+                "--branch value must not be empty.\n"
+                "If calling from CI, ensure the variable is set."
+            )
 
     print("Reading agent_config/...")
     config = read_config()

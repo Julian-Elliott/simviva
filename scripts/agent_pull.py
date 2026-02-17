@@ -400,7 +400,12 @@ def main():
                 "--branch requires a branch name or ID.\n"
                 "Usage: agent_pull.py [--diff] [--branch <name>]"
             )
-        branch_ref = sys.argv[idx + 1]
+        branch_ref = sys.argv[idx + 1].strip()
+        if not branch_ref:
+            raise SystemExit(
+                "--branch value must not be empty.\n"
+                "If calling from CI, ensure the variable is set."
+            )
 
     branch_id = None
     if branch_ref:
