@@ -133,6 +133,12 @@ export interface Scenario {
   // ── Ethical / Source Tracking ──
   provenance?: AIProvenance;
 
+  // ── Demographic Monitoring (EU AI Act Art. 10 Bias Control) ──
+  demographics?: {
+    patientAgeGroup: 'neonate' | 'infant' | 'child' | 'adolescent' | 'adult' | 'geriatric';
+    patientGender: 'male' | 'female'; 
+  };
+
   // ── What it covers ──
 
   /** Primary science domain */

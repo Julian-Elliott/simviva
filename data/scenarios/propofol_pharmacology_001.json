@@ -8,6 +8,11 @@
   "slotType": "any",
   "caseOrder": 0,
 
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "male"
+  },
+
   "stem": "Dr. {{surname}}, tell me about propofol.",
 
   "prompts": [
@@ -92,7 +97,7 @@
   "provenance": {
     "generatedBy": "Claude 3.5 Sonnet",
     "generatedAt": "2024-02-18T10:00:00Z",
-    "promptVersion": "v1.0.0-pharmacology",
+    "promptVersion": "v1.0.0",
     "sourceMaterial": ["BJA_Propofol_Pharmacology_2018", "RCoA_Propofol_Guideline"],
     "validation": {
       "reviewedBy": "Dr. Sarah Admin, FRCA",
