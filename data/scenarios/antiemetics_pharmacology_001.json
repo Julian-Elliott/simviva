@@ -1,0 +1,135 @@
+{
+  "id": "antiemetics_pharmacology_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "pharmacology",
+  "topicTagIds": ["antiemetics", "pharmacology", "ponv"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "female"
+  },
+
+  "stem": "Dr. {{candidate_name}}, tell me about antiemetic drugs used in anaesthesia.",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "What are the main classes of antiemetic drugs and give examples?",
+      "expectedKeyFacts": [
+        "5-HT3 antagonists: ondansetron, granisetron",
+        "Dopamine (D2) antagonists: metoclopramide, prochlorperazine, droperidol",
+        "Antihistamines (H1): cyclizine",
+        "Anticholinergics: hyoscine",
+        "NK1 antagonists: aprepitant",
+        "Corticosteroids: dexamethasone",
+        "Propofol has antiemetic properties"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "Explain how ondansetron works and its side effects.",
+      "expectedKeyFacts": [
+        "Selective 5-HT3 (serotonin) receptor antagonist",
+        "Blocks receptors in chemoreceptor trigger zone and GI tract",
+        "Dose: 4-8 mg IV",
+        "Effective for PONV prevention and treatment",
+        "Side effects: headache, constipation, dizziness",
+        "QT prolongation — caution in cardiac patients",
+        "Well tolerated overall",
+        "More effective when given at end of surgery than at induction"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "How would you assess a patient's risk of PONV and plan antiemetic prophylaxis?",
+      "expectedKeyFacts": [
+        "Apfel score: female gender, non-smoker, history of PONV/motion sickness, post-op opioids",
+        "Each factor = 1 point; 0-1 = low risk, 2 = moderate, 3-4 = high risk",
+        "High-risk surgery: laparoscopy, ENT, gynaecological, strabismus surgery",
+        "Prophylaxis: multimodal approach if ≥2 risk factors",
+        "Combine agents from different classes for additive effect",
+        "TIVA with propofol reduces baseline risk",
+        "Adequate hydration, minimize opioids, avoid N₂O",
+        "Example: dexamethasone 4-8 mg + ondansetron 4 mg"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "A patient develops severe PONV in recovery despite receiving ondansetron intraoperatively. What would you give?",
+      "expectedKeyFacts": [
+        "Use antiemetic from different class",
+        "Cyclizine 50 mg IV or IM",
+        "Prochlorperazine 12.5 mg IM (avoid IV — hypotension risk)",
+        "Dexamethasone 4-8 mg IV if not already given",
+        "Metoclopramide 10 mg IV",
+        "Consider acupressure (P6 stimulation)",
+        "Avoid repeat ondansetron within 4-6 hours",
+        "Ensure adequate hydration and minimize opioid dose",
+        "Consider switching to non-opioid analgesia"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "Why is dexamethasone commonly used for PONV prophylaxis despite being a steroid?",
+      "expectedKeyFacts": [
+        "Highly effective for PONV prevention (mechanism not fully understood)",
+        "Works via anti-inflammatory and central antiemetic effects",
+        "Single dose 4-8 mg has minimal side effects",
+        "Long duration of action (~24 hours)",
+        "Most effective when given at induction",
+        "Synergistic with other antiemetics",
+        "Low cost and widely available",
+        "Concerns: hyperglycaemia (minimal with single dose), delayed wound healing (not clinically significant)",
+        "Relative contraindications: active peptic ulcer, poorly controlled diabetes"
+      ],
+      "timeBudgetSec": 60
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the Apfel score — what are the risk factors for PONV?",
+
+  "keyFacts": [
+    "5-HT3 antagonists (ondansetron), D2 antagonists (metoclopramide), H1 antagonists (cyclizine)",
+    "Ondansetron 4-8 mg IV, blocks 5-HT3 receptors",
+    "Apfel score: female, non-smoker, PONV history, opioids",
+    "Multimodal prophylaxis for high-risk patients",
+    "Dexamethasone 4-8 mg at induction",
+    "Avoid N₂O, use TIVA, minimize opioids",
+    "Ondansetron QT prolongation",
+    "Cyclizine 50 mg for rescue",
+    "Combine different classes for additive effect",
+    "P6 acupressure can help"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Lists main antiemetic classes with examples, explains ondansetron mechanism and side effects, knows Apfel score and risk stratification, describes multimodal approach, appropriate rescue therapy using different class; stronger candidates discuss optimal timing and dexamethasone rationale",
+    "borderline": "Knows some antiemetics but classification unclear, mentions ondansetron but mechanism vague, aware of PONV risk but Apfel score incomplete, rescue therapy non-systematic",
+    "fail": "Cannot classify antiemetics, does not understand mechanisms, unaware of risk assessment or prophylaxis strategies, inappropriate rescue therapy"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T22:10:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["PONV_Consensus_Guidelines_2020", "BJA_Antiemetics_2019"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1213/ANE.0000000000004833"
+  ],
+  "isActive": true
+}

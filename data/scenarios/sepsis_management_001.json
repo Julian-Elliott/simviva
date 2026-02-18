@@ -1,0 +1,121 @@
+{
+  "id": "sepsis_management_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "critical_care",
+  "topicTagIds": ["sepsis", "critical_care", "resuscitation"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "male"
+  },
+
+  "stem": "Dr. {{candidate_name}}, you are called to see a 65-year-old man on the surgical ward. He is 2 days post-laparotomy. He is pyrexial, hypotensive, tachycardic, and drowsy. How would you assess and manage this patient?",
+
+  "prompts": [
+    {
+      "tier": "application",
+      "text": "What is your initial assessment and diagnosis?",
+      "expectedKeyFacts": [
+        "Suspect sepsis — SIRS + suspected infection",
+        "SIRS criteria: temp >38°C or <36°C, HR >90, RR >20, WCC >12 or <4",
+        "Sepsis: life-threatening organ dysfunction due to dysregulated host response to infection",
+        "qSOFA score: GCS <15, RR ≥22, systolic BP ≤100 mmHg",
+        "Two or more qSOFA criteria suggests sepsis",
+        "ABC assessment: airway, breathing, circulation",
+        "Identify source: abdominal, respiratory, urinary, wound, line-related"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "Describe your immediate management according to the Sepsis Six bundle.",
+      "expectedKeyFacts": [
+        "Three in: oxygen, IV fluids, antibiotics",
+        "Three out: blood cultures, lactate, urine output",
+        "Oxygen: target SpO₂ 94-98% (or 88-92% if COPD risk)",
+        "IV fluid resuscitation: 500 mL crystalloid bolus, reassess",
+        "Broad-spectrum antibiotics within 1 hour (after cultures)",
+        "Blood cultures before antibiotics if possible",
+        "Lactate >2 mmol/L suggests tissue hypoperfusion",
+        "Monitor urine output — target >0.5 mL/kg/hr"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "The patient remains hypotensive despite 2 litres of fluid. What would you do next?",
+      "expectedKeyFacts": [
+        "Consider septic shock — sepsis with persistent hypotension requiring vasopressors",
+        "Invasive monitoring: arterial line, central venous access",
+        "Commence vasopressor: noradrenaline first-line",
+        "Target MAP ≥65 mmHg",
+        "Assess fluid responsiveness: passive leg raise, stroke volume variation",
+        "Consider further fluid if responsive, avoid fluid overload",
+        "Involve ICU/critical care team urgently",
+        "Source control: surgical review if intra-abdominal source",
+        "Repeat lactate — trend indicates response to treatment"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "What is the rationale for early antibiotic administration in sepsis?",
+      "expectedKeyFacts": [
+        "Each hour delay in antibiotics increases mortality",
+        "Broad-spectrum empirical therapy covers likely organisms",
+        "Tailor antibiotics once culture results available",
+        "Source control essential — antibiotics alone insufficient",
+        "De-escalate to narrow-spectrum once sensitivities known",
+        "Early goal-directed therapy improves outcomes",
+        "Time-critical intervention — 'door to antibiotics' <1 hour",
+        "Balance against antimicrobial stewardship"
+      ],
+      "timeBudgetSec": 60
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the Sepsis Six — what are the three things you give and three things you measure?",
+
+  "keyFacts": [
+    "Sepsis: organ dysfunction due to infection",
+    "SIRS criteria: temp, HR, RR, WCC",
+    "qSOFA: GCS, RR, systolic BP",
+    "Sepsis Six: oxygen, fluids, antibiotics; cultures, lactate, urine output",
+    "Antibiotics within 1 hour",
+    "Fluid resuscitation guided by response",
+    "Septic shock: persistent hypotension needing vasopressors",
+    "Noradrenaline first-line vasopressor",
+    "Target MAP ≥65 mmHg",
+    "Source control essential",
+    "ICU involvement early",
+    "Lactate trend indicates response"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Recognises sepsis, applies Sepsis Six systematically, knows time-critical nature of antibiotics, describes fluid resuscitation and escalation to vasopressors, involves ICU appropriately; stronger candidates discuss fluid responsiveness assessment and antimicrobial stewardship",
+    "borderline": "Suspects sepsis but assessment not systematic, knows some elements of Sepsis Six but incomplete, vague on escalation or vasopressor choice",
+    "fail": "Does not recognise sepsis, no knowledge of Sepsis Six or time-critical antibiotics, inappropriate fluid management, does not escalate care"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:45:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["Surviving_Sepsis_Campaign_2021", "UK_Sepsis_Trust_Guidelines"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://www.sepsistrust.org/professional-resources/clinical/"
+  ],
+  "isActive": true
+}

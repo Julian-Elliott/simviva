@@ -1,0 +1,130 @@
+{
+  "id": "capnography_physics_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "physics",
+  "topicTagIds": ["clinical_measurement", "monitoring", "capnography"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "female"
+  },
+
+  "stem": "Dr. {{candidate_name}}, can you explain how capnography works and interpret a capnograph trace?",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "Describe the principles of capnography measurement.",
+      "expectedKeyFacts": [
+        "Measures partial pressure of CO₂ in respiratory gases",
+        "Infrared spectroscopy — CO₂ absorbs infrared light at 4.3 μm",
+        "Beer-Lambert law: absorption proportional to concentration",
+        "Mainstream: sensor in breathing circuit, fast response, no sampling delay",
+        "Sidestream: gas sampled via thin tube, slower response, risk of blockage",
+        "Normal ETCO₂: 4.5-6.0 kPa (34-45 mmHg)",
+        "Difference between PaCO₂ and ETCO₂ normally <1 kPa"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "Describe the phases of a normal capnograph trace.",
+      "expectedKeyFacts": [
+        "Phase 0 (inspiratory baseline): zero CO₂ — inspiratory gas",
+        "Phase I (expiratory upstroke): rapid rise — anatomical dead space washed out",
+        "Phase II (expiratory upstroke): steep rise — mixed dead space and alveolar gas",
+        "Phase III (alveolar plateau): gradual rise — alveolar gas, slope reflects V/Q matching",
+        "End-tidal point: peak of phase III",
+        "Phase IV: rapid fall during inspiration"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "What would cause a gradual decrease in ETCO₂ during anaesthesia?",
+      "expectedKeyFacts": [
+        "Decreased cardiac output: reduced pulmonary blood flow → less CO₂ delivered",
+        "Hypothermia: reduced metabolic rate → less CO₂ production",
+        "Hyperventilation: excess alveolar ventilation → lower alveolar CO₂",
+        "Air embolism: increased dead space",
+        "Circuit disconnection or leak: dilution with room air",
+        "Inadequate CO₂ production: prolonged anaesthesia, muscle relaxation",
+        "Pulmonary embolus: sudden fall with V/Q mismatch"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "You see a sudden fall in ETCO₂ to near zero during laparoscopic surgery. What are the possible causes and how would you respond?",
+      "expectedKeyFacts": [
+        "Differential diagnosis: cardiac arrest, massive pulmonary embolus, circuit disconnection, oesophageal intubation (if recent)",
+        "Check patient: pulse, BP, ECG — exclude cardiac arrest",
+        "Check breathing circuit: connections, ventilator functioning",
+        "Auscultate chest: bilateral air entry",
+        "CO₂ embolism in laparoscopy: gas insufflation → venous embolus",
+        "Management of CO₂ embolus: stop insufflation, 100% oxygen, left lateral head-down position, supportive measures",
+        "Cardiac arrest: start CPR immediately",
+        "Document and investigate cause"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "Why might the gradient between PaCO₂ and ETCO₂ be increased?",
+      "expectedKeyFacts": [
+        "Normal gradient <1 kPa — reflects alveolar dead space",
+        "Increased V/Q mismatch: COPD, pulmonary embolus",
+        "Increased dead space: air embolism, low cardiac output",
+        "ETCO₂ underestimates PaCO₂",
+        "Rapid shallow breathing: inadequate alveolar plateau",
+        "In healthy lungs with normal cardiac output, gradient minimal",
+        "Cannot rely on ETCO₂ as surrogate for PaCO₂ in diseased lungs",
+        "Arterial blood gas needed for accurate PaCO₂ in sick patients"
+      ],
+      "timeBudgetSec": 60
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me what you would see on the capnograph if the endotracheal tube was in the oesophagus — what would the trace look like?",
+
+  "keyFacts": [
+    "Infrared spectroscopy at 4.3 μm",
+    "Beer-Lambert law",
+    "Normal ETCO₂ 4.5-6.0 kPa",
+    "PaCO₂ - ETCO₂ gradient normally <1 kPa",
+    "Phases: 0 (inspiratory), I (dead space), II (mixed), III (alveolar plateau)",
+    "Mainstream vs sidestream",
+    "Decreased ETCO₂: low cardiac output, hyperventilation, embolus, disconnection",
+    "Sudden fall to zero: arrest, massive PE, disconnection",
+    "Increased gradient: V/Q mismatch, dead space, low CO",
+    "CO₂ embolism in laparoscopy"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Explains infrared spectroscopy and Beer-Lambert law, describes capnograph phases correctly, interprets changes in ETCO₂ with differential diagnosis, recognises significance of sudden fall and gradient changes; stronger candidates discuss mainstream vs sidestream and V/Q physiology",
+    "borderline": "Knows capnography measures CO₂ but mechanism unclear, can identify some phases but interpretation vague, mentions some causes of changes but non-systematic",
+    "fail": "Cannot explain measurement principle, does not understand capnograph trace, unaware of clinical significance of ETCO₂ changes, no differential for sudden fall"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:40:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["BJA_Capnography_2018", "AAGBI_Capnography_Standards"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1093/bjaceaccp/mkt030"
+  ],
+  "isActive": true
+}

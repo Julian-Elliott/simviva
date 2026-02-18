@@ -1,0 +1,130 @@
+{
+  "id": "acid_base_physiology_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "physiology",
+  "topicTagIds": ["acid_base", "respiratory_physiology", "renal_physiology"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "male"
+  },
+
+  "stem": "Dr. {{candidate_name}}, can you explain how the body regulates pH?",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "What are the normal values for arterial blood gases?",
+      "expectedKeyFacts": [
+        "pH: 7.35-7.45 (hydrogen ion concentration 35-45 nmol/L)",
+        "PaCO₂: 4.5-6.0 kPa (34-46 mmHg)",
+        "PaO₂: 10.5-13.5 kPa (80-100 mmHg) breathing room air",
+        "Bicarbonate (HCO₃⁻): 22-28 mmol/L",
+        "Base excess: -2 to +2 mmol/L",
+        "Standard bicarbonate: measured at PaCO₂ 5.3 kPa"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "Explain the three main buffering systems in the body.",
+      "expectedKeyFacts": [
+        "Bicarbonate buffer: CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻",
+        "Most important extracellular buffer, regulated by lungs and kidneys",
+        "Protein buffers: haemoglobin (most important), albumin",
+        "Phosphate buffer: H₂PO₄⁻ ⇌ HPO₄²⁻ + H⁺, important in urine",
+        "Henderson-Hasselbalch equation: pH = pKa + log([HCO₃⁻]/[H₂CO₃])",
+        "Respiratory compensation: minutes (change ventilation)",
+        "Renal compensation: days (excrete/retain H⁺ and HCO₃⁻)"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "A patient has pH 7.28, PaCO₂ 7.5 kPa, HCO₃⁻ 24 mmol/L, base excess 0. What is the acid-base disturbance?",
+      "expectedKeyFacts": [
+        "Acidaemia (pH <7.35)",
+        "Raised PaCO₂ — respiratory acidosis",
+        "Normal bicarbonate and base excess — acute, uncompensated",
+        "Causes: hypoventilation, respiratory depression, airway obstruction",
+        "If chronic: expect metabolic compensation with raised HCO₃⁻",
+        "For every 1 kPa rise in PaCO₂, HCO₃⁻ rises 1 mmol/L acutely, 4 mmol/L chronically",
+        "Management: treat underlying cause, improve ventilation"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "How does the kidney handle acid-base balance?",
+      "expectedKeyFacts": [
+        "Reabsorbs all filtered HCO₃⁻ in proximal tubule",
+        "Secretes H⁺ in distal tubule and collecting duct",
+        "H⁺ buffered by ammonia (NH₃ + H⁺ → NH₄⁺) and phosphate",
+        "Type A intercalated cells secrete H⁺ via H⁺-ATPase",
+        "Type B intercalated cells secrete HCO₃⁻ in alkalosis",
+        "Generates new HCO₃⁻ for systemic use",
+        "Compensation takes 3-5 days",
+        "Can excrete acid urine (pH 4.5-5.5) or alkaline (pH 8)"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "What is the anion gap and how is it useful?",
+      "expectedKeyFacts": [
+        "Anion gap = (Na⁺ + K⁺) - (Cl⁻ + HCO₃⁻), or Na⁺ - (Cl⁻ + HCO₃⁻)",
+        "Normal 12-16 mmol/L (without K⁺) or 16-20 mmol/L (with K⁺)",
+        "Represents unmeasured anions (albumin, phosphate, sulphate, lactate)",
+        "High anion gap metabolic acidosis: MUDPILES (Methanol, Uraemia, DKA, Paraldehyde, Iron/Isoniazid, Lactic acidosis, Ethylene glycol, Salicylates)",
+        "Normal anion gap acidosis: GI losses (diarrhoea), RTA, Addison's",
+        "Corrected for albumin: add 2.5 to AG for every 10 g/L drop in albumin",
+        "Useful for differentiating causes of metabolic acidosis"
+      ],
+      "timeBudgetSec": 90
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me how you interpret an arterial blood gas — what is your systematic approach?",
+
+  "keyFacts": [
+    "Normal pH 7.35-7.45, PaCO₂ 4.5-6.0 kPa, HCO₃⁻ 22-28 mmol/L",
+    "Bicarbonate, protein, phosphate buffers",
+    "Henderson-Hasselbalch equation",
+    "Respiratory compensation: minutes",
+    "Renal compensation: days",
+    "Respiratory acidosis: hypoventilation, raised CO₂",
+    "Metabolic acidosis: low HCO₃⁻, negative base excess",
+    "Anion gap: Na⁺ - (Cl⁻ + HCO₃⁻)",
+    "High AG: lactic acidosis, DKA, uraemia",
+    "Normal AG: GI losses, RTA",
+    "Kidney: reabsorbs HCO₃⁻, secretes H⁺, generates new HCO₃⁻"
+  ],
+
+  "scoringGuidance": {
+    "pass": "States normal ABG values, explains buffering systems and Henderson-Hasselbalch, interprets ABG correctly identifying primary disturbance and compensation, describes renal acid handling, understands anion gap and its use; stronger candidates discuss compensation formulas and corrected anion gap",
+    "borderline": "Knows some normal values but incomplete, mentions buffers but mechanism unclear, can identify acidosis but compensation vague, aware of anion gap but interpretation limited",
+    "fail": "Cannot state normal ABG values, does not understand buffering or compensation, cannot interpret ABG, unaware of anion gap concept or renal acid handling"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:55:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["Acid_Base_Physiology_Textbook_2019", "BJA_Acid_Base_2018"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1093/bjaceaccp/mkt021"
+  ],
+  "isActive": true
+}

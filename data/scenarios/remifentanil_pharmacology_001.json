@@ -1,0 +1,128 @@
+{
+  "id": "remifentanil_pharmacology_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "pharmacology",
+  "topicTagIds": ["opioids", "pharmacokinetics", "pharmacodynamics"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "male"
+  },
+
+  "stem": "Dr. {{candidate_name}}, tell me about remifentanil.",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "What is remifentanil and how does it differ from other opioids?",
+      "expectedKeyFacts": [
+        "Ultra-short-acting synthetic opioid",
+        "μ-opioid receptor agonist",
+        "Metabolised by non-specific plasma and tissue esterases",
+        "Context-sensitive half-time remains constant (~3-4 minutes) regardless of infusion duration",
+        "Inactive metabolites — no accumulation"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "Explain the pharmacokinetic properties that make remifentanil unique.",
+      "expectedKeyFacts": [
+        "Ester linkage rapidly hydrolysed by non-specific esterases",
+        "Metabolism is independent of hepatic or renal function",
+        "Small volume of distribution (~0.3 L/kg)",
+        "Very high clearance (~40 mL/kg/min)",
+        "Rapid redistribution and elimination",
+        "No active metabolites",
+        "Predictable offset even after prolonged infusion"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "A patient with severe renal failure requires a major operation. How would you use remifentanil in this context and why?",
+      "expectedKeyFacts": [
+        "Remifentanil is ideal for renal failure — ester metabolism is independent of renal function",
+        "No dose adjustment required",
+        "Avoids accumulation seen with morphine and fentanyl metabolites",
+        "Predictable offset allows rapid titration",
+        "Must plan alternative analgesia before discontinuation",
+        "No residual analgesia after stopping infusion"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "What are the potential problems when using remifentanil for anaesthesia?",
+      "expectedKeyFacts": [
+        "Profound bradycardia — especially with rapid bolus",
+        "Chest wall rigidity at high doses",
+        "Profound respiratory depression — requires mechanical ventilation",
+        "Acute opioid tolerance — may require higher doses intraoperatively",
+        "Hyperalgesia post-infusion — increased postoperative pain",
+        "No residual analgesia — must transition to alternative analgesia before emergence",
+        "Expensive compared to alternatives"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "When would you choose remifentanil over fentanyl or alfentanil?",
+      "expectedKeyFacts": [
+        "Cases requiring rapid, predictable emergence (neurosurgery, awake craniotomy)",
+        "Renal or hepatic impairment — avoids accumulation",
+        "Total intravenous anaesthesia (TIVA) — stable plasma levels",
+        "Cases with uncertain duration — no accumulation concern",
+        "Controlled hypotension — easily titrated",
+        "Acknowledge disadvantages: cost, need for transition analgesia, potential hyperalgesia",
+        "Fentanyl preferred for long cases with residual analgesia requirement"
+      ],
+      "timeBudgetSec": 90
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the side effects of remifentanil — what do you see when you give an induction dose?",
+
+  "keyFacts": [
+    "Ultra-short-acting μ-opioid receptor agonist",
+    "Metabolised by plasma and tissue esterases",
+    "Context-sensitive half-time ~3-4 minutes regardless of duration",
+    "Independent of hepatic and renal function",
+    "No active metabolites",
+    "Rapid onset and offset",
+    "Bradycardia — especially with bolus",
+    "Chest wall rigidity at high doses",
+    "Acute tolerance and hyperalgesia",
+    "No residual analgesia — requires transition plan",
+    "Ideal for TIVA, neurosurgery, renal failure",
+    "Expensive relative to alternatives"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Correctly identifies ester metabolism and esterase-mediated breakdown, explains constant context-sensitive half-time, discusses advantages in renal failure, aware of bradycardia and hyperalgesia risks, can justify choice vs other opioids; stronger candidates explain three-compartment model and transition analgesia strategies",
+    "borderline": "Knows remifentanil is short-acting and metabolised differently but vague on mechanism, mentions some side effects, unclear on clinical applications or when to prefer over alternatives",
+    "fail": "Cannot explain unique pharmacokinetics, unaware of ester metabolism, does not understand clinical implications of ultra-short duration, no knowledge of hyperalgesia or transition analgesia requirement"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T20:45:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["BJA_Remifentanil_Pharmacology_2018", "RCoA_Opioid_Guidelines"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1093/bja/aet139"
+  ],
+  "isActive": true
+}

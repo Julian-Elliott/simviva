@@ -1,0 +1,132 @@
+{
+  "id": "renal_physiology_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "physiology",
+  "topicTagIds": ["renal_physiology", "fluid_balance", "electrolytes"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "male"
+  },
+
+  "stem": "Dr. {{candidate_name}}, can you explain how the kidney handles sodium?",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "Describe the structure of the nephron and where sodium is reabsorbed.",
+      "expectedKeyFacts": [
+        "Nephron: glomerulus, proximal tubule, loop of Henle, distal tubule, collecting duct",
+        "Proximal tubule: 65-70% sodium reabsorbed with water (iso-osmotic)",
+        "Thick ascending limb: 25% sodium reabsorbed (Na-K-2Cl cotransporter)",
+        "Distal tubule: 5% sodium reabsorbed",
+        "Collecting duct: 2-3% sodium reabsorbed (aldosterone-sensitive)",
+        "Overall >99% of filtered sodium reabsorbed",
+        "Glomerular filtration rate ~125 mL/min in adults"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "How does the loop of Henle create the concentration gradient in the medulla?",
+      "expectedKeyFacts": [
+        "Countercurrent multiplier system",
+        "Descending limb: permeable to water, impermeable to sodium — water moves out, fluid becomes hypertonic",
+        "Thick ascending limb: impermeable to water, actively transports Na-K-2Cl out",
+        "Creates increasing osmotic gradient from cortex (300 mOsm) to medulla (1200 mOsm)",
+        "Vasa recta: countercurrent exchanger preserves gradient",
+        "Urea recycling in inner medulla contributes to gradient",
+        "ADH increases water permeability in collecting duct — allows concentration"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "How does aldosterone affect sodium handling and what triggers its release?",
+      "expectedKeyFacts": [
+        "Mineralocorticoid acting on principal cells of collecting duct",
+        "Increases sodium reabsorption via epithelial sodium channels (ENaC)",
+        "Increases potassium secretion (Na-K-ATPase activity)",
+        "Triggers: renin-angiotensin-aldosterone system (RAAS)",
+        "Released in response to: low BP, low sodium, high potassium",
+        "Juxtaglomerular apparatus senses low perfusion pressure — releases renin",
+        "Angiotensin II stimulates aldosterone from adrenal cortex",
+        "Effect: sodium and water retention, increased BP, potassium loss"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "What would happen if you gave a loop diuretic and where does it act?",
+      "expectedKeyFacts": [
+        "Acts on Na-K-2Cl cotransporter in thick ascending limb",
+        "Blocks sodium and chloride reabsorption",
+        "Prevents concentration gradient formation",
+        "Results: sodium, chloride, potassium loss; increased urine output",
+        "Cannot concentrate urine maximally",
+        "Also inhibits calcium reabsorption — hypocalcaemia",
+        "Metabolic alkalosis: increased distal sodium delivery, K+ and H+ loss",
+        "Examples: furosemide, bumetanide",
+        "Used in fluid overload, pulmonary oedema, hyperkalaemia"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "Compare the effects of loop diuretics versus thiazide diuretics on calcium balance.",
+      "expectedKeyFacts": [
+        "Loop diuretics: inhibit calcium reabsorption in thick ascending limb — hypocalcaemia, increased urinary calcium",
+        "Thiazides: enhance calcium reabsorption in distal tubule — hypercalcaemia",
+        "Thiazides block Na-Cl cotransporter in distal tubule",
+        "Loop diuretics more potent but thiazides useful in long-term HTN",
+        "Thiazides used in hypercalciuria and recurrent calcium stones",
+        "Loop diuretics used in acute hypercalcaemia with fluid resuscitation",
+        "Both cause hypokalaemia and metabolic alkalosis"
+      ],
+      "timeBudgetSec": 90
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the renin-angiotensin-aldosterone system — what triggers it and what does it do?",
+
+  "keyFacts": [
+    "65-70% sodium reabsorbed in proximal tubule",
+    "25% in thick ascending limb (Na-K-2Cl)",
+    "Countercurrent multiplier creates medullary gradient",
+    "ADH increases water permeability in collecting duct",
+    "Aldosterone increases sodium reabsorption, potassium secretion",
+    "RAAS activated by low BP, low sodium",
+    "Loop diuretics block Na-K-2Cl, prevent concentration, cause hypocalcaemia",
+    "Thiazides block Na-Cl, cause hypercalcaemia",
+    "GFR ~125 mL/min, >99% sodium reabsorbed",
+    "Juxtaglomerular apparatus releases renin"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Describes nephron segments and percentages of sodium reabsorption, explains countercurrent multiplier, understands aldosterone mechanism and RAAS, knows loop diuretic action and complications; stronger candidates compare thiazide vs loop effects on calcium",
+    "borderline": "Knows kidney filters and reabsorbs sodium but unclear on segments, mentions loop of Henle but mechanism vague, aware of diuretics but side effects unclear",
+    "fail": "Cannot describe nephron structure, does not understand sodium handling or concentration mechanism, unaware of aldosterone or RAAS, no knowledge of diuretic mechanisms"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:15:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["Renal_Physiology_Textbook_2019", "BJA_Renal_Physiology_2018"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1093/bjaceaccp/mkt004"
+  ],
+  "isActive": true
+}

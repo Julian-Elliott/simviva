@@ -1,0 +1,133 @@
+{
+  "id": "local_anaesthetics_pharmacology_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "pharmacology",
+  "topicTagIds": ["local_anaesthetics", "pharmacology", "toxicity"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "male"
+  },
+
+  "stem": "Dr. {{candidate_name}}, tell me about local anaesthetic drugs.",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "What is the structure and classification of local anaesthetics?",
+      "expectedKeyFacts": [
+        "Consist of aromatic ring linked to amine group",
+        "Classified by linkage: amides or esters",
+        "Amides: lignocaine, bupivacaine, ropivacaine, levobupivacaine",
+        "Esters: cocaine, procaine, amethocaine",
+        "Amides metabolised by liver, esters by plasma cholinesterase",
+        "Weak bases — mostly ionised at physiological pH"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "How do local anaesthetics work?",
+      "expectedKeyFacts": [
+        "Block voltage-gated sodium channels",
+        "Prevent action potential propagation",
+        "Non-ionised form crosses cell membrane",
+        "Ionised form binds to intracellular part of sodium channel",
+        "Preferentially block open/inactivated channels — use-dependent block",
+        "Differential block: small myelinated fibres (B, Aδ) blocked before large fibres (Aα)",
+        "Autonomic and pain fibres blocked before motor and proprioception"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "What are the maximum safe doses of lignocaine and bupivacaine, and how do these change with adrenaline?",
+      "expectedKeyFacts": [
+        "Lignocaine: 3 mg/kg plain, 7 mg/kg with adrenaline",
+        "Bupivacaine: 2 mg/kg plain or with adrenaline",
+        "Adrenaline causes vasoconstriction — slows systemic absorption",
+        "Prolongs duration of action",
+        "Reduces peak plasma concentration",
+        "Bupivacaine dose not increased with adrenaline due to cardiotoxicity risk",
+        "Calculate dose based on ideal body weight in obesity"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "A patient develops signs of local anaesthetic toxicity. Describe the features and your management.",
+      "expectedKeyFacts": [
+        "Early CNS signs: perioral tingling, tinnitus, confusion, agitation",
+        "Progressive CNS: seizures, loss of consciousness",
+        "CVS toxicity: arrhythmias (VT/VF), myocardial depression, cardiovascular collapse",
+        "Bupivacaine more cardiotoxic than lignocaine — binds tightly to cardiac sodium channels",
+        "Management: stop injection, ABC, 100% oxygen",
+        "Control seizures: benzodiazepines, small dose propofol/thiopentone",
+        "Intralipid 20% — 1.5 mL/kg bolus then infusion",
+        "Start CPR if cardiac arrest — may be prolonged",
+        "Avoid vasopressin, beta-blockers, calcium channel blockers",
+        "Alert cardiac bypass team — may need ECMO"
+      ],
+      "timeBudgetSec": 120
+    },
+    {
+      "tier": "evaluation",
+      "text": "Why is levobupivacaine or ropivacaine preferred over bupivacaine for major nerve blocks?",
+      "expectedKeyFacts": [
+        "Levobupivacaine is S-enantiomer of bupivacaine — less cardiotoxic",
+        "Ropivacaine is pure S-enantiomer — less lipid-soluble, less CNS and CVS toxic",
+        "Improved safety margin if accidental intravascular injection",
+        "Ropivacaine causes less motor block — differential sensory block useful in labour",
+        "Racemic bupivacaine R-enantiomer more cardiotoxic",
+        "Accept that bupivacaine is cheaper and still widely used",
+        "For major blocks with large doses, safety profile favours newer agents"
+      ],
+      "timeBudgetSec": 90
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the signs and symptoms of local anaesthetic toxicity — what would you see?",
+
+  "keyFacts": [
+    "Amides vs esters — different metabolism",
+    "Block voltage-gated sodium channels",
+    "Differential block — small fibres affected first",
+    "Maximum doses: lignocaine 3 mg/kg (7 with adrenaline), bupivacaine 2 mg/kg",
+    "Adrenaline reduces systemic absorption",
+    "Toxicity: CNS excitation then depression, CVS collapse",
+    "Bupivacaine highly cardiotoxic",
+    "Intralipid 20% 1.5 mL/kg for toxicity",
+    "Prolonged CPR may be needed",
+    "Levobupivacaine and ropivacaine safer enantiomers",
+    "pKa affects onset — closer to pH 7.4 = faster onset",
+    "Protein binding affects duration"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Correct classification (amide/ester), explains sodium channel blockade, knows maximum doses and effect of adrenaline, describes features and management of LA toxicity including intralipid; stronger candidates explain enantiomers and differential block mechanism",
+    "borderline": "Knows local anaesthetics block nerves and some drug names, vague on doses, mentions toxicity but unclear on management or intralipid protocol",
+    "fail": "Cannot classify local anaesthetics, does not understand mechanism of action, unaware of maximum doses or toxicity features, no knowledge of intralipid rescue"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T20:55:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["AAGBI_LA_Toxicity_2010", "BJA_Local_Anaesthetics_2019"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://www.aagbi.org/sites/default/files/la_toxicity_2010_0.pdf"
+  ],
+  "isActive": true
+}

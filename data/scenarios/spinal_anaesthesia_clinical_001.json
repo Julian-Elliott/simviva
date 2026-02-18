@@ -1,0 +1,118 @@
+{
+  "id": "spinal_anaesthesia_clinical_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "clinical_anaesthesia",
+  "topicTagIds": ["regional_anaesthesia", "spinal_anaesthesia", "neuraxial"],
+  "caseId": null,
+  "slotType": "clinical",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "female"
+  },
+
+  "stem": "Dr. {{candidate_name}}, you are planning a spinal anaesthetic for a 70-year-old woman having a total hip replacement. Talk me through your approach.",
+
+  "prompts": [
+    {
+      "tier": "application",
+      "text": "What are the indications and contraindications for spinal anaesthesia?",
+      "expectedKeyFacts": [
+        "Indications: lower limb, pelvic, lower abdominal surgery; obstetric procedures",
+        "Advantages: avoids general anaesthesia, excellent analgesia, reduced DVT risk",
+        "Absolute contraindications: patient refusal, infection at injection site, coagulopathy, severe hypovolaemia",
+        "Relative contraindications: fixed cardiac output states (severe AS), raised ICP, sepsis, previous spinal surgery",
+        "Check platelets >80×10⁹/L, INR <1.4, stopped anticoagulation appropriately",
+        "LMWH: stop prophylactic dose 12 hours, therapeutic dose 24 hours before"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "Describe your technique for performing a spinal anaesthetic.",
+      "expectedKeyFacts": [
+        "Position: sitting or lateral, flexed spine",
+        "Identify level: Tuffier's line (iliac crests) = L4/L5",
+        "Aseptic technique: gown, gloves, mask, chlorhexidine prep, sterile drape",
+        "Infiltrate local anaesthetic subcutaneously",
+        "Insert spinal needle (25G pencil-point) at L3/L4 or L4/L5",
+        "Advance through: skin, supraspinous ligament, interspinous ligament, ligamentum flavum, epidural space, dura",
+        "Confirm CSF flow, inject local anaesthetic slowly",
+        "Typical dose: 2-3 mL heavy bupivacaine 0.5% (10-15 mg)",
+        "Assess block height with cold or pinprick"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "What are the potential complications of spinal anaesthesia?",
+      "expectedKeyFacts": [
+        "Hypotension: most common, due to sympathetic blockade and vasodilation",
+        "Post-dural puncture headache: <1% with pencil-point needles",
+        "Bradycardia: Bezold-Jarisch reflex, high block affecting cardiac sympathetics",
+        "Total spinal: inadvertent high block, respiratory compromise, loss of consciousness",
+        "Neurological injury: rare, direct trauma or ischaemia",
+        "Cauda equina syndrome, spinal haematoma (very rare)",
+        "Urinary retention",
+        "Back pain at injection site"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "How would you manage severe hypotension after spinal anaesthesia?",
+      "expectedKeyFacts": [
+        "Prevention: IV fluid preload 500 mL, avoid aortocaval compression (left lateral tilt)",
+        "Treatment: fluid boluses 250-500 mL crystalloid",
+        "Vasopressor: phenylephrine 50-100 mcg or metaraminol 0.5-1 mg",
+        "Ephedrine 6-9 mg if bradycardic",
+        "Increase oxygen delivery",
+        "Raise legs if possible",
+        "Severe/refractory: consider small dose adrenaline, exclude high block",
+        "Monitor: frequent BP, assess block height, check consciousness"
+      ],
+      "timeBudgetSec": 90
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the surface anatomy for spinal anaesthesia — how do you identify the correct level?",
+
+  "keyFacts": [
+    "Indications: lower limb, pelvic, lower abdominal surgery",
+    "Contraindications: refusal, infection, coagulopathy, hypovolaemia",
+    "Tuffier's line = L4/L5 interspace",
+    "Aseptic technique essential",
+    "Layers: skin, supraspinous, interspinous, ligamentum flavum, epidural, dura",
+    "Heavy bupivacaine 0.5% 2-3 mL (10-15 mg)",
+    "Complications: hypotension, PDPH, bradycardia, total spinal",
+    "Hypotension management: fluids, phenylephrine, ephedrine",
+    "PDPH: <1% with pencil-point needles",
+    "Check anticoagulation timing"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Lists indications and contraindications including coagulopathy, describes technique with correct anatomy and aseptic precautions, knows complications and their management especially hypotension, appropriate vasopressor choice; stronger candidates discuss anticoagulation timing and prevention strategies",
+    "borderline": "Knows spinal is for lower body surgery but indications/contraindications incomplete, technique described but anatomy vague, mentions hypotension but management unclear",
+    "fail": "Cannot describe indications or contraindications, does not know surface anatomy, technique unsafe or incomplete, unaware of major complications or their management"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T22:00:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["AAGBI_Spinal_Anaesthesia_2020", "ASRA_Anticoagulation_Guidelines"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://anaesthetists.org/Home/Resources-publications/Guidelines/Spinal-anaesthesia"
+  ],
+  "isActive": true
+}

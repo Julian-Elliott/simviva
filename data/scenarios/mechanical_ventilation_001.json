@@ -1,0 +1,133 @@
+{
+  "id": "mechanical_ventilation_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "critical_care",
+  "topicTagIds": ["mechanical_ventilation", "critical_care", "respiratory_support"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "female"
+  },
+
+  "stem": "Dr. {{candidate_name}}, can you explain the principles of mechanical ventilation and the different modes available?",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "What are the key variables in mechanical ventilation?",
+      "expectedKeyFacts": [
+        "Tidal volume (Vt): typically 6-8 mL/kg ideal body weight",
+        "Respiratory rate (RR): typically 12-20 breaths/min",
+        "Inspiratory:Expiratory ratio (I:E): normally 1:2",
+        "PEEP (positive end-expiratory pressure): typically 5-10 cmH₂O",
+        "FiO₂ (fraction of inspired oxygen): adjust to target SpO₂",
+        "Peak and plateau pressures",
+        "Minute ventilation = Vt × RR"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "Explain the difference between volume-controlled and pressure-controlled ventilation.",
+      "expectedKeyFacts": [
+        "Volume-controlled (VCV): delivers set tidal volume, pressure varies",
+        "Guarantees minute ventilation",
+        "Risk of barotrauma if high pressures generated",
+        "Pressure-controlled (PCV): delivers set inspiratory pressure, volume varies",
+        "Pressure limit protects against barotrauma",
+        "Tidal volume varies with compliance",
+        "PCV may be better in non-compliant lungs (ARDS)",
+        "Both modes can be used with PEEP"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "What is PEEP and why is it used?",
+      "expectedKeyFacts": [
+        "Positive end-expiratory pressure — prevents alveolar collapse",
+        "Maintains FRC above closing capacity",
+        "Improves oxygenation by recruiting collapsed alveoli",
+        "Reduces atelectrauma (repeated opening/closing injury)",
+        "Reduces shunt fraction",
+        "Typical PEEP 5-10 cmH₂O, higher in ARDS (10-15 cmH₂O)",
+        "Excessive PEEP can reduce venous return and cardiac output",
+        "PEEP also reduces work of breathing in COPD (intrinsic PEEP)"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "A patient with ARDS is hypoxic despite high FiO₂. How would you optimise their ventilation?",
+      "expectedKeyFacts": [
+        "Lung protective strategy: low tidal volume (6 mL/kg IBW), limit plateau pressure <30 cmH₂O",
+        "Increase PEEP to recruit alveoli — balance oxygenation vs cardiovascular effects",
+        "Prone positioning — improves V/Q matching, reduces mortality in severe ARDS",
+        "Recruitment manoeuvres (cautiously)",
+        "Consider permissive hypercapnia if pH >7.2",
+        "Neuromuscular blockade in severe ARDS (first 48 hours)",
+        "ECMO if refractory hypoxaemia despite maximal support",
+        "Avoid excessive oxygen — target SpO₂ 88-92%"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "What is volutrauma and how is it different from barotrauma?",
+      "expectedKeyFacts": [
+        "Barotrauma: physical injury from high airway pressures (pneumothorax, pneumomediastinum)",
+        "Volutrauma: alveolar damage from overdistension — more important mechanism in ARDS",
+        "Even 'normal' pressures can cause volutrauma if volume too large",
+        "Biotrauma: inflammatory cascade from mechanical ventilation",
+        "Atelectrauma: repeated opening/closing of alveoli",
+        "Lung protective ventilation minimises these injuries",
+        "Focus on plateau pressure and tidal volume, not just peak pressure",
+        "Driving pressure (plateau - PEEP) correlates with mortality"
+      ],
+      "timeBudgetSec": 60
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about lung protective ventilation in ARDS — what are the key principles?",
+
+  "keyFacts": [
+    "Tidal volume, RR, PEEP, FiO₂, I:E ratio",
+    "Volume-controlled vs pressure-controlled",
+    "PEEP prevents alveolar collapse, improves oxygenation",
+    "Lung protective: 6 mL/kg IBW, plateau <30 cmH₂O",
+    "ARDS: high PEEP, prone positioning, permissive hypercapnia",
+    "Volutrauma from overdistension",
+    "Barotrauma from high pressures",
+    "Atelectrauma from repeated opening/closing",
+    "Driving pressure = plateau - PEEP",
+    "ECMO for refractory hypoxaemia"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Describes key ventilator variables, distinguishes VCV from PCV, explains PEEP mechanism and benefits, knows lung protective strategy for ARDS, differentiates volutrauma from barotrauma; stronger candidates discuss driving pressure and prone positioning evidence",
+    "borderline": "Knows basic ventilator settings but unclear on modes, mentions PEEP but mechanism vague, aware of ARDS but protective strategy incomplete",
+    "fail": "Cannot describe ventilator variables, does not understand VCV vs PCV, unaware of PEEP benefits, no knowledge of lung protective ventilation or volutrauma"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:50:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["ARDSNET_Protocol_2000", "BJA_Mechanical_Ventilation_2020"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1056/NEJM200005043421801"
+  ],
+  "isActive": true
+}

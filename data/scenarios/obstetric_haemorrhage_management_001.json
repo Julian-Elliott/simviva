@@ -1,0 +1,117 @@
+{
+  "id": "obstetric_haemorrhage_management_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "clinical_anaesthesia",
+  "topicTagIds": ["obstetric_anaesthesia", "major_haemorrhage", "critical_care"],
+  "caseId": null,
+  "slotType": "clinical",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "female"
+  },
+
+  "stem": "Dr. {{candidate_name}}, you are the anaesthetist on call for obstetrics. A 28-year-old woman has just delivered her baby normally but is now bleeding heavily. The obstetrician estimates 1500 mL blood loss and it continues. How would you manage this?",
+
+  "prompts": [
+    {
+      "tier": "application",
+      "text": "What are the common causes of postpartum haemorrhage and how would you identify them?",
+      "expectedKeyFacts": [
+        "4 Ts: Tone (uterine atony), Trauma (genital tract tears), Tissue (retained placenta), Thrombin (coagulopathy)",
+        "Uterine atony most common (~70%)",
+        "Feel abdomen — uterus should be firm and contracted",
+        "Vaginal examination — assess for tears, retained products",
+        "Coagulation screen if bleeding not controlled",
+        "History: previous PPH, anticoagulants, bleeding disorders"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "Describe your immediate resuscitation measures.",
+      "expectedKeyFacts": [
+        "Call for help — activate major haemorrhage protocol",
+        "ABC approach: high-flow oxygen, secure large-bore IV access (×2)",
+        "Aggressive fluid resuscitation — warm crystalloid and blood products",
+        "Activate major haemorrhage protocol — request emergency O-negative blood",
+        "Tranexamic acid 1 g IV within 3 hours of delivery",
+        "Keep patient warm — prevent hypothermia",
+        "Bimanual uterine compression if atony",
+        "Monitor: continuous HR, BP, SpO₂, consider arterial line"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "What pharmacological agents would you use to control uterine atony?",
+      "expectedKeyFacts": [
+        "Oxytocin 5 IU slow IV bolus, then infusion (40 IU in 500 mL over 4 hours)",
+        "Ergometrine 500 mcg IM or slow IV (contraindicated in hypertension, pre-eclampsia)",
+        "Carboprost (Hemabate) 250 mcg IM, repeat every 15 min up to 8 doses (contraindicated in asthma)",
+        "Misoprostol 800-1000 mcg PR",
+        "Consider all agents in combination if bleeding not controlled",
+        "Monitor for side effects: tachycardia, hypertension, bronchospasm"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "If medical management fails, what are the surgical options?",
+      "expectedKeyFacts": [
+        "Intrauterine balloon tamponade (Bakri balloon)",
+        "Uterine compression sutures (B-Lynch, Hayman)",
+        "Systematic arterial ligation (uterine, internal iliac arteries)",
+        "Interventional radiology — uterine artery embolisation if haemodynamically stable",
+        "Hysterectomy — last resort, life-saving",
+        "Involve senior obstetrician and interventional radiology early",
+        "Document blood loss, fluids, transfusion in notes",
+        "Consider transfer to ICU"
+      ],
+      "timeBudgetSec": 90
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the major haemorrhage protocol — what blood products would you give and in what ratio?",
+
+  "keyFacts": [
+    "4 Ts: Tone, Trauma, Tissue, Thrombin",
+    "Uterine atony most common cause",
+    "Call for help, activate major haemorrhage protocol",
+    "ABC: oxygen, large-bore access, fluid resuscitation",
+    "Tranexamic acid 1 g IV",
+    "Oxytocin 5 IU IV then infusion",
+    "Ergometrine 500 mcg (avoid in HTN)",
+    "Carboprost 250 mcg IM (avoid in asthma)",
+    "Misoprostol 800-1000 mcg PR",
+    "Intrauterine balloon, compression sutures, arterial ligation, hysterectomy",
+    "Keep warm, monitor closely, ICU if needed",
+    "Blood products: red cells, FFP, platelets in ratio (typically 1:1:1)"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Systematically applies 4 Ts framework, describes immediate resuscitation including major haemorrhage protocol, knows uterotonic agents with doses and contraindications, aware of tranexamic acid, escalates to surgical options appropriately; stronger candidates discuss transfusion ratios and cell salvage considerations",
+    "borderline": "Mentions some causes and uterotonics but doses unclear, vague on major haemorrhage protocol, mentions surgery but options unclear",
+    "fail": "Does not have systematic approach, unaware of 4 Ts, incorrect drug doses or missing key agents like tranexamic acid, no escalation plan"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:30:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["RCOG_PPH_Guideline_2016", "WOMAN_Trial_Lancet_2017"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/postpartum-haemorrhage-prevention-and-management-green-top-guideline-no-52/"
+  ],
+  "isActive": true
+}

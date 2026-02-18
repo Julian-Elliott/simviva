@@ -1,0 +1,131 @@
+{
+  "id": "pulse_oximetry_physics_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "physics",
+  "topicTagIds": ["clinical_measurement", "monitoring", "pulse_oximetry"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "male"
+  },
+
+  "stem": "Dr. {{candidate_name}}, can you explain how a pulse oximeter works?",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "Describe the basic principles of pulse oximetry.",
+      "expectedKeyFacts": [
+        "Uses spectrophotometry — absorption of light by haemoglobin",
+        "Two wavelengths: red (660 nm) and infrared (940 nm)",
+        "Oxyhaemoglobin absorbs more infrared, deoxyhaemoglobin absorbs more red",
+        "Light source (LED) on one side, photodetector on other",
+        "Measures pulsatile (arterial) component vs non-pulsatile (venous, tissue)",
+        "Ratio of red to infrared absorption calculates SpO₂",
+        "Calibrated using empirical data from healthy volunteers"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "Why does the pulse oximeter use two different wavelengths?",
+      "expectedKeyFacts": [
+        "Oxyhaemoglobin and deoxyhaemoglobin have different absorption spectra",
+        "At 660 nm (red): deoxyhaemoglobin absorbs more than oxyhaemoglobin",
+        "At 940 nm (infrared): oxyhaemoglobin absorbs more than deoxyhaemoglobin",
+        "Isobestic point at 810 nm — both absorb equally",
+        "Ratio R = (AC red / DC red) / (AC infrared / DC infrared)",
+        "R value correlates with SpO₂ via calibration curve",
+        "When R = 1, SpO₂ ~85%"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "What factors can cause inaccurate pulse oximeter readings?",
+      "expectedKeyFacts": [
+        "Poor perfusion: vasoconstriction, hypothermia, hypotension, cardiac arrest",
+        "Movement artifact: shivering, patient movement",
+        "Abnormal haemoglobins: carboxyhaemoglobin reads ~90%, methaemoglobin reads ~85%",
+        "Nail varnish, especially blue or black — absorbs red light",
+        "Ambient light interference",
+        "Skin pigmentation: may overestimate in dark skin when SaO₂ low",
+        "Venous pulsation: tricuspid regurgitation",
+        "Dyes: methylene blue, indocyanine green"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "A patient with carbon monoxide poisoning has an SpO₂ reading of 98%. Why is this misleading?",
+      "expectedKeyFacts": [
+        "Carboxyhaemoglobin (COHb) absorbs light similarly to oxyhaemoglobin at 660 nm",
+        "Pulse oximeter cannot distinguish COHb from O₂Hb",
+        "Reads COHb as oxygenated — falsely high SpO₂",
+        "Typically reads ~90% regardless of true SaO₂",
+        "Patient may be severely hypoxic despite high SpO₂",
+        "Diagnosis requires co-oximetry (arterial blood gas)",
+        "Co-oximeter measures four haemoglobin species: O₂Hb, HHb, COHb, MetHb",
+        "Treatment: 100% oxygen (reduces COHb half-life from 5-6 hours to 1 hour)"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "How does the pulse oximeter differ from a co-oximeter?",
+      "expectedKeyFacts": [
+        "Pulse oximeter: uses 2 wavelengths, estimates SaO₂ based on only O₂Hb and HHb",
+        "Co-oximeter: uses 4+ wavelengths, directly measures all haemoglobin species",
+        "Co-oximeter measures: O₂Hb, HHb, COHb, MetHb — reports fractional saturation",
+        "Pulse oximeter reports functional saturation: O₂Hb / (O₂Hb + HHb)",
+        "Co-oximeter more accurate in abnormal haemoglobins",
+        "Pulse oximeter non-invasive and continuous; co-oximeter requires blood sample",
+        "Pulse oximeter unreliable when dyshemoglobins present"
+      ],
+      "timeBudgetSec": 60
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me what happens to the pulse oximeter reading in a patient with very poor peripheral perfusion — what would you see?",
+
+  "keyFacts": [
+    "Spectrophotometry using red (660 nm) and infrared (940 nm) light",
+    "Oxyhaemoglobin absorbs more infrared, deoxyhaemoglobin absorbs more red",
+    "Measures pulsatile arterial component",
+    "Ratio of absorptions calculates SpO₂",
+    "Calibrated on healthy volunteers — unreliable <70%",
+    "Errors: poor perfusion, movement, abnormal Hb, nail varnish, dyes",
+    "Carboxyhaemoglobin reads ~90%",
+    "Methaemoglobin reads ~85%",
+    "Co-oximeter uses 4+ wavelengths, measures all Hb species",
+    "Functional vs fractional saturation"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Explains spectrophotometry and two wavelengths, describes absorption differences between oxy/deoxyhaemoglobin, knows causes of inaccuracy including abnormal haemoglobins, explains CO poisoning paradox, distinguishes pulse oximeter from co-oximeter; stronger candidates discuss calibration curve and isobestic point",
+    "borderline": "Knows pulse oximeter measures oxygen but mechanism unclear, mentions some error sources but missing key ones like COHb, vague on co-oximeter differences",
+    "fail": "Cannot explain basic principle, does not understand two wavelengths or absorption spectra, unaware of limitations with abnormal haemoglobins, no knowledge of co-oximetry"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:35:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["BJA_Pulse_Oximetry_2019", "Davis_Physics_Pharmacology_Anaesthetists"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1093/bjaceaccp/mkt025"
+  ],
+  "isActive": true
+}

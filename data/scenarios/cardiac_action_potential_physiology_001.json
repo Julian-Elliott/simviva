@@ -1,0 +1,129 @@
+{
+  "id": "cardiac_action_potential_physiology_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "physiology",
+  "topicTagIds": ["cardiovascular_physiology", "cardiac_electrophysiology", "action_potential"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "female"
+  },
+
+  "stem": "Dr. {{candidate_name}}, can you describe the cardiac action potential?",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "Describe the phases of the ventricular myocyte action potential.",
+      "expectedKeyFacts": [
+        "Phase 0: Rapid depolarisation — voltage-gated sodium channels open",
+        "Phase 1: Early repolarisation — sodium channels close, potassium efflux begins",
+        "Phase 2: Plateau — calcium influx balances potassium efflux",
+        "Phase 3: Repolarisation — calcium channels close, potassium efflux continues",
+        "Phase 4: Resting potential — maintained by Na+/K+-ATPase",
+        "Resting potential ~-90 mV, peak +20 mV",
+        "Duration ~250-300 ms"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "What is the significance of the plateau phase in cardiac muscle?",
+      "expectedKeyFacts": [
+        "Prolonged depolarisation due to L-type calcium channels",
+        "Calcium influx triggers calcium-induced calcium release from sarcoplasmic reticulum",
+        "Enables sustained contraction — unlike skeletal muscle",
+        "Long refractory period prevents tetanic contraction",
+        "Ensures adequate ventricular filling between beats",
+        "Vulnerable period during phase 3 — risk of arrhythmias if stimulated"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "How does the pacemaker cell action potential differ from ventricular myocytes?",
+      "expectedKeyFacts": [
+        "No true resting potential — spontaneous depolarisation (phase 4)",
+        "Pacemaker potential: slow depolarisation due to 'funny current' (If) — sodium influx",
+        "Also calcium leak channels contribute",
+        "Maximum diastolic potential ~-60 mV (less negative than ventricle)",
+        "Phase 0: calcium influx (not sodium) — slower upstroke",
+        "No plateau phase",
+        "Autonomic modulation: sympathetic increases If, parasympathetic (vagal) increases potassium efflux"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "How do class III antiarrhythmic drugs work and what are the risks?",
+      "expectedKeyFacts": [
+        "Block potassium channels — prolong phase 3 repolarisation",
+        "Increase action potential duration and refractory period",
+        "Examples: amiodarone, sotalol",
+        "Prevent re-entry arrhythmias by prolonging refractoriness",
+        "Risk: excessive QT prolongation",
+        "Torsades de pointes — polymorphic VT",
+        "Triggered activity during early after-depolarisations",
+        "Worse with hypokalaemia, hypomagnesaemia, bradycardia"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "Why does the heart have a long refractory period compared to skeletal muscle?",
+      "expectedKeyFacts": [
+        "Absolute refractory period ~250 ms — coincides with mechanical systole",
+        "Prevents tetanic contraction which would be fatal",
+        "Ensures adequate diastolic filling time",
+        "Allows coordinated sequential contraction",
+        "Skeletal muscle short refractory period allows tetanus for sustained force",
+        "Heart requires rhythmic relaxation for circulatory function",
+        "Relative refractory period allows premature beats but with reduced force"
+      ],
+      "timeBudgetSec": 60
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the role of calcium in the cardiac action potential — when does it enter the cell and what does it do?",
+
+  "keyFacts": [
+    "Phase 0: rapid depolarisation (Na+ influx)",
+    "Phase 1: early repolarisation (K+ efflux)",
+    "Phase 2: plateau (Ca²+ influx balances K+ efflux)",
+    "Phase 3: repolarisation (K+ efflux)",
+    "Phase 4: resting potential (-90 mV)",
+    "Pacemaker cells: spontaneous depolarisation, funny current (If)",
+    "Long refractory period prevents tetany",
+    "Calcium triggers contraction via CICR",
+    "Class III drugs block K+ channels — prolong AP",
+    "Torsades de pointes risk with QT prolongation"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Correctly describes 5 phases with ion movements, explains plateau phase and calcium's role, distinguishes pacemaker from ventricular AP, understands refractory period significance, knows class III drug mechanism; stronger candidates explain funny current and triggered activity",
+    "borderline": "Knows phases exist but unclear on ion movements, mentions calcium but vague on significance, confused about pacemaker vs ventricular cells",
+    "fail": "Cannot describe phases, does not understand ion channels or currents, unaware of plateau significance or refractory period, no knowledge of pacemaker physiology"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:10:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["Cardiovascular_Physiology_Textbook_2019", "BJA_Cardiac_Electrophysiology_2020"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1093/bjaceaccp/mkt015"
+  ],
+  "isActive": true
+}

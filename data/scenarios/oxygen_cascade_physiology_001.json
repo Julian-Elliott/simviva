@@ -1,0 +1,127 @@
+{
+  "id": "oxygen_cascade_physiology_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "physiology",
+  "topicTagIds": ["respiratory_physiology", "oxygen_transport", "gas_exchange"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "male"
+  },
+
+  "stem": "Dr. {{candidate_name}}, can you explain the oxygen cascade?",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "What is the oxygen cascade and what are the values at each step?",
+      "expectedKeyFacts": [
+        "Describes progressive fall in partial pressure of oxygen from atmosphere to mitochondria",
+        "Atmospheric PO₂: 21 kPa (160 mmHg) at sea level",
+        "Humidified inspired gas: 20 kPa (150 mmHg)",
+        "Alveolar PO₂: 13-14 kPa (100 mmHg)",
+        "Arterial PO₂: 12-13 kPa (90-100 mmHg)",
+        "Mixed venous PO₂: 5.3 kPa (40 mmHg)",
+        "Mitochondrial PO₂: <1 kPa"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "Why does the partial pressure of oxygen fall at each step?",
+      "expectedKeyFacts": [
+        "Humidification: Water vapour pressure 6.3 kPa dilutes inspired oxygen",
+        "Alveolar gas equation: PAO₂ = PiO₂ - (PACO₂/R) where R = respiratory quotient ~0.8",
+        "Alveolar-arterial gradient: V/Q mismatch, shunt, diffusion limitation",
+        "Normal A-a gradient <2 kPa, increases with age",
+        "Tissue extraction: oxygen diffuses down concentration gradient to mitochondria",
+        "Venous PO₂ reflects tissue extraction and oxygen consumption"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "How would you calculate the alveolar partial pressure of oxygen for a patient breathing 40% oxygen at sea level?",
+      "expectedKeyFacts": [
+        "Alveolar gas equation: PAO₂ = PiO₂ - (PACO₂/R)",
+        "FiO₂ = 0.4, atmospheric pressure = 101 kPa",
+        "PiO₂ = FiO₂ × (Patm - PH₂O) = 0.4 × (101 - 6.3) = 38 kPa",
+        "Assume PACO₂ = 5.3 kPa, R = 0.8",
+        "PAO₂ = 38 - (5.3/0.8) = 38 - 6.6 = 31.4 kPa",
+        "Therefore PAO₂ ~31 kPa on 40% oxygen"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "A patient has a PaO₂ of 8 kPa on room air. How would you assess the severity and determine the cause?",
+      "expectedKeyFacts": [
+        "Calculate A-a gradient: PAO₂ - PaO₂",
+        "If normal PAO₂ ~13 kPa, A-a gradient = 13 - 8 = 5 kPa (raised)",
+        "Normal gradient: hypoventilation (increased PACO₂ lowers PAO₂)",
+        "Raised gradient: V/Q mismatch, shunt, diffusion defect",
+        "Check PACO₂: if low (hyperventilating), likely V/Q or shunt",
+        "Response to oxygen: shunt does not improve with high FiO₂",
+        "Calculate P/F ratio: PaO₂/FiO₂ (normal >40 kPa or >300 mmHg)",
+        "Perform shunt calculation if available"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "Why is the A-a gradient more useful than PaO₂ alone in assessing gas exchange?",
+      "expectedKeyFacts": [
+        "PaO₂ depends on both alveolar PO₂ and gas exchange efficiency",
+        "Hypoventilation lowers PAO₂ and PaO₂ equally — normal gradient",
+        "Intrinsic lung disease increases A-a gradient",
+        "A-a gradient isolates gas exchange defect from ventilatory failure",
+        "Age-related increase in gradient — formula: A-a = (Age/4) + 4 in kPa",
+        "Allows assessment of lung pathology independent of ventilation",
+        "P/F ratio also useful but A-a gradient more physiologically precise"
+      ],
+      "timeBudgetSec": 60
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the alveolar gas equation — what does it describe and what are the key components?",
+
+  "keyFacts": [
+    "Oxygen cascade: progressive fall in PO₂ from atmosphere to mitochondria",
+    "Atmospheric 21 kPa → Inspired 20 kPa → Alveolar 13 kPa → Arterial 12 kPa → Venous 5.3 kPa",
+    "Alveolar gas equation: PAO₂ = PiO₂ - (PACO₂/R)",
+    "Water vapour pressure 6.3 kPa at 37°C",
+    "Respiratory quotient R = 0.8",
+    "A-a gradient normally <2 kPa, increases with age",
+    "Causes of increased A-a gradient: V/Q mismatch, shunt, diffusion defect",
+    "P/F ratio: PaO₂/FiO₂ (normal >40 kPa)",
+    "Shunt: persistent hypoxaemia despite high FiO₂"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Describes oxygen cascade with approximate values, explains alveolar gas equation, can calculate PAO₂, understands A-a gradient and its causes, can differentiate hypoventilation from V/Q mismatch; stronger candidates explain age-related changes and shunt calculation",
+    "borderline": "Knows oxygen levels fall from air to tissues but values unclear, mentions alveolar gas equation but cannot apply it, vague on A-a gradient interpretation",
+    "fail": "Cannot describe oxygen cascade, does not know alveolar gas equation, unaware of A-a gradient concept or its clinical significance"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:05:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["Nunn's_Respiratory_Physiology_2017", "BJA_Gas_Exchange_2018"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1093/bjaceaccp/mks020"
+  ],
+  "isActive": true
+}

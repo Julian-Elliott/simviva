@@ -1,0 +1,134 @@
+{
+  "id": "desflurane_vaporizer_physics_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "physics",
+  "topicTagIds": ["equipment", "vaporizers", "volatile_anaesthetics"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "male"
+  },
+
+  "stem": "Dr. {{candidate_name}}, can you explain how an anaesthetic vaporizer works, and why desflurane requires a special vaporizer?",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "Describe the principles of a plenum vaporizer.",
+      "expectedKeyFacts": [
+        "Variable bypass vaporizer (e.g., Tec 5 for isoflurane, sevoflurane)",
+        "Fresh gas flow splits into bypass and vaporizing chamber",
+        "Dial controls splitting ratio",
+        "Vaporizing chamber saturated with vapour at SVP",
+        "Temperature compensation: bimetallic strip adjusts flow",
+        "Accurate delivery over wide range of flows and temperatures",
+        "Agent-specific: calibrated for one volatile agent"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "Why does desflurane require a heated, pressurized vaporizer?",
+      "expectedKeyFacts": [
+        "Desflurane boiling point 23.5°C — near room temperature",
+        "Would boil at normal operating room temperatures",
+        "High saturated vapour pressure at 20°C (669 mmHg or 88 kPa)",
+        "Standard vaporizer cannot accurately control delivery",
+        "TEC 6 vaporizer: heated to 39°C, pressurized to 2 bar (1500 mmHg)",
+        "Creates predictable vapour pressure regardless of ambient temperature",
+        "Electronic control and fresh gas blending",
+        "Requires electrical power"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "What safety features are built into modern vaporizers?",
+      "expectedKeyFacts": [
+        "Agent-specific keyed fillers — prevent filling with wrong agent",
+        "Interlock system — only one vaporizer can be turned on at a time",
+        "Overfill protection — prevents overfilling which would alter output",
+        "Temperature compensation maintains accuracy",
+        "Desflurane vaporizer: alarms for low agent, low battery, overpressure",
+        "Cannot be tipped when full — damages wicks and calibration",
+        "Colour-coded: sevoflurane yellow, isoflurane purple, desflurane blue"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "A vaporizer is accidentally tipped over with agent inside. What problems might occur?",
+      "expectedKeyFacts": [
+        "Liquid agent enters bypass chamber",
+        "Delivers excessive concentration — risk of overdose",
+        "Wicks become damaged or displaced",
+        "Temperature compensation disrupted",
+        "Calibration lost",
+        "Management: remove from use, drain completely, send for service/recalibration",
+        "Do NOT use until serviced",
+        "Use alternative vaporizer if available",
+        "Document incident"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "Compare the advantages and disadvantages of desflurane versus sevoflurane.",
+      "expectedKeyFacts": [
+        "Desflurane: lowest blood:gas coefficient (0.42) — fastest onset/offset",
+        "Rapid emergence and titration",
+        "Pungent — unsuitable for gas induction, airway irritation",
+        "Requires expensive heated vaporizer, needs electricity",
+        "High environmental impact — potent greenhouse gas",
+        "Sevoflurane: pleasant odour, suitable for gas induction",
+        "Slower offset than desflurane but faster than isoflurane",
+        "Compound A formation with soda lime",
+        "Both expensive agents compared to isoflurane"
+      ],
+      "timeBudgetSec": 90
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me what happens inside a vaporizer when you turn the dial — how does it control the concentration delivered?",
+
+  "keyFacts": [
+    "Plenum vaporizer: variable bypass design",
+    "Splitting ratio controlled by dial",
+    "Temperature compensation via bimetallic strip",
+    "Agent-specific calibration",
+    "Desflurane: BP 23.5°C, SVP 669 mmHg at 20°C",
+    "TEC 6: heated to 39°C, pressurized to 2 bar",
+    "Safety: keyed fillers, interlock, overfill protection",
+    "Tipping damages calibration — remove from service",
+    "Desflurane: fastest offset, pungent, needs heated vaporizer",
+    "Sevoflurane: pleasant, suitable for induction, forms Compound A"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Describes plenum vaporizer principles with bypass and vaporizing chamber, explains why desflurane needs special vaporizer (BP 23.5°C, high SVP), knows safety features including keyed fillers, understands risks of tipping, compares desflurane and sevoflurane; stronger candidates discuss temperature compensation mechanism and environmental impact",
+    "borderline": "Knows vaporizer splits gas flow but mechanism unclear, aware desflurane is different but reasons vague, mentions some safety features, unclear on tipping risks",
+    "fail": "Cannot describe vaporizer principle, does not know why desflurane is special, unaware of safety features or risks of tipping, cannot compare volatile agents"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T22:05:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["Davis_Physics_Pharmacology_Anaesthetists", "Vaporizer_Technical_Manual"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://www.frca.co.uk/article.aspx?articleid=100360"
+  ],
+  "isActive": true
+}

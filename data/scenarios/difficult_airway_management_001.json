@@ -1,0 +1,119 @@
+{
+  "id": "difficult_airway_management_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "clinical_anaesthesia",
+  "topicTagIds": ["airway_management", "difficult_airway", "cant_intubate"],
+  "caseId": null,
+  "slotType": "clinical",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "male"
+  },
+
+  "stem": "Dr. {{candidate_name}}, you are about to anaesthetise a 45-year-old man for elective laparoscopic cholecystectomy. He has a BMI of 38, Mallampati grade 3, and limited neck extension. How would you approach this airway?",
+
+  "prompts": [
+    {
+      "tier": "application",
+      "text": "Describe your pre-operative airway assessment.",
+      "expectedKeyFacts": [
+        "History: previous anaesthetics, difficult intubation, OSA symptoms, reflux",
+        "Examination: Mallampati score, thyromental distance, neck extension, mouth opening",
+        "Look for: obesity, short neck, receding mandible, prominent teeth, beard",
+        "Risk stratification: predict difficult mask ventilation and difficult intubation",
+        "STOP-BANG score for OSA screening",
+        "Plan A, B, C, D — DAS difficult airway guidelines",
+        "Equipment check: ensure rescue devices available"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "You induce anaesthesia and cannot intubate. Mask ventilation is just adequate. What is your immediate plan?",
+      "expectedKeyFacts": [
+        "DAS Plan B: maintain oxygenation with face mask ventilation",
+        "Call for help",
+        "Optimize head position, two-person technique, adjuncts (Guedel, NPA)",
+        "Second-generation supraglottic airway (i-gel, LMA Supreme)",
+        "Limit attempts: maximum 3 intubation attempts",
+        "Consider: wake the patient if adequate ventilation and elective surgery",
+        "Avoid repeated laryngoscopy causing trauma and oedema",
+        "Maintain anaesthesia and oxygenation"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "You insert an i-gel and ventilation improves. What are your options now?",
+      "expectedKeyFacts": [
+        "Proceed with surgery via supraglottic airway if suitable (short, low aspiration risk)",
+        "Attempt fibreoptic intubation through the i-gel using Aintree catheter",
+        "Wake the patient and consider awake fibreoptic intubation",
+        "In this case: laparoscopy contraindicated with SGA — high aspiration risk",
+        "Best option: wake patient, explain, plan awake FOI or postpone",
+        "Document clearly in notes and alert patient",
+        "Do NOT make repeated attempts at direct laryngoscopy"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "If you could not ventilate via face mask or i-gel, what would you do?",
+      "expectedKeyFacts": [
+        "Can't intubate, can't oxygenate (CICO) — emergency",
+        "Declare emergency, call for help",
+        "Final attempt: optimise head position, two-person BMV, consider LMA",
+        "Front of neck access: scalpel cricothyroidotomy",
+        "DAS CICO guidelines: identify cricothyroid membrane",
+        "Technique: transverse stab incision, rotate scalpel 90°, bougie, railroaded tube",
+        "Do NOT delay — hypoxic brain injury after 3-4 minutes",
+        "Equipment: scalpel (size 10 blade), bougie, size 6.0 cuffed ETT"
+      ],
+      "timeBudgetSec": 90
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could talk me through the DAS difficult airway algorithm — what are the key plans A, B, C, and D?",
+
+  "keyFacts": [
+    "Pre-operative airway assessment: history and examination",
+    "Mallampati, thyromental distance, neck extension, mouth opening",
+    "Plan A: facemask ventilation and tracheal intubation",
+    "Plan B: maintaining oxygenation — supraglottic airway",
+    "Plan C: facemask ventilation",
+    "Plan D: emergency front of neck access",
+    "Maximum 3 intubation attempts",
+    "Call for help early",
+    "Wake the patient if elective and adequate oxygenation",
+    "CICO: scalpel cricothyroidotomy",
+    "Avoid repeated instrumentation causing trauma",
+    "Document and inform patient"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Systematic airway assessment, recognises predictors of difficulty, follows DAS algorithm structure, appropriate escalation through plans, identifies CICO and scalpel cricothyroidotomy, considers waking patient; stronger candidates discuss fibreoptic options and risk-benefit of proceeding with SGA",
+    "borderline": "Mentions some assessment features but unsystematic, aware of DAS guidelines but unclear on specific plans, mentions cricothyroidotomy but technique vague",
+    "fail": "No structured assessment, does not follow DAS algorithm, makes repeated intubation attempts, delays emergency front of neck access, unaware of CICO definition"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:20:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["DAS_Difficult_Airway_Guidelines_2015", "NAP4_Report"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://das.uk.com/guidelines/das_intubation_guidelines"
+  ],
+  "isActive": true
+}

@@ -1,0 +1,135 @@
+{
+  "id": "volatile_anaesthetics_pharmacology_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "pharmacology",
+  "topicTagIds": ["volatile_anaesthetics", "pharmacology", "mac"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "female"
+  },
+
+  "stem": "Dr. {{candidate_name}}, can you tell me about sevoflurane?",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "What is sevoflurane and what are its physical properties?",
+      "expectedKeyFacts": [
+        "Halogenated volatile anaesthetic agent",
+        "Fluorinated methyl isopropyl ether",
+        "Boiling point 58.5°C",
+        "Saturated vapour pressure 160 mmHg at 20°C",
+        "Blood:gas partition coefficient 0.65",
+        "Oil:gas partition coefficient 47",
+        "Non-flammable, non-explosive",
+        "Pleasant, non-pungent odour"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "Explain what MAC means and what factors affect it.",
+      "expectedKeyFacts": [
+        "Minimum Alveolar Concentration — prevents movement to surgical stimulus in 50% of patients",
+        "MAC is a measure of anaesthetic potency",
+        "Sevoflurane MAC ~2% in adults",
+        "Inversely related to lipid solubility (Meyer-Overton hypothesis)",
+        "Factors that increase MAC: hyperthermia, chronic alcohol use, young age",
+        "Factors that decrease MAC: hypothermia, pregnancy, elderly, opioids, sedatives, acute alcohol",
+        "Additive when combining agents",
+        "MAC-awake and MAC-BAR are related concepts"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "How does sevoflurane's blood:gas partition coefficient affect its clinical use?",
+      "expectedKeyFacts": [
+        "Low blood:gas coefficient (0.65) means rapid onset and offset",
+        "Less soluble in blood — alveolar concentration rises quickly",
+        "Allows rapid induction and emergence",
+        "Easier to control depth of anaesthesia",
+        "Suitable for gas induction in children and adults",
+        "Compare to isoflurane (1.4) and desflurane (0.42)",
+        "Desflurane faster but pungent and causes airway irritation"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "What are the potential problems with using sevoflurane?",
+      "expectedKeyFacts": [
+        "Reacts with soda lime to form Compound A at high temperatures",
+        "Compound A potentially nephrotoxic in rats — significance in humans unclear",
+        "Use low-flow anaesthesia with caution (<2 L/min)",
+        "Cardiovascular depression — dose-dependent reduction in BP and SVR",
+        "Respiratory depression",
+        "Can trigger malignant hyperthermia in susceptible individuals",
+        "Metabolised to inorganic fluoride — theoretical renal concern but not clinically significant",
+        "Expensive compared to isoflurane",
+        "Environmental impact — greenhouse gas"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "Why might you choose sevoflurane for gas induction rather than desflurane?",
+      "expectedKeyFacts": [
+        "Sevoflurane is non-pungent — well tolerated for gas induction",
+        "Desflurane is pungent and irritant — causes coughing, breath-holding, laryngospasm",
+        "Desflurane unsuitable for gas induction",
+        "Sevoflurane rapid onset due to low blood:gas coefficient",
+        "Safe and smooth induction especially in children",
+        "Desflurane advantages: even lower blood:gas (0.42), faster emergence, but requires heated vaporiser",
+        "Acknowledge both are expensive, environmental concerns with all volatiles"
+      ],
+      "timeBudgetSec": 60
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the cardiovascular effects of sevoflurane — what happens to blood pressure and heart rate?",
+
+  "keyFacts": [
+    "Fluorinated methyl isopropyl ether",
+    "Low blood:gas partition coefficient (0.65) — rapid onset/offset",
+    "MAC ~2% in adults",
+    "Non-pungent — suitable for gas induction",
+    "Cardiovascular depression — reduced BP and SVR",
+    "Respiratory depression",
+    "Forms Compound A with soda lime",
+    "Metabolised to fluoride ions",
+    "Triggers malignant hyperthermia",
+    "Cerebral vasodilator — increases ICP at >1 MAC",
+    "Bronchodilator properties",
+    "Environmental pollutant — greenhouse gas"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Describes physical properties including blood:gas coefficient, explains MAC concept and factors affecting it, aware of Compound A formation and cardiovascular effects, can justify use for gas induction vs desflurane; stronger candidates discuss Meyer-Overton hypothesis and environmental concerns",
+    "borderline": "Knows sevoflurane is a volatile agent used for induction, vague on partition coefficients or MAC, mentions some side effects but unclear on clinical significance",
+    "fail": "Cannot explain basic properties, does not understand MAC or partition coefficients, unaware of Compound A or major side effects, no knowledge of clinical applications"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:00:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["BJA_Volatile_Anaesthetics_2020", "RCoA_Pharmacology_Curriculum"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1093/bja/aeg296"
+  ],
+  "isActive": true
+}

@@ -1,0 +1,121 @@
+{
+  "id": "anaphylaxis_management_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "clinical_anaesthesia",
+  "topicTagIds": ["anaphylaxis", "critical_incidents", "emergency_management"],
+  "caseId": null,
+  "slotType": "clinical",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "female"
+  },
+
+  "stem": "Dr. {{candidate_name}}, two minutes after induction of anaesthesia for an elective procedure, the patient develops severe hypotension, bronchospasm, and an urticarial rash. What is your diagnosis and immediate management?",
+
+  "prompts": [
+    {
+      "tier": "application",
+      "text": "What is your immediate management?",
+      "expectedKeyFacts": [
+        "Diagnose anaphylaxis: clinical triad of cardiovascular collapse, bronchospasm, rash",
+        "Stop suspected trigger — likely NMBA, antibiotic, or latex",
+        "Call for help",
+        "100% oxygen, secure airway if needed",
+        "Adrenaline 50 mcg IV boluses (0.5 mL of 1:10,000) titrated to response",
+        "Or IM adrenaline 500 mcg (0.5 mL of 1:1000) if no IV access",
+        "Start IV fluid resuscitation — 500-1000 mL crystalloid bolus",
+        "Lie flat, elevate legs"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "The patient remains hypotensive and bronchospastic despite initial adrenaline. What further measures would you take?",
+      "expectedKeyFacts": [
+        "Repeat adrenaline 50-100 mcg IV boluses every 1-2 minutes",
+        "Consider adrenaline infusion if repeated boluses needed (0.05-0.5 mcg/kg/min)",
+        "Aggressive fluid resuscitation — may need several litres",
+        "Salbutamol for persistent bronchospasm — nebulised or IV",
+        "Chlorphenamine 10 mg IV",
+        "Hydrocortisone 200 mg IV — prevents biphasic reaction",
+        "Arterial line for BP monitoring",
+        "Consider ICU transfer"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "What investigations would you send during and after the event?",
+      "expectedKeyFacts": [
+        "During: mast cell tryptase at time of reaction, then 1-2 hours, then 24 hours",
+        "Peak tryptase 1-2 hours post-reaction",
+        "Baseline tryptase >24 hours after reaction",
+        "Elevated tryptase confirms mast cell degranulation",
+        "Specific IgE testing at 6 weeks in allergy clinic",
+        "Skin prick testing at 4-6 weeks",
+        "Identify culprit drug for future avoidance",
+        "Document in notes and alert patient"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "Why is adrenaline the first-line treatment for anaphylaxis?",
+      "expectedKeyFacts": [
+        "α1-agonist: vasoconstriction — reverses vasodilation and hypotension",
+        "β1-agonist: positive inotropy and chronotropy — improves cardiac output",
+        "β2-agonist: bronchodilation — reverses bronchospasm",
+        "Stabilises mast cells — reduces further mediator release",
+        "No other drug has all these combined effects",
+        "IV route allows rapid titration in anaesthetised patients",
+        "IM route safer in non-monitored settings (community, wards)",
+        "Delay in adrenaline associated with worse outcomes"
+      ],
+      "timeBudgetSec": 60
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the dose and route of adrenaline in anaphylaxis — how much would you give and how?",
+
+  "keyFacts": [
+    "Anaphylaxis: IgE-mediated mast cell degranulation",
+    "Clinical features: hypotension, bronchospasm, urticaria, angioedema",
+    "Stop trigger, call for help, 100% oxygen",
+    "Adrenaline 50 mcg IV (0.5 mL 1:10,000) or 500 mcg IM (0.5 mL 1:1,000)",
+    "Repeat every 1-2 minutes as needed",
+    "IV fluid resuscitation",
+    "Chlorphenamine 10 mg IV",
+    "Hydrocortisone 200 mg IV",
+    "Mast cell tryptase: at event, 1-2 hours, 24 hours",
+    "Follow-up: allergy clinic, skin prick testing at 4-6 weeks",
+    "Common triggers: NMBAs, antibiotics, latex, chlorhexidine",
+    "Document and alert patient"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Diagnoses anaphylaxis promptly, knows correct adrenaline dose and route, describes escalation strategy including infusion, mentions fluid resuscitation and adjuncts, understands tryptase testing timeline, explains adrenaline's mechanism; stronger candidates discuss biphasic reactions and allergy follow-up pathway",
+    "borderline": "Recognises anaphylaxis but dose/route of adrenaline unclear, mentions some adjuncts but management not systematic, vague on investigations or follow-up",
+    "fail": "Does not diagnose anaphylaxis or delays recognition, incorrect adrenaline dose or route, no systematic approach, unaware of tryptase testing or allergy referral"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T21:25:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["AAGBI_Anaphylaxis_Guideline_2020", "RCUK_Anaphylaxis_Algorithm"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://anaesthetists.org/Home/Resources-publications/Guidelines/Anaphylaxis"
+  ],
+  "isActive": true
+}

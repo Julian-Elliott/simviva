@@ -1,0 +1,129 @@
+{
+  "id": "suxamethonium_pharmacology_001",
+  "updatedAt": "2026-02-18T00:00:00Z",
+
+  "domain": "pharmacology",
+  "topicTagIds": ["neuromuscular_blockers", "muscle_relaxants", "pharmacology"],
+  "caseId": null,
+  "slotType": "any",
+  "caseOrder": 0,
+
+  "demographics": {
+    "patientAgeGroup": "adult",
+    "patientGender": "female"
+  },
+
+  "stem": "Dr. {{candidate_name}}, can you tell me about suxamethonium?",
+
+  "prompts": [
+    {
+      "tier": "recall",
+      "text": "What is suxamethonium and how does it work?",
+      "expectedKeyFacts": [
+        "Depolarising neuromuscular blocker",
+        "Two acetylcholine molecules joined back-to-back",
+        "Nicotinic acetylcholine receptor agonist at neuromuscular junction",
+        "Causes sustained depolarisation — phase I block",
+        "Not broken down by acetylcholinesterase",
+        "Metabolised by plasma cholinesterase (butyrylcholinesterase)"
+      ],
+      "timeBudgetSec": 60
+    },
+    {
+      "tier": "mechanism",
+      "text": "Describe the pharmacokinetics of suxamethonium.",
+      "expectedKeyFacts": [
+        "Rapid onset — 30-60 seconds",
+        "Short duration — 5-10 minutes",
+        "Hydrolysed by plasma cholinesterase to succinylmonocholine then succinic acid",
+        "Succinylmonocholine has weak neuromuscular blocking activity",
+        "Rapid redistribution from neuromuscular junction",
+        "Elimination half-life ~3 minutes",
+        "Only ~10% reaches neuromuscular junction"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "application",
+      "text": "What are the indications and contraindications for suxamethonium?",
+      "expectedKeyFacts": [
+        "Indications: rapid sequence induction, difficult airway, laryngospasm",
+        "Absolute contraindications: known malignant hyperthermia susceptibility, plasma cholinesterase deficiency",
+        "Relative contraindications: hyperkalaemia, burns >24-48 hours old, denervation injuries, neuromuscular disease, penetrating eye injury",
+        "Risk of hyperkalaemic cardiac arrest in these conditions",
+        "Avoid in children unless emergency airway indication"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "synthesis",
+      "text": "A patient has prolonged neuromuscular blockade after suxamethonium. What are the possible causes and how would you manage this?",
+      "expectedKeyFacts": [
+        "Plasma cholinesterase deficiency — genetic (homozygous, heterozygous) or acquired",
+        "Acquired causes: liver disease, malnutrition, pregnancy, organophosphate exposure",
+        "Confirm with peripheral nerve stimulator — sustained block",
+        "Management: maintain anaesthesia and ventilation until spontaneous recovery",
+        "Do NOT use anticholinesterases — ineffective and may prolong block",
+        "Fresh frozen plasma in extreme cases (controversial)",
+        "Investigate with plasma cholinesterase levels and dibucaine number",
+        "Warn patient and family — medic alert, avoid suxamethonium in future"
+      ],
+      "timeBudgetSec": 90
+    },
+    {
+      "tier": "evaluation",
+      "text": "Why do we still use suxamethonium despite its side effects when rocuronium with sugammadex is available?",
+      "expectedKeyFacts": [
+        "Faster onset than rocuronium (30-60s vs 60-90s)",
+        "Shorter duration — spontaneous recovery in emergency situations",
+        "Sugammadex is expensive and may not be immediately available",
+        "Suxamethonium relaxes laryngeal muscles more reliably for emergency airway",
+        "Decades of clinical experience and familiarity",
+        "Acknowledge side effects: hyperkalaemia risk, malignant hyperthermia, bradycardia, muscle pains",
+        "Trend towards rocuronium-sugammadex in many centres, but suxamethonium still first-line in many RSI protocols"
+      ],
+      "timeBudgetSec": 90
+    }
+  ],
+
+  "rescuePrompt": "Perhaps you could tell me about the side effects of suxamethonium — what concerns do you have when giving it?",
+
+  "keyFacts": [
+    "Depolarising neuromuscular blocker",
+    "Two acetylcholine molecules linked",
+    "Rapid onset (30-60 seconds), short duration (5-10 minutes)",
+    "Metabolised by plasma cholinesterase",
+    "Phase I depolarising block",
+    "Contraindicated in hyperkalaemia, burns, denervation, MH susceptibility",
+    "Prolonged block in plasma cholinesterase deficiency",
+    "Side effects: bradycardia, hyperkalaemia, muscle pains, raised IOP/ICP/IGP",
+    "Triggers malignant hyperthermia",
+    "Use in RSI and emergency airway management",
+    "Cannot be reversed with anticholinesterases",
+    "Dibucaine number identifies genetic variants"
+  ],
+
+  "scoringGuidance": {
+    "pass": "Correct mechanism (depolarising block), knows rapid onset and short duration, aware of plasma cholinesterase metabolism, identifies key contraindications (burns, hyperkalaemia, MH), describes management of prolonged block; stronger candidates explain dibucaine number and compare with rocuronium-sugammadex strategy",
+    "borderline": "Knows suxamethonium is a muscle relaxant and is used for RSI but mechanism unclear, mentions some side effects, vague on contraindications or prolonged block management",
+    "fail": "Cannot explain mechanism of action, unaware of plasma cholinesterase metabolism, does not know contraindications, no understanding of hyperkalaemia risk or malignant hyperthermia"
+  },
+
+  "author": "SimViva Team",
+  "provenance": {
+    "generatedBy": "Claude (Anthropic)",
+    "generatedAt": "2026-02-18T20:50:00Z",
+    "promptVersion": "v1.0.0",
+    "sourceMaterial": ["RCoA_Muscle_Relaxants_Guidelines", "BJA_Suxamethonium_2019"],
+    "validation": {
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "status": "pending_review",
+      "notes": "Awaiting clinical reviewer sign-off."
+    }
+  },
+  "furtherReading": [
+    "https://doi.org/10.1093/bja/aep143"
+  ],
+  "isActive": true
+}
