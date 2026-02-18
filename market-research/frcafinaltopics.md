@@ -1,0 +1,1488 @@
+# FRCA Final Exam Topics
+
+> **Provenance:** Self-compiled topic list aggregated from publicly available
+> syllabi, textbooks, and personal study notes. Not sourced from any single
+> copyrighted work. Provided as a reference for curriculum coverage only.
+
+## Clinical Short Case
+
+### Airway
+- Airway Management
+- Airway Obstruction
+- Anaesthesia for Foreign Body removal
+- Bleeding tracheostomy
+- Blocked tracheostomy
+- Difficult airway management
+- Epiglottitis/croup
+- Extubation criteria
+- Extubation of the difficult airway
+- Extubation strategy
+- Failed intubation
+- False passage
+- FESS procedure
+- Iatrogenic airway injury
+- Inhaled foreign body
+- Laryngeal obstruction (congenital vascular web, infection, neoplasm, cord)
+- Laryngeal tumour
+- Laryngospasm
+- LMA or ET appropriate
+- Management of a trache that gets pulled out later that night on ITU
+- Management of airway obstruction
+- Management of extubation
+- Management of failed intubation
+- Management of laryngospasm on gas induction
+- Mediastinal mass
+- Microlaryngoscopy for hoarse voice
+- Oedematous airway may make intubation difficult
+- Paediatric tracheostomy
+- Paediatric vs Adult Airway
+- Paeds airway infections
+- Percutaneous tracheostomy
+- Post extubation airway obstruction
+- Recovery room airway obstruction
+- Retrosternal goitre
+- Seldinger mini-tracheostomy
+- Spray as you go
+- The anticipated difficult airway
+- Throat pack
+- Tracheomalacia
+- Tracheostomy bleeding: causes and management
+- Tracheostomy emergencies
+- Tracheostomy management
+- Videolaryngoscopy
+
+### Cardiac
+- Alcoholic cardiomyopathy
+- Anaesthesia for Cardiac ablation
+- Aortic stenosis
+- Arrhythmias
+- Atrial Fibrillation
+- Cardiac arrest after cardiac surgery
+- Cardiac risk assessment
+- Cardiomyopathy
+- Cardioversion
+- Children with LVAD
+- DDD pacing benefits
+- ECG interpretation
+- Eisenmenger's
+- Fast AF in ICU
+- Hereditary arrhythmias (Long QT, ARVC, Brugada)
+- ICD insertion
+- ICD management perioperatively
+- Infective endocarditis
+- Ischaemia, myocarditis
+- Ischaemic heart disease for non-cardiac surgery
+- Loss of capture intraop - causes, management
+- LVF management
+- Management of AF
+- Management of asystole
+- Management of broad complex tachy
+- Management of complete heart block
+- Management of intraop fast AF
+- Mitral / tricuspid stenosis
+- Myocardial infarction
+- NSTEMI management
+- Pacing
+- Paediatric ECG interpretation
+- Paediatric SVT
+- Paeds cardiac transplant
+- Pericardial effusion and tamponade
+- Perioperative care in cardiac surgery
+- Q waves on ECG
+- RBB, inferior Q waves Acute inferior MI
+- Rheumatic fever
+- ST changes after clamp off - management
+- Tetralogy of Fallot
+- Transvenous pacing
+- Uterotonics and aortic stenosis
+- Valvular regurgitation
+- Ventricular arrhythmias - esp. torsades des pointes and VF
+- Ventricular arrhythmias and sudden cardiac death
+- Ventricular ectopics
+- Wolff-Parkinson-White (WPW) syndrome
+
+### Respiratory & Thoracic
+- Acute Lung Injury
+- Analgesia for thoracotomy
+- APRV - Airway Pressure Release Ventilation
+- ARDS - Acute Respiratory Distress Syndrome
+- Asthma
+- Breathing in the Prone Position
+- Capnometry
+- Causes of sudden drop in end-tidal CO2
+- CO2 carriage
+- COPD/Severe asthma for major surgery
+- Criteria for ECMO
+- Cystic fibrosis
+- Definition ALI / ARDS
+- ECMO
+- Empyema
+- Exacerbation of COPD
+- Haemothorax
+- Hypoxic Pulmonary Vasoconstriction (HPV)
+- Lobectomy
+- Management of hypercapnic recovery patient
+- Management of post op respiratory distress
+- Management of rib fractures
+- Management of tension
+- Mechanics of breathing
+- Nitric Oxide
+- OLV and management of hypoxia
+- Oxygen carriage
+- Oxygen requirement calculations
+- Oxygen therapy
+- Oxygen via catheter in ETT
+- Paeds ECMO and eCPR
+- Pleura
+- PLEURAL CAVITY
+- Pleural effusions
+- PLEURODESIS
+- Pneumomediastinum
+- Pneumonectomy
+- Pneumonia
+- Pneumothorax
+- Postop pulm complications
+- Postoperative wheeze: causes and management
+- Preop preparation / assessment for lobectomy
+- Prone Position in Anaesthesia
+- Prone positioning
+- Pulmonary atelectasis
+- Pulmonary hypertension - treatment, anaesthesia
+- Pulmonary Oedema
+- Rib fractures
+- RS: pulmonary oedema
+- RUL can be affected if prone
+- Severe CAP
+- Severity of COPD
+- Tension pneumothorax
+- Smoke inhalation injury
+- Splaying of the carinal angle
+- Surfactant
+- Thoracic and thoracoabdominal aneurysms
+- Thoracic surgery pre-assessment
+- Treatment of pulmonary Oedema Postoperatively
+- Ventilator Associated Pneumonia
+
+### Neuro
+- Awake craniotomy
+- Cerebral Circulation
+- Cerebrovascular disease
+- Craniotomy (Tumour/Aneurysm) in sitting/prone position
+- Elective craniotomy for clipping of a cerebral aneurysm in an obese patient
+- Epilepsy perioperatively
+- Evoked Potentials
+- Extra-dural haematoma
+- Head injury and C-spine
+- Head injury management
+- ICP
+- Interventional management of stroke
+- Isoflurane and neurosurgery
+- Lumbar drains - management, settings
+- MECHANICAL THROMBECTOMY
+- MENINGITIS
+- Neuroradiology interventions
+- Neurosurgery
+- Osmotherapy
+- Pontine infarct
+- Post-operative seizure
+- Preventing secondary injury
+- Pupil examination: causes of dilated/sluggish pupils
+- Radiological investigations in neurocritical care
+- Status epilepticus
+- Subarachnoid haemorrhage 
+- Syndromes of cerebral herniation
+
+### Vascular
+- Abdominal Aortic Aneurysm repair (Open/EVAR)
+- Arterial Cross-Clamping
+- Arterial line complications
+- Arterial tourniquet
+- Clamp time, premorbid vascular disease, age
+- Cross-clamping
+- Dorsalis pedis
+- GALA Trial (GA vs LA) Lancet, 2008
+- Gangrene, ulceration (chronic)
+- IVC filter insertion
+- Management of post-CEA bleeding
+- May require embolectomy, bypass, radiologically guided fibrinolytics
+- Pseudoaneurysm formation
+- Radicular arteries
+- Raynaud's and arterial lines
+- Ruptured AAA
+- Ruptured abdominal aortic aneurysm (AAA)
+- Spinal cord perfusion - Weak Legs post AAA repair (CSE) - Causes
+- SVC obstruction
+- Vascular surgery (e.g. CEA)
+
+### Obstetric
+- Breastfeeding and anaesthesia
+- CORD PROLAPSE
+- CPR in the pregnant patient
+- Dural tap in obstetrics
+- Emergency Caesarean section
+- Emergency LSCS
+- Fetal circulation
+- Fetal erythropoiesis
+- Fetal haematopoiesis
+- G4P3, 20/40, in labour
+- GA for LSCS
+- Intra-uterine fetal death
+- Management of cord prolapse
+- Management of intrapartum haemorrhage
+- Management of PDPH, blood patching
+- Maternal collapse
+- Maternity critical care
+- MV (40%) - progesterone mediated
+- Obstetric Major haemorrhage
+- Options for labour analgesia
+- Peripartum diabetes
+- Plan for LSCS
+- Postpartum and Massive Obstetric Haemorrhage
+- PPH management
+- Pre-eclampsia/Eclampsia
+- Pre-term labour, requiring LSCS - management
+- Prevention of seizures (eclampsia)
+- Prolonged 1st stage
+- Regional and differences post partum
+- Severe preeclampsia in high BMI (35) at term
+- Sickle cell case - emergency C-section
+- Widespread maternal endothelial
+
+### Paediatric
+- Anterior mediastinal masses in paediatrics
+- Autism in paediatrics
+- Child protection
+- Circumcision
+- Collapsed newborn
+- Gillick competence
+- Growth plate injury
+- Necrotising enterocolitis
+- Neonatal resuscitation
+- Paediatric burns management
+- Paediatric squint surgery
+- Paediatric/Neonatal
+- Paeds palliative care
+- Pyloric stenosis
+- Risk factors for squint
+- Sepsis in paeds
+- VTE in paeds
+
+### Trauma & Emergency
+- Burns
+- C-spine injury
+- Cervical spine injury
+- Cervical spine protection
+- Chest trauma
+- Compartment syndrome
+- EFAST
+- Fractured mandible
+- Haemorrhagic shock
+- Major haemorrhage in trauma
+- Management of chest injury
+- Management of exsanguinating trauma
+- Management of massive haemorrhage
+- Mass casualty events
+- Massive Haemorrhage: Compensatory Responses and Management
+- Multiple trauma
+- Penetrating trauma
+- Resuscitative thoracotomy
+- Trauma - supracondylar fractures, distal radius
+- Trauma / rupture
+- Trauma critical care
+- Trauma team composition
+
+### Critical Care
+- Burnout and resilience in critical care
+- Critical care for criminals
+- Critical illness neuropathy / myopathy
+- Delirium in critically ill patients
+- Dermatological complications of critical care
+- Feeding and critical illness
+- Fungal disease in critically ill
+- ICU acquired weakness
+- ICU nutrition
+- Life threatening skin conditions presenting to critical care
+- Nutrition in critical care
+- Parenteral nutrition in critical care
+- Re-feeding syndrome
+- Resource allocation in critical care
+- Sepsis
+- Sepsis management
+- Septic shock
+- Vasoactive therapy in shock
+- Viral infections in critical care
+
+### Regional Anaesthesia
+- Caudal
+- Complications of blocks
+- Difficult spinal
+- Failing epidural
+- Infraclavicular
+- Interscalene
+- IVRA
+- Level at T10
+- Lipid emulsion
+- Management of high block or total spinal
+- Option in this case for regional anaesthesia
+- Regional anaesthesia
+- Regional anaesthesia types
+- Regional technique
+- Regional vs GA
+- Spinals and day-case
+- Supraclavicular
+
+### Perioperative
+- Air embolism
+- Anaesthetic management of obesity hypoventilation
+- Assessment of the high risk surgical patient
+- Awareness under Anaesthesia
+- Care bundles
+- Classification of urgency
+- Clinical risk assessment tools in anaesthesia
+- Conscious sedation
+- Correction of hypothermia
+- Cut-offs for surgery
+- Day-case criteria
+- Difficult IV access
+- Enhanced recovery
+- Epworth, STOPBANG
+- Estimation of wait
+- Grading of hypothermia
+- History, examination
+- Hypotensive anaesthesia
+- Hypothermia
+- Induced Hypotension
+- IV access issues
+- Malignant hyperthermia
+- Malignant hyperthermia and squint surgery
+- Management of the morbidly obese patient
+- Management of various co-morbidities
+- OSA - causes, grading, investigations
+- Periop ACEi
+- Periop alcohol withdrawal
+- Periop diabetes
+- Periop optimisation
+- Perioperative problems
+- Positioned laterally, operative side uppermost
+- Positioning - lateral or prone
+- Positioning injuries
+- Post op care
+- Post op extubation
+- Post-op analgesia
+- Postop management esp pain - what options? Compare and contrast
+- Postoperative confusion/delirium
+- Postoperative ICU management
+- Postoperative management
+- Postoperative nausea and vomiting (PONV)
+- Practical management
+- Practicalities of transfer
+- Pre-op resuscitation
+- Pre-optimisation
+- Pre-oxygenate
+- Prehabilitation
+- Remote site anaesthesia
+- Shuttle testing
+- Smoking advice
+- Smoking and Anaesthesia
+- Sux apnoea
+- Targets for optimisation
+- Temperature management
+- Urgency or surgery
+- URTI and anaesthesia
+
+### Renal
+- Chronic kidney disease for transplant/other surgery
+- Dialysis catheters
+- GFR
+- Hyperkalaemia
+- Hypernatraemia
+- Hyponatraemia
+- Postop oliguria
+- RBF and GFR
+- Rhabdomyolysis
+- SIADH
+- Timing around dialysis
+- Treatment of hyperkalaemia
+- Urinary retention
+
+### Hepatic & GI
+- Abdominal compartment syndrome
+- Bowel obstruction
+- Cholestatic jaundice
+- Decompression (open abdomen, drainage)
+- Diverticulitis
+- Hernia repair
+- Hiatus hernia
+- IVDU for Hickman line
+- Jaundice
+- Laparoscopy complications
+- Laparotomy for abdominal bleeding management
+- Management of Crohn's
+- Management of hepatic failure
+- Management of upper GI bleed
+- N-acetylcysteine and other specific management
+- Nausea, vomiting
+- Pancreatitis
+- Peptic ulcer
+- Portal circulation
+- Ulcerative colitis
+- Whipple's procedure
+
+### Endocrine
+- Acromegaly
+- Carcinoid syndrome
+- Cushing's syndrome
+- Diabetes (IDDM/NIDDM) for surgery
+- Diabetic investigations / perioperative management and hyperglycaemia
+- Diabetic Ketoacidosis (DKA and HONK)
+- GH - Acromegaly
+- HPA axis in health and disease
+- Pituitary
+- Pituitary Gland
+- Pituitary surgery (Acromegaly)
+- Thyroid Surgery
+- Treatment of DKA
+
+### Haematology & Coagulation
+- Anticoagulation
+- Blood Groups
+- Blood viscosity
+- DIC and MOF
+- Haematopoiesis (fetal, extramedullary)
+- Haemoglobin
+- Jehovah's Witness
+- Management of anticoagulants
+- Management of DIC
+- Management of periop anticoagulation, CHADS2 score
+- May be taking anti-coagulants
+- Multifactorial anaemia - usually normocytic, normochromic
+- Point of care coag testing
+- Polycythaemia causes
+- Treatment of hypersplenism (haemolysis, leukaemia)
+
+### Orthopaedic & MSK
+- Anaesthesia for laminectomy
+- Carpal tunnel compression
+- Fat embolus
+- Hip prosthesis dislocation
+- Perioperative analgesia for knee and hip surgery
+- Rheumatoid arthritis
+- Rheumatoid arthritis (C-spine)
+- Scoliosis surgery
+- Shoulder surgery
+- Spinal surgery
+- Surgery below the elbow
+- Wrist fracture
+
+### ENT
+- Cholesteatoma
+- Middle ear surgery (e.g. mastoidectomy)
+- Parotidectomy
+- POST-TONSILLECTOMY BLEEDING
+- Post-tonsillectomy bleeding: assessment and management
+- Tonsillectomy (OSAS)
+
+### Ophthalmic
+- Corneal abrasion, chemical injury, acute glaucoma
+- Horner's syndrome
+- Improve aqueous humour drainage
+- Intraocular pressure management
+
+### Urology
+- Anaesthesia for Transurethral Resection of Prostate
+- Anaesthesia for urological surgery
+- Transurethral resection of the prostate (TURP)
+- TURP syndrome
+
+### Neuromuscular
+- Anticholinesterases
+- Guillain-Barre syndrome
+- Management of GBS
+- Multiple sclerosis
+- Myasthenia gravis
+- Myotonic dystrophy
+- Neuromuscular junction
+- Parkinson's disease
+- Residual neuromuscular
+- Synaptic transmission
+
+### Pain & Analgesia
+- Constituents of enteral feed
+- Enteral feeding benefits
+- Post-herpetic neuralgia
+
+### Organ Donation & Transplant
+- Donation after cardiac death
+- Ensuring graft survival
+- Ethics of organ donation
+- Management of organ donor
+- Organ donation
+- Organ donation and family consent
+
+### Ethics, Legal & Communication
+- Communication around withdrawing care
+- Consent
+- Coroner
+- End of life care
+- Never events
+
+### Pharmacology & Drugs
+- Antiemetics
+- Antihypertensives
+- Electroconvulsive Therapy (ECT)
+- NICE guidance on hypertension management, antihypertensives and anaesthesia
+- Vasopressin
+
+### Miscellaneous
+- Acid base balance
+- Apnoeic coma
+- Bacteraemia
+- CNV1 and CNV2
+- Communicable diseases
+- Components of GCS
+- Confidence intervals
+- Criteria for pathological Q waves
+- CSF (formation, circulation)
+- CVP
+- CVS: hypertension (80%), salt and water retention
+- Down syndrome - cardiac complications
+- DRESS syndrome
+- External circumference in millimetres
+- Extravasation injury
+- Facial - Cranial
+- Facial - Trigeminal
+- Filters
+- Flexor digitorum profundus (medial half)
+- Floor - iliaxus, pectineus, psoas
+- Forefoot surgery
+- Hyperbaric Oxygen
+- Hyperoxia
+- Hypertension
+- Hypotension
+- Hypothesis tests
+- IBP
+- IM buttock injections
+- Immune: immunosuppression
+- Immunoglobulins
+- Management of TB
+- Marrow cavity
+- Motor to EOM
+- Multicentre RCT
+- Musculocutaneous is
+- Nasal speech
+- NIBP
+- Null hypothesis
+- Osteomyelitis
+- Paired posterior spinal arteries
+- Pallor, cold to touch
+- Palmar arches
+- Paraesthesia
+- Passes obliquely behind the humerus
+- Pathologies of diving diseases
+- PPV/NPV
+- Profound hypotension
+- Prognostication after CPR
+- Proximal injury - loss of wrist flexion and flexion of first 3 digits
+- Raised JVP: causes and assessment
+- Rebleeding
+- Remove ASAP once IV access established to reduce infection risk
+- Repeated blood sampling
+- Resonator in speech
+- Resuscitation strategy
+- Sarcoidosis
+- Sensory loss / paraesthesia
+- Skin and subcutaneous tissue
+- Splanchnic vasodilatation may reduce SVR
+- Subcostal, loin incisions, thoracotomy
+- Supportive treatment
+- Systolic (afterload)
+- T - thickness
+- Temporal, zygomatic, buccal, mandibular, cervical
+- Tetanus
+- Therapeutic level 2-3.5mmol/l
+- Transudates
+- Tumour lysis syndrome
+- Vaccination
+- Ventral primary rami T1-T11
+- Vertebrae (Cervical, Thoracic, Lumbar)
+
+## Anatomy
+
+- Acute coronary syndrome
+- Acute kidney injury (AKI)
+- Adrenals (Cortex/Medulla)
+- Adult congenital heart disease and pregnancy
+- Airway anatomy
+- Ischaemic heart disease and major abdominal surgery
+- Analgesia for femoral fracture
+- Anatomy and Its Applications
+- Anatomy for ophthalmic anaesthesia
+- Anatomy of the epidural space
+- Anatomy of the Median nerve
+- Anatomy of the Nose
+- Anatomy of the Radial nerve
+- Anatomy of the Trachea and Bronchi
+- Anatomy of the Ulnar nerve
+- Anatomy Relevant to Subarachnoid (Spinal) Anaesthesia
+- Ankle block
+- Antecubital Fossa
+- Anterior Abdominal Wall
+- Aortacaval compression
+- Aortic Valve Disease
+- Aorto-bronchial constriction
+- Arterial system of the hand
+- Autonomic nervous system (Stellate ganglion, Coeliac plexus)
+- Axillary
+- Base of Skull
+- Bladder puncture
+- Block assessment
+- Blocked trache
+- Bone cement
+- Bone cement implantation syndrome
+- Brachial artery
+- Brachial plexus block
+- Brain and spinal cord
+- Brain Stem Death Testing
+- Brainstem death
+- Bronchial tree
+- Bronchomotor Tone (Asthma)
+- Bronchoscopy
+- Cardiac Plexus
+- Cardiovascular complications of brain injury
+- Carotid endarterectomy
+- Cervical Plexus
+- Cervical plexus block
+- Cervical Spine & Cervical Plexus
+- Chest wall blocks
+- Circulatory Changes at Birth (Congenital Heart Disease)
+- Classification of hyperparathyroidism
+- Clearing c-spine
+- Coeliac plexus block
+- Complete heart block
+- Conduction studies
+- Congenital - bicuspid valve, William's syndrome
+- Contractility
+- Contrast associated kidney injury
+- Coronary artery diameter
+- Coronary circulation
+- Coronary Circulation/ACS
+- Coronary perfusion
+- Cortical vein thrombosis is associated with pregnancy
+- Cranial nerves (esp. V, VII, IX, X)
+- Cranial venous sinus anatomy and drainage
+- Cricothyroid - Tenses
+- Crohn's colonoscopy
+- Cross-Sectional Areas of Interest (Eye, Neck, Lower Thoracic and Lumbar Regions)
+- Cutaneous innervation and dermatomes
+- Deep peroneal nerve
+- Deep veins of the leg
+- Development of renal failure in patients who have liver
+- Diaphragm
+- Diaphragmatic constriction
+- Digital block
+- Enhanced recovery and pre-operative optimisation
+- Epidural abscess
+- Epidural abscess / haematoma
+- Epidural haematoma or abscess
+- Epidural Space
+- Essentially a ring block
+- Exit via ventral nerve roots
+- Extra-ocular muscle tone
+- Extradural (Epidural) Space
+- Eye
+- Eye blocks - how to perform each, disadvantages
+- Facial Nerve
+- Facial nerve stimulation
+- Failing epidural
+- Failing Lung
+- Fascia iliaca block
+- Fast conducting (12-30 m/s)
+- Femoral Nerve
+- Femoral nerve block / catheter
+- Femoral nerve injury with resulting paresthesias
+- Femoral Triangle/Nerve - TAP Block
+- Femoral vein/artery
+- Femoral/Sciatic Nerve & Blocks
+- Flexor carpi ulnaris
+- Floor - inguinal ligament
+- Flutter valve drains
+- FONA (Front of Neck Access)
+- Foot Nerves & Ankle Block
+- Gives off axillary nerve
+- Grave's disease in pregnancy, antibodies and placenta
+- Great vessels
+- Greater petrosal nerve (lacrimal secretomotor)
+- Grommets with runny nose
+- Grown up congenital heart disease
+- Heart block
+- Heart failure
+- Heart rate / diastolic time
+- Heart transplant
+- High spinal cord injury - Anaesthesia
+- Hyperparathyroidism
+- Hyperthyroidism management
+- Hypocalcaemia (removal of parathyroids)
+- Hypoparathyroidism
+- Hypothermia
+- Hypothyroidism
+- Ilioinguinal nerve
+- Illegal substances on critical care
+- Infrahyoid muscles (sternothyroid, thyrohyoid)
+- Inguinal Region & TAP Block
+- Initial management of blunt and penetrating neck trauma
+- Innervation of the Heart
+- Innervation of the Inguinal Region
+- Innervation of the Larynx
+- Intercostal Nerves
+- Intercostal spaces
+- Internal Jugular Vein
+- Ischaemic heart disease
+- Ischaemic Lower Limb
+- Jugular Venous Bulb Oxygen Saturation (SjVO2)
+- Kidneys are histologically normal
+- Laryngeal anatomy and innervation
+- Laryngeal complications after tracheal intubation and tracheostomy
+- Larynx - RLN
+- Larynx - Tracheostomy
+- Lax ligaments (progesterone, relaxin)
+- Left bundle branch block
+- Liver
+- Liver disease in pregnancy
+- Liver failure and anaesthesia
+- Liver resection
+- Liver transplantation
+- Lumbar plexus
+- Lumbar plexus block (psoas compartment block)
+- Lung malignancy
+- Lung protective ventilation
+- Lung transplantation
+- LVEDV and contractility relationship (Starling) is normal
+- Malignant lung / neck disease
+- Management of acute liver failure in ITU
+- Management of acute spinal cord injury
+- Management of heart failure
+- Management of retained placenta / PPH
+- Management of traumatic brain injury / raised ICP
+- Managing wrong side block
+- May be associated with complex congenital heart defects (asplenia syndrome)
+- Mean/Median/Mode
+- Median and radial nerves
+- Median ligament links two crura
+- Median Nerve
+- Mid-humeral fracture / radial head
+- Mitral valve calcification
+- Mitral Valve Disease
+- Motor - phrenic nerve
+- Muscle contraction (skeletal/smooth/cardiac)
+- Myocardial Innervation
+- Nasal regurgitation / abnormal swallowing
+- Nasotracheal tube
+- Neck dissection management
+- Neck haematoma
+- Neck swelling post-operatively
+- Neck triangles
+- Nerve fibre types (myelinated vs unmyelinated)
+- Nose
+- Obese neck stabbing, afro-caribbean
+- Obstruction on induction
+- Obturator block, sciatic block
+- Ocular Anatomy
+- One-Lung Ventilation (One-Lung Anaesthesia)
+- Options for colonoscopy
+- Obstructive sleep apnoea (OSA)
+- Oxygen delivery
+- Oxygen delivery and oxygen flux
+- Pain pathways
+- Paravertebral block
+- Paravertebral Space & Block
+- Parkinson’s disease and dental extractions
+- Penetrating eye injury
+- Penetrating neck injury (stabbing)
+- Penetrating neck injury (stabbing)- Obese neck stabbing, afro-caribbean
+- Penile block
+- Peripheral nerve injuries
+- Peripheral Nerve Stimulators
+- Pharynx
+- Phrenic Nerve & Diaphragm
+- Phrenic nerve block - caution in respiratory
+- Phrenic Nerve Palsy
+- Phrenic Nerve Palsy- Elderly woman having had right humerusoperation, post-operative difficulty in breathing
+- Phrenic, sympathetic, recurrent laryngeal or brachial plexus block
+- Placenta abruption
+- Placenta praevia/accreta
+- Placental circulation (fetal-maternal)
+- Pleural cavities are potential spaces
+- Pleural Space
+- Pneumothorax, diaphragmatic impairment, failure
+- Popliteal fossa / sciatic
+- Preventing wrong side block
+- Publican due to have CABG. Now found to have carotid stenosis
+- Radial Artery
+- Radial Nerve
+- Radial nerve palsy (wrist drop)
+- Reasons for instrumenting the nose
+- Recurrent laryngeal nerve (from vagus)
+- Recurrent laryngeal nerve damage
+- Reduce aqueous humour production
+- Rheumatoid neck - assessment and value
+- Sacral plexus
+- Sacrum & Caudal Block
+- Saphenous nerve
+- Scalp & Blocks
+- Scalp Block & Trigeminal Nerve
+- Sciatic nerve
+- Secreted into the posterior chamber
+- Sensory Innervation of the Foot
+- Single midline anterior spinal artery
+- Single ventricle child
+- Slow conducting (0.5-2 m/s)
+- Spasmodic contraction of blood vessels - causes ischaemia
+- Spermatic cord / round ligament
+- Spinal / epidural / paravertebral
+- Spinal Cord Injury
+- Spinal cord perfusion
+- Spinal, epidural
+- Spleen
+- Status epilepticus
+- Stellate Ganglion
+- Stridor / airway obstruction
+- Structure (Amide/Ester)
+- Subarachnoid space
+- Subclavian vein
+- Subdural block
+- Superficial peroneal nerve
+- SUPRACLAVICULAR BLOCK/PNEUMOTHORAX
+- Sural nerve
+- Surface anatomy and vertebral levels
+- Surface Anatomy of the Neck (Percutaneous Tracheostomy and Cricothyroidotomy)
+- Synapse in the thalamus (midbrain)
+- T10 - Liver
+- TAP block
+- Tendon of biceps
+- Thenar muscles
+- Third heart sound
+- Thyroid coma
+- Thyroid crisis
+- Thyroid hormone synthesis and treatment
+- Thyroid hormones
+- Thyroid storm
+- Thyroidectomy (Toxic/Retro-sternal)
+- Thyroidectomy / parathyroidectomy
+- Tibial nerve
+- Trachea & Bronchial Tree
+- Trachea & Foreign Body
+- Tracheal tumour
+- Transtracheal injection
+- Traumatic amputation of lower limb
+- Treat hyperparathyroidism to reduce marrow failure
+- Triceps, anconeus, brachioradialis
+- Trifascicular heart block
+- Trigeminal Nerve
+- Two fundamental ethical and legal rules for deceased organ donation
+- Ulcerative colitis with toxic megacolon
+- Ulnar artery
+- Ulnar Nerve
+- Ulnar neuropathy (perioperative nerve injury)
+- V/Q relationships
+- Vagal / recurrent laryngeal block
+- Vagal nerve stimulators
+- Valve area
+- Valvular heart disease (AS, MS, AR, MR)
+- Vascular injury distal to venous drainage (e.g. IVC injury and leg bones)
+
+## Physiology
+
+- 5-Hydroxytryptamine (Serotonin)
+- ACEi in pregnancy
+- Acid-base balance
+- Action potentials
+- Air embolism
+- Altitude
+- Cervical spondylosis, rheumatoid arthritis and airway management
+- Chronic obstructive pulmonary disease (COPD) and major surgery
+- Anticoagulation
+- Anticoagulation and surgery
+- Apnoea and Hypoventilation
+- Arteriovenous extracorporeal membrane
+- Aspiration under general anaesthesia
+- Autonomic dysreflexia
+- Autonomic nervous system
+- Autonomic nervous system disorders
+- Blood pressure control (short/long term)
+- Bowel obstruction in elderly/comorbid
+- Cardiac cycle
+- Cardiac cycle pressures
+- Cardiac disease in pregnancy
+- Cardiovascular changes in pregnancy
+- Cardiovascular risk
+- CBF regulation
+- Cellular oxygen utilisation
+- Cerebral angiography
+- Cerebral perfusion pressure (CPP) and intracranial pressure (ICP)
+- Cerebral venous thrombosis
+- Chronic ischaemia (lactic acidosis) sensitises afferent sympathetics such that pain occurs
+- Classification of sleep apnoea
+- Coagulation cascade
+- Coagulation, TXA
+- Complex Regional Pain Syndrome (CRPS)
+- Consent and capacity
+- Control of Breathing
+- Control of ventilation
+- Counter-current mechanism
+- Crohn's disease
+- CSE and coagulation
+- Definitions of respiratory failure
+- Detection and response to acute systemic hypoxia
+- Diastolic dysfunction
+- DVT prophylaxis
+- Elderly
+- Endocrine problems in critically ill
+- Exercise
+- Exercise and sats
+- Exudates - capillary look (infection, inflammation, malignancy)
+- Fat embolism syndrome
+- Filtration of red blood cells
+- Genetics, testing
+- Glucocorticoid Response to Surgery
+- Haemostatic disorders in pregnancy
+- Hepatocellular causes (unconjugated or conjugated)
+- Hip fracture in elderly
+- Hormone synthesis (e.g., prolactin, chorionic
+- Humans at altitude
+- Hydrocephalus
+- Hypertensive disorders in pregnancy
+- Hypertrophic obstructive cardiomyopathy
+- Hypoventilation
+- Hypoxia with LMA
+- Hypoxia/Hypercapnia
+- Hyoscine and secretions
+- Immune response
+- Immunological function
+- Intracranial Pressure
+- Intraocular Pressure
+- Long term complications of spinal cord injury and autonomic dysreflexia
+- Lung function tests
+- Managing anaesthesia in uncooperative patients
+- Markers of inflammation / infection
+- Means of mechanical ventilation
+- Mechanism of inhaled FB
+- Mechanism of oxygen induced hypercapnoea
+- Metabolic acidosis and anion gap
+- Metabolic functions
+- Miscellaneous clinical considerations
+- MORAL balance decision making in ITU
+- Morbid obesity in pregnancy
+- Myotonic dystrophy
+- Nasopharyngeal airway
+- Negative pressure pulmonary oedema
+- Neonatal jaundice phototherapy
+- Nervous: uraemic neuropathy / myopathy
+- Neurotransmitters
+- Non-invasive ventilation
+- Non-Obstetric Surgery in Pregnancy
+- Non-Respiratory Functions of the Lung
+- Obesity
+- Occurs in children with sickle cell disease
+- Oculocardiac reflex
+- Oesophageal injury
+- Oesophageal perforation, mediastinitis
+- Oesophagectomy
+- Optimisation of cardiac function
+- OSA, obesity hypoventilation, STOPBANG
+- Osmosis
+- Paediatric consciousness assessment
+- Paediatric daycase in general
+- Paediatric mechanical ventilation
+- Paediatric SVT and post-operative agitation
+- Paeds consent and capacity issues
+- Paeds respiratory distress
+- Parasympathetic nervous system
+- Pathophysiology, incidence
+- Patient-controlled analgesia
+- Periop anticoagulation
+- Periop renal protection
+- Peripherally inserted central catheters (PICC)
+- Pharyngo-oesophageal constriction
+- PHEM
+- Pheochromocytoma
+- Phosphate homeostasis
+- Physiological changes in pregnancy
+- Physiological Changes of Late Pregnancy Relevant to General Anaesthesia
+- Physiology and Clinical Anatomy of the Infant and Neonate
+- Physiology of Ageing
+- Physiology of cord perfusion
+- Physiology of ICP and CBF
+- Physiology of O2 transport
+- Physiology of pregnancy
+- Polycythaemia - pathophysiology, causes
+- Polysomnography
+- Porphyria
+- Positioning for nephrectomy
+- Post partum haemorrhage and postoperative acute respiratory distress syndrome
+- Post-op desaturation in recovery
+- Postoperative Cognitive Dysfunction and Delirium
+- Postoperative hypoxia and renal failure following abdominal aortic aneurysm repair
+- Pre-hepatic (unconjugated)
+- Pre-Operative Assessment of Cardiac Function
+- Pregnancy (maternal/fetal)
+- Pregnancy counselling
+- Pulmonary embolism
+- Pulmonary function tests
+- Red cell mass ↑ but relative anaemia / dilution
+- Regional vs general anaesthesia
+- Removal of air following embolism
+- Renal failure
+- Renal failure and anaesthesia
+- Renal Replacement Therapy (RRT)
+- Requires urgent ophthalmological assessment and tonometry
+- Respiratory assessment
+- Respiratory depressants
+- Respiratory optimisation
+- Respiratory physiotherapy
+- Right shift of OHDC
+- RV dysfunction, structure and function
+- Scleroderma implications, CREST
+- Serotonin syndrome
+- Shortness of breath in pregnancy
+- Sickle cell disease vs trait, complications, pathophysiology
+- SJS, TENS, staph scalded skin
+- Sleep
+- Sleep studies
+- SOB and desaturation in recovery
+- Stimulated by hypoxia
+- Stress hyperglycaemia
+- Stress response
+- Stress Response to Surgery
+- Sympathetic Nervous System
+- Synthetic functions
+- Thyroid Function
+- Tracheo-oesophageal fistula
+- Trans-valvular pressure
+- Trauma during pregnancy
+- Triggers for intubation, normal vital capacity values
+- Tubular function
+- Type 2 Respiratory Failure
+- Ulceration, mucosal atrophy, bacterial
+- Uncontrolled hypertension
+- Urea cycle
+- Venous thrombosis
+- Volume
+- VTE in pregnancy
+- VTE prophylaxis
+- Weaning from ventilation
+- Weaning from ventilation and extubation of children
+- Work of breathing
+
+## Pharmacology
+
+- Psychiatric disease and anaesthesia
+- Adrenaline (Epinephrine)
+- Agonists/Antagonists
+- Alfentanil
+- Alpha-adrenergic blockers
+- Aminoglycosides
+- Amniotic fluid embolism
+- Amniotic fluid embolus
+- Amphotericin B
+- Anaesthetic concerns
+- Anaesthetic considerations
+- Anaesthetic implications of high spinal cord injury
+- Anaesthetic management for EVAR
+- Anaesthetic problems in IVDU
+- Anaesthetic technique for VATS
+- Analgesic options
+- Anaphylaxis
+- Anti-Arrhythmic Drugs
+- Anti-arrhythmics
+- Anti-epileptic drugs
+- Anti-Hypertensive Drugs and Anaesthesia
+- Antibiotic prophylaxis
+- Antibiotic stewardship
+- Antibiotics
+- Anticholinergics (Atropine, Glycopyrrolate)
+- Anticoagulants
+- Anticoagulants (Heparin, Warfarin, DOACs)
+- Antihypertensives (Beta-blockers, CCBs, ACEI, GTN, SNP)
+- Antiplatelets
+- Baroreceptors
+- Beta-Adrenoceptor Blockers
+- Bioavailability
+- Biotransformation
+- Blast injury
+- Blood products - contents
+- Blood transfusion reactions
+- Bupivacaine, Ropivacaine, Lidocaine and Prilocaine
+- C-spine clearance
+- Calcium channel blockers
+- Carbohydrate metabolism
+- Cataract- 70yo on warfarin
+- Chemotherapeutic (Cytotoxic) Drugs
+- Chirality
+- Chremotherapy agents
+- Classification of blast injury
+- Clearance
+- Clonidine (and Dexmedetomidine)
+- Co-phenelcaine (5% lignocaine, 0.5% phenylephrine)
+- Coagulopathy (↓clotting factors, platelet
+- Cocaine 10%
+- Codeine
+- Collapse - suspected overdose
+- Collapse – suspected overdose
+- Complications of Blood Transfusion
+- Cyclo-Oxygenase (COX) Enzyme Inhibitors
+- Cytochrome P450
+- Depolarizing (Suxamethonium)
+- Desflurane
+- Digoxin toxicity
+- Diuretics
+- Diuretics mechanisms
+- Dose of adenosine in child
+- Drug / hormone metabolism
+- Drug interactions
+- Drug metabolism
+- Drug Overdose: Prescribed and Therapeutic Drugs
+- Drugs Affecting Coagulation
+- Drugs Affecting Mood
+- Drugs Used in Parkinson's Disease
+- Drugs Used in the Treatment of Nausea and Vomiting
+- Drugs Used to Treat Diabetes Mellitus
+- Electrolyte abnormalities (↓K,Mg,Ca), hypothermia
+- Electrolyte handling
+- Enteral - NG/NJ/OG, gastrostomy, jejunostomy
+- Environmental emergencies in critical care
+- Excretion
+- Exomphalos/Gastroschisis
+- Fentanyl
+- Fibreoptic bronchoscopy - indications, anaesthesia
+- Fluid management
+- Fluid Therapy
+- Gabapentinoids
+- Gas exchange
+- Gases and Vapours
+- Gastric residual volumes, normal emptying
+- GI: gastroparesis, GI ulcers
+- Goal directed fluid therapy
+- Half-life
+- Hazards of transfusion
+- Hip revision on warfarin
+- Hypnotic pulmonary vasoconstriction
+- Ilioinguinal and iliohypogastric nerves
+- Immunology (and Drug Reactions)
+- Inhalational Agents: Comparison with the Ideal
+- Inhalational Agents: Desflurane
+- Inhalational Agents: Isoflurane
+- Inhalational Agents: Nitrous Oxide
+- Inhalational Agents: Sevoflurane
+- Inhalational Agents: Xenon
+- Inotropes (Adrenaline, Noradrenaline, Dopamine, Dobutamine)
+- Insulin and hypoglycaemic drugs
+- Intravenous drug abuse
+- Iron homeostasis
+- Isoflurane
+- Ketamine
+- LA toxicity
+- LA toxicity- Epidural top up for LSCS, drowsy
+- Latex Allergy
+- Lipid metabolism
+- Lithium and anaesthesia
+- Local Anaesthetics: Actions
+- Local Anaesthetics: Influences on Onset and Duration
+- Local Anaesthetics: Toxicity
+- Magnesium Sulphate
+- Massive transfusion - practicalities, transfusion targets, complications
+- Mastectomy, lymph node clearance and free-flap following chemotherapy
+- Maximum safe dosage of topical anaesthesia
+- Mechanism of action of dantrolene
+- Mechanism of gas exchange unclear
+- Mechanisms of Action of General Anaesthetics
+- Metabolism (Phase I/II)
+- MOA
+- Morphine
+- Mucopolysaccharidoses
+- Naloxone
+- Neuromuscular Blocking Drugs (and Sugammadex)
+- Nitrous oxide
+- NMBDs in the critically ill
+- NMDA antagonists
+- Non-depolarizing (Rocuronium, Atracurium, Vecuronium, Cisatracurium)
+- Non-steroidal anti-inflammatory drugs (NSAIDs)
+- Opiates/Opioids
+- Opioids and tolerance
+- Outer layer of trophoblast (syncytiotrophoblast)
+- Oxygen Toxicity
+- Paeds massive transfusion
+- Pancreas (Insulin/Glucagon)
+- Paracetamol
+- Peri-operative myocardial infarction
+- Perioperative beta blockers
+- PKa
+- Plasma cholinesterase (30%)
+- Plasma Proteins
+- Plasma volume (40%) and TBW
+- Platelets
+- Poisoning from legal highs
+- Post op analgesia - blocks, equivalence of opioids, ketamine and action
+- Potassium, calcium, magnesium
+- Premedication
+- Presentation of LA toxicity
+- Process of spinal anaesthesia, choice of drug
+- Propofol
+- Protein binding
+- Psychiatric drugs and anaesthesia
+- Receptors
+- Recreational Drugs and Drugs of Abuse
+- Remifentanil
+- Remifentanil often used
+- Renal / drugs
+- Resuscitation / massive transfusion
+- Reversal (Neostigmine, Glycopyrrolate, Sugammadex)
+- Role of mannitol
+- Serous pleural fluid lubricates
+- Sevoflurane
+- Thoracotomy and lung resection
+- Spinal Adjuncts to Local Anaesthetics
+- Steroid replacement
+- Steroids
+- Sux apnoea in detail
+- Suxamethonium
+- Thiopental and Etomidate
+- Thiopentone
+- TIVA vs volatile
+- Tocolytics (Drugs That Relax the Uterus)
+- Toxicity (LAST)
+- Tramadol
+- Tranexamic Acid
+- Transfusion triggers in anaemia
+- TTE for dynamic fluid responsiveness
+- Tube / drug calculations
+- TYMPANOPLASTY
+- Uterotonics (Drugs That Stimulate the Uterus)
+- Vasopressors
+- Vit C and Thiamine
+- Volatile anaesthetic agents
+- Volatiles and other IV induction agents reduce intraocular pressure due to hypotension
+- Warmer, fluid
+- Weight, tube, LMA, fluid calculations
+- Xylometazoline (otrivine) - rebound hyperaemia
+
+## Physics, Clinical Measurement, Equipment and Statistics
+
+- ABGs
+- Absorption
+- Advanced airway assessment techniques
+- Airway assessment
+- Airway options
+- Airway tests, sensitivity and specificity
+- Anaesthetic Breathing Systems
+- Anaesthetic machine (Checklist, Safety features)
+- ANOVA
+- Anthropometric measurements (perioperative assessment)
+- Anti-emetics pharmacology
+- Arteriography, MR/CT angio
+- Atrial dilatation and hypertrophy
+- Atrial ectopics or non-sinus rhythm
+- Atrial fibrillation
+- Atrial flutter
+- Atrial myxoma, flow murmurs, LAD artery stenosis
+- Ayre’s T piece
+- Biological Potentials
+- Blood supply
+- Blood Supply to Brain
+- Blood Supply to Gut/Ischaemic Bowel
+- Blood Supply to Spinal Cord
+- Blood Supply to the Abdominal Viscera (the Splanchnic Circulation)
+- Blood Supply to the Lower Limb
+- Blood supply to the spinal cord
+- Brain imaging for anaesthetists and intensivists
+- Breathing systems (Mapleson, Circle)
+- BTS Guidelines
+- Capnography in critical care
+- Cardiac output (determinants, measurement)
+- Cardiac output monitoring
+- Cardiac output monitoring (Doppler, Thermodilution, Pulse contour)
+- Cardiovascular effects of positive pressure ventilation
+- Central Venous Pressure and Cannulation
+- Cerebral blood flow in TBI
+- Cerebral oximetry
+- Chemical incidents
+- Chi-square
+- Circle of Willis
+- Clinical Trials: Errors in Interpretation of Data
+- Cognitive biases in diagnosis and decision making
+- Compliance
+- Continuous BP monitoring - actual or expected cardiovascular instability
+- Cord monitoring
+- Correlation vs Regression
+- CPET results
+- CPEX testing
+- Cricothyroid cannula and jet ventilation
+- CVP monitoring
+- CXR - bilateral infiltrates
+- CXR interpretation
+- CXR position - right cupola level with 4th costal cartilage anteriorly on max
+- CXR signs of collapse
+- CXR signs of phrenic nerve palsy
+- CXRs
+- Cylinders/Pipeline
+- Data types
+- Defibrillation
+- Defibrillator
+- Depth of anaesthesia (BIS/Entropy)
+- Depth of Anaesthesia Monitoring
+- Design of a Clinical Trial for a New (Analgesic) Drug
+- Diathermy and electrical safety
+- Differences between CT and MRI
+- Direct causes - aspiration, smoke
+- Distribution
+- Dose-response curves
+- Double-lumen tubes and OLV
+- ECG analysis
+- Echocardiogram
+- Effects of smoking
+- Efficacy
+- Electrical Safety
+- Electricity (Safety, Shock, Classes, Floating circuits)
+- Equipment, monitoring
+- Error and root cause analysis
+- Etomidate (Structure, MOA, Effects)
+- Experimental - bioimpedance, TBW measurement
+- Facial nerve monitoring
+- Fibreoptic bronchoscope and sterilisation
+- Flow (pneumotachograph, rotameter)
+- Flowmeters
+- Fluid dynamics (Laminar/Turbulent flow, Poiseuille, Bernoulli, Venturi)
+- Forest plots
+- Fractured mandible and head injury
+- Fuel Cell (Oxygen Measurement)
+- Gas laws (Boyle, Charles, Gay-Lussac, Dalton, Henry)
+- Hand arterial supply (digital arteries)
+- Heart (chambers, valves, conducting system, blood supply)
+- Heat Loss
+- High flow nasal O2
+- Hospital response to major incident
+- Human factors in airway management and complex trauma
+- Humidification (of Inspired Gases)
+- Humidity
+- Imaging in head and neck cancers
+- Implantable cardiac devices
+- Intra-Arterial Blood Pressure Measurement
+- Invasive blood pressure measurement
+- Laminar and Turbulent Flow
+- Larynx (cartilages, muscles, nerve supply)
+- Lasers
+- Left bundle branch block (LBBB)
+- Liver blood flow
+- Loss of resistance (LOR) technique
+- Low flow anaesthesia
+- Lower Limb Blood Supply/Ischaemic Leg
+- Lung malignancy and incidental findings
+- Lung ultrasound for COVID-19
+- MAC
+- Magnetic resonance imaging
+- Measurement of blood gases
+- Measurement of Cardiac Output
+- Measurement of Cerebral Oxygenation (Near Infrared Spectroscopy)
+- Measurement of CO2
+- Measurement of Organ Blood Flow
+- Medical conditions that affect the risk of diving
+- Meta-analysis
+- Microcirculatory flow
+- Microlaryngeal tubes
+- Mild cardiac dilatation, flow murmurs
+- Minimally invasive cardiac output monitoring
+- Monitoring the brain
+- Monitoring the depth of anaesthesia
+- MR/CT angio
+- MRI safety
+- Myocardial Blood Supply
+- NAP4 suggests that cricothyroid cannulation has a higher failure rate than
+- Neuromuscular monitoring
+- NGT position checking
+- NIRS in paeds critical care
+- Non-inferiority statistics and equivalence studies
+- Normal distribution
+- OLV and hypoxia including artefact near spine
+- Organ effects
+- Outer compact (cortical) bone
+- Oxygen dissociation curve
+- Oxygen supply
+- Oxygen-Haemoglobin Dissociation Curve
+- P-values
+- Pacemaker classification and management
+- Pacemaker management
+- Pacemakers
+- Pacemakers/ICD
+- Parametric and Non-Parametric Data
+- Parkinson’s disease pharmacology
+- Partition coefficients
+- Pharmacogenomics
+- Pharmacokinetics and liver failure
+- Pharmacokinetics at extremes of weight
+- Pharmacological (neuropathic treatments), ganglion block (which can also be used to provide surgical
+- Pharmacology of Anaesthetic agents
+- Pharmacology of local anaesthetics
+- Physics of ultrasound
+- Physiology of Valsalva and effects
+- Plasma volume, tissue oedema, starling principle
+- Point of Care Tests (and ROTEM)
+- Post-operative monitoring
+- Potency
+- Power
+- Practical approach to lung ultrasound
+- Preop assessment of patients with pacemakers
+- Pressure (transducers, invasive/non-invasive)
+- Protect dependent lung
+- Strangulated hernia
+- Pulmonary vascular resistance
+- Pulse oximetry (principles, limitations)
+- PV loops
+- Rectus sheath
+- Regional blood flow (Brain, Kidney, Liver, Uterus)
+- Renal blood flow
+- Resistance
+- Respiratory pharmacology
+- Right loops around subclavian artery
+- Risk stratification scoring systems
+- Risks, scoring
+- Robotic hysterectomy post radiotherapy for endometrial cancer
+- Role of simulation in preparing for a pandemic
+- Scavenging
+- Scoring systems
+- Scoring systems in critical illness
+- Second gas effect
+- Sensitivity/Specificity
+- Sensory Nerve Supply to the Face
+- Sensory Nerve Supply to the Scalp
+- Soda lime
+- Spinal cord (tracts, blood supply)
+- Spinal cord monitoring
+- SSEP monitoring can be used to warn of impending ischaemia
+- Standard deviation
+- Standard error
+- Starling's law
+- Storage (vitamins, minerals)
+- Storage of vitamins (ADK B12)
+- Subclavian vein cannulation
+- Suction
+- Supply of Medical Gases
+- Surgical Diathermy
+- Systematic Review and Meta-Analysis
+- Systems-based models for investigating patient safety incidents
+- T-tests
+- Target-Controlled Infusion (TCI)
+- Tuberculosis (TB) and emergency surgery
+- TCI principles
+- Temperature measurement
+- Temperature probe
+- Transcranial doppler
+- Transfer ventilators
+- Triage, major incidents
+- Type I/II errors
+- Ultrasound (Piezoelectric effect, Doppler)
+- Uptake and distribution
+- VAD (Ventricular Assist Device)
+- Vaporizers
+- Ventilators (Modes, Mechanics)
+- Ventilatory strategies
+- Volume of distribution
+- Warm and humidify
