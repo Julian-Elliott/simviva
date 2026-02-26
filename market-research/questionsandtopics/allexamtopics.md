@@ -9,7 +9,6 @@
 - Absorption
 - ACEi in pregnancy
 - Acid base balance
-- Acid-base balance
 - Acromegaly
 - Action potentials
 - Acute coronary syndrome
@@ -33,7 +32,6 @@
 - Altitude
 - Aminoglycosides
 - Amniotic fluid embolism
-- Amniotic fluid embolus
 - Amphotericin B
 - Anaesthesia for Cardiac ablation
 - Anaesthesia for Foreign Body removal
@@ -69,8 +67,6 @@
 - Anterior mediastinal masses in paediatrics
 - Anthropometric measurements (perioperative assessment)
 - Anti-Arrhythmic Drugs
-- Anti-arrhythmics
-- Anti-emetics pharmacology
 - Anti-epileptic drugs
 - Anti-Hypertensive Drugs and Anaesthesia
 - Antibiotic prophylaxis
@@ -78,13 +74,9 @@
 - Antibiotics
 - Anticholinergics (Atropine, Glycopyrrolate)
 - Anticholinesterases
-- Anticoagulants
-- Anticoagulants (Heparin, Warfarin, DOACs)
-- Anticoagulation
 - Anticoagulation and surgery
 - Antiemetics
 - Antihypertensives
-- Antihypertensives (Beta-blockers, CCBs, ACEI, GTN, SNP)
 - Antiplatelets
 - Aortacaval compression
 - Aortic stenosis
@@ -107,14 +99,11 @@
 - Atrial dilatation and hypertrophy
 - Atrial ectopics or non-sinus rhythm
 - Atrial fibrillation
-- Atrial Fibrillation
 - Atrial flutter
 - Atrial myxoma, flow murmurs, LAD artery stenosis
 - Autism in paediatrics
 - Autonomic dysreflexia
 - Autonomic nervous system
-- Autonomic nervous system (Stellate ganglion, Coeliac plexus)
-- Autonomic nervous system disorders
 - Awake craniotomy
 - Awareness under Anaesthesia
 - Axillary
@@ -128,20 +117,16 @@
 - Biotransformation
 - Bladder puncture
 - Blast injury
-- Bleeding tracheostomy
 - Block assessment
-- Blocked trache
 - Blocked tracheostomy
 - Blood Groups
 - Blood pressure control (short/long term)
 - Blood products - contents
-- Blood supply
 - Blood Supply to Brain
 - Blood Supply to Gut/Ischaemic Bowel
 - Blood Supply to Spinal Cord
 - Blood Supply to the Abdominal Viscera (the Splanchnic Circulation)
 - Blood Supply to the Lower Limb
-- Blood supply to the spinal cord
 - Blood transfusion reactions
 - Blood viscosity
 - Bone cement
@@ -153,7 +138,6 @@
 - Brain and spinal cord
 - Brain imaging for anaesthetists and intensivists
 - Brain Stem Death Testing
-- Brainstem death
 - Breastfeeding and anaesthesia
 - Breathing in the Prone Position
 - Breathing systems (Mapleson, Circle)
@@ -164,7 +148,6 @@
 - Bupivacaine, Ropivacaine, Lidocaine and Prilocaine
 - Burnout and resilience in critical care
 - Burns
-- C-spine clearance
 - C-spine injury
 - Calcium channel blockers
 - Capnography in critical care
@@ -176,7 +159,6 @@
 - Cardiac cycle pressures
 - Cardiac disease in pregnancy
 - Cardiac output (determinants, measurement)
-- Cardiac output monitoring
 - Cardiac output monitoring (Doppler, Thermodilution, Pulse contour)
 - Cardiac Plexus
 - Cardiac risk assessment
@@ -202,11 +184,9 @@
 - Cerebral perfusion pressure (CPP) and intracranial pressure (ICP)
 - Cerebral venous thrombosis
 - Cerebrovascular disease
-- Cervical Plexus
 - Cervical plexus block
-- Cervical Spine & Cervical Plexus
+- Cervical Spine
 - Cervical spine injury
-- Cervical spine protection
 - Cervical spondylosis, rheumatoid arthritis and airway management
 - Chemical incidents
 - Chemotherapeutic (Cytotoxic) Drugs
@@ -239,14 +219,12 @@
 - Co-phenelcaine (5% lignocaine, 0.5% phenylephrine)
 - CO2 carriage
 - Coagulation cascade
-- Coagulation, TXA
-- Coagulopathy (↓clotting factors, platelet
+- Coagulopathy
 - Cocaine 10%
 - Codeine
 - Coeliac plexus block
 - Cognitive biases in diagnosis and decision making
 - Collapse - suspected overdose
-- Collapse – suspected overdose
 - Collapsed newborn
 - Communicable diseases
 - Communication around withdrawing care
@@ -254,12 +232,12 @@
 - Complete heart block
 - Complex Regional Pain Syndrome (CRPS)
 - Compliance
-- Complications of blocks
+- Complications of Blocks
 - Complications of Blood Transfusion
 - Components of GCS
 - Conduction studies
 - Confidence intervals
-- Congenital - bicuspid valve, William's syndrome
+- Congenital heart disease
 - Conscious sedation
 - Consent
 - Consent and capacity
@@ -271,11 +249,9 @@
 - Control of ventilation
 - COPD/Severe asthma for major surgery
 - Cord monitoring
-- CORD PROLAPSE
 - Corneal abrasion, chemical injury, acute glaucoma
 - Coronary artery diameter
 - Coronary circulation
-- Coronary Circulation/ACS
 - Coronary perfusion
 - Coroner
 - Correction of hypothermia
@@ -329,7 +305,6 @@
 - Delirium in critically ill patients
 - Depolarizing (Suxamethonium)
 - Depth of anaesthesia (BIS/Entropy)
-- Depth of Anaesthesia Monitoring
 - Dermatological complications of critical care
 - Desflurane
 - Design of a Clinical Trial for a New (Analgesic) Drug
@@ -373,7 +348,6 @@
 - Drugs Used to Treat Diabetes Mellitus
 - Dural tap in obstetrics
 - DVT prophylaxis
-- ECG analysis
 - ECG interpretation
 - Echocardiogram
 - ECMO
@@ -389,7 +363,6 @@
 - Electrolyte abnormalities (↓K,Mg,Ca), hypothermia
 - Electrolyte handling
 - Emergency Caesarean section
-- Emergency LSCS
 - Empyema
 - End of life care
 - Endocrine problems in critically ill
@@ -399,9 +372,7 @@
 - Enteral - NG/NJ/OG, gastrostomy, jejunostomy
 - Enteral feeding benefits
 - Environmental emergencies in critical care
-- Epidural abscess
 - Epidural abscess / haematoma
-- Epidural haematoma or abscess
 - Epidural Space
 - Epiglottitis/croup
 - Epilepsy perioperatively
@@ -444,7 +415,6 @@
 - Fast AF in ICU
 - Fast conducting (12-30 m/s)
 - Fat embolism syndrome
-- Fat embolus
 - Feeding and critical illness
 - Femoral Nerve
 - Femoral nerve block / catheter
@@ -490,7 +460,6 @@
 - Gastric residual volumes, normal emptying
 - Genetics, testing
 - GFR
-- GH - Acromegaly
 - GI: gastroparesis, GI ulcers
 - Gillick competence
 - Gives off axillary nerve
@@ -549,7 +518,6 @@
 - Hypertensive disorders in pregnancy
 - Hyperthyroidism management
 - Hypertrophic obstructive cardiomyopathy
-- Hypnotic pulmonary vasoconstriction
 - Hypocalcaemia (removal of parathyroids)
 - Hyponatraemia
 - Hypoparathyroidism
@@ -645,7 +613,6 @@
 - Latex Allergy
 - Lax ligaments (progesterone, relaxin)
 - Left bundle branch block
-- Left bundle branch block (LBBB)
 - Level at T10
 - Life threatening skin conditions presenting to critical care
 - Lipid emulsion
@@ -670,7 +637,6 @@
 - Lumbar drains - management, settings
 - Lumbar plexus
 - Lumbar plexus block (psoas compartment block)
-- Lung function tests
 - Lung malignancy
 - Lung malignancy and incidental findings
 - Lung protective ventilation
@@ -774,7 +740,6 @@
 - Mitral Valve Disease
 - MOA
 - Monitoring the brain
-- Monitoring the depth of anaesthesia
 - MORAL balance decision making in ITU
 - Morbid obesity in pregnancy
 - Morphine
@@ -883,9 +848,6 @@
 - Oxygen-Haemoglobin Dissociation Curve
 - P-values
 - Pacemaker classification and management
-- Pacemaker management
-- Pacemakers
-- Pacemakers/ICD
 - Pacing
 - Paediatric burns management
 - Paediatric consciousness assessment
@@ -1049,7 +1011,6 @@
 - Pre-hepatic (unconjugated)
 - Pre-op resuscitation
 - Pre-Operative Assessment of Cardiac Function
-- Pre-optimisation
 - Pre-oxygenate
 - Pre-term labour, requiring LSCS - management
 - Pregnancy (maternal/fetal)
@@ -1109,7 +1070,6 @@
 - Red cell mass ↑ but relative anaemia / dilution
 - Reduce aqueous humour production
 - Regional anaesthesia
-- Regional anaesthesia types
 - Regional and differences post partum
 - Regional blood flow (Brain, Kidney, Liver, Uterus)
 - Regional technique
@@ -1155,7 +1115,6 @@
 - Robotic hysterectomy post radiotherapy for endometrial cancer
 - Role of mannitol
 - Role of simulation in preparing for a pandemic
-- RS: pulmonary oedema
 - RUL can be affected if prone
 - Ruptured AAA
 - Ruptured abdominal aortic aneurysm (AAA)
@@ -1261,7 +1220,6 @@
 - Surgery below the elbow
 - Surgical Diathermy
 - Sux apnoea
-- Sux apnoea in detail
 - Suxamethonium
 - SVC obstruction
 - Sympathetic Nervous System
@@ -1291,14 +1249,12 @@
 - Thenar muscles
 - Therapeutic level 2-3.5mmol/l
 - Thiopental and Etomidate
-- Thiopentone
 - Third heart sound
 - Thoracic and thoracoabdominal aneurysms
 - Thoracic surgery pre-assessment
 - Thoracotomy and lung resection
 - Throat pack
 - Thyroid coma
-- Thyroid crisis
 - Thyroid Function
 - Thyroid hormone synthesis and treatment
 - Thyroid hormones
@@ -1403,7 +1359,6 @@
 - Volume of distribution
 - VTE in paeds
 - VTE in pregnancy
-- VTE prophylaxis
 - Warm and humidify
 - Warmer, fluid
 - Weaning from ventilation
