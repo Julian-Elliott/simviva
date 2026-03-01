@@ -1,4 +1,4 @@
-# Parkinsons Disease Short Case
+# Parkinson's Disease Short Case
 
 ## Clinical Questions
 
@@ -70,7 +70,7 @@ Examiner: Briefly—what are your postoperative priorities?
 Candidate: First, confirm how we will deliver Parkinson’s medication before leaving recovery: if the oral route is reliable, restart promptly; if nausea and vomiting make enteral dosing unreliable, supplement with transdermal rotigotine and seek specialist advice early. Second, plan destination—consider higher level care if poor cough or swallow, sleep apnoea, or autonomic instability. Third, analgesia: I’d have a clear plan because tremor and rigidity can limit ability to use PCA devices. And finally delirium: it’s common and often delayed, so I’d prioritise non-pharmacological measures—reorientation and an appropriate environment—and avoid typical antipsychotics like haloperidol; if medication is absolutely necessary, benzodiazepines such as lorazepam are generally safer choices in Parkinson’s.
 
 
-# Robotic Hyserectomy Short Case
+# Robotic Hysterectomy Short Case
 
 ## Clinical Question
 
