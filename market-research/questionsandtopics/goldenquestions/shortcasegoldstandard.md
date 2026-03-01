@@ -482,3 +482,189 @@ Candidate: I’d group them into iatrogenic puncture, barotrauma, and surgical i
 Examiner: What substances can accumulate in the pleural space?
 
 Candidate: The common ones are air—pneumothorax; blood—haemothorax; pus—empyema; and fluid—pleural effusion, which can be transudate or exudate including malignant effusions. Less commonly, chyle can accumulate—chylothorax—after thoracic duct injury, and in rarer situations you can see other fluids such as urine in a urinothorax. Clinically, identifying what’s in the pleural space guides both the acute management and the underlying diagnosis.
+
+# Mastectomy and free flap surgery Short Case
+
+## Clinical Question
+
+Clinical 3: Mastectomy, axillary clearance and free-flap breast reconstruction post-chemotherapy
+
+Examiner: You’re anaesthetising a patient for mastectomy, axillary node clearance and free-flap breast reconstruction after chemotherapy. Talk me through your approach.
+
+Candidate: I’d structure my approach into four parts: first, pre-operative assessment and selection issues, including chemotherapy effects; second, the intraoperative physiological goals for free-flap perfusion; third, the practical conduct of anaesthesia for a long case—monitoring, ventilation, positioning and temperature; and finally, emergence, analgesia and postoperative flap surveillance.
+
+Pre-operatively, I’d confirm the reconstructive plan—most commonly a DIEP free flap—and whether this is immediate or delayed, as that affects bleeding and transfusion risk. I’d review a recent full blood count: haemoglobin for oxygen carriage, neutrophils for infection risk and antibiotic planning, and platelets for bleeding and the safety of regional techniques. I’d actively assess chemotherapy sequelae: high risk of nausea and vomiting, dehydration and electrolyte disturbance, and I’d plan multimodal antiemetics and optimise hydration.
+
+Access needs planning because veins may be poor post-chemotherapy, and after axillary surgery we generally avoid venepuncture, cannulation and blood pressure cuffs on the operated side. So I’d aim for large-bore peripheral access on the contralateral arm early, and I’d have a low threshold for central venous access if peripheral access is unreliable, because this is long surgery and haemodynamic stability is important.
+
+Examiner: What are the physiological goals of free-flap surgery?
+
+Candidate: The goal is to maintain reliable blood flow through the flap microcirculation and the arterial and venous anastomoses. I’d categorise that into the determinants of flow: perfusion pressure gradient, vessel calibre, and blood viscosity.
+
+First, perfusion pressure gradient—systemic arterial pressure minus venous pressure. I aim for stable perfusion pressure and avoid sustained hypotension. In breast free flap surgery the anastomosis is usually to the internal mammary vessels, which are close to the heart and tend to have good perfusion pressure, so I do not chase supranormal blood pressure targets with fluid.
+
+Second, vessel calibre. Denervated flap tissue loses intrinsic sympathetic tone, but recipient vessels still respond to stimuli such as cold, circulating catecholamines and drugs. Therefore I aim for a warm, vasodilated patient with low systemic vascular resistance and good peripheral perfusion. Practically, that means preventing hypothermia, treating pain, and avoiding hypoxia and extremes of CO₂ that provoke sympathetic activation or vasoconstriction.
+
+Third, blood viscosity. I aim for an appropriate haematocrit, typically around 30–35%, balancing oxygen delivery against viscosity to optimise microvascular flow.
+
+Putting that together, the target physiology is a hyperdynamic circulation—adequate cardiac output with peripheral vasodilation—and avoidance of hypovolaemia, vasoconstriction and hypothermia.
+
+Examiner: How would you manage fluids and blood pressure intraoperatively?
+
+Candidate: I’d use goal-directed fluid therapy to maintain normovolaemia while avoiding interstitial oedema. The free flap lacks intact lymphatic drainage and excess fluid can promote oedema, which compromises gas exchange and flow at the microcirculatory level, and can worsen venous drainage. I’d therefore avoid large, empiric fluid loading.
+
+I’d monitor fluid responsiveness with a stroke volume or cardiac output method where available, for example oesophageal Doppler monitoring, and give small boluses guided by response rather than fixed targets.
+
+If blood pressure support is needed once volume status is appropriate, I would use vasopressors to maintain normotension. Although there has been historical concern, clinical experience and available evidence suggest that phenylephrine and ephedrine used to maintain normotension in an adequately filled patient do not adversely affect outcome. I generally avoid vasodilators as a strategy during microsurgery because of concern about reducing effective perfusion pressure and potential redistribution of flow away from the flap.
+
+During dissection, if controlled hypotension is requested, I would primarily achieve this by adjusting anaesthetic depth—volatile concentration and opioid or remifentanil—rather than adding vasodilators.
+
+Examiner: What monitoring and practical conduct of anaesthesia would you plan?
+
+Candidate: This is prolonged surgery, often 6–10 hours, so I plan robust monitoring and meticulous supportive care. I’d intubate and ventilate. I’d place an arterial line for continuous blood pressure monitoring and blood sampling, a urinary catheter to monitor output, and a core temperature probe. Venous access should be large bore and contralateral to the surgery, and if access is difficult post-chemotherapy I would place central venous access early rather than during a crisis.
+
+For maintenance, I’d use either a volatile-based technique in oxygen-enriched air or TIVA. Volatile anaesthesia is commonly used, and whichever technique is chosen, the priority is haemodynamic stability and a smooth emergence profile. I’d use either remifentanil infusion or intermittent opioid dosing depending on the plan for emergence and postoperative analgesia.
+
+Ventilation-wise, I’d aim for normal oxygenation and normocapnia. Hypoxia causes catecholamine release and vasoconstriction, hypocapnia causes vasoconstriction, and hypercapnia can stimulate sympathetic activity, so I avoid extremes.
+
+Positioning is critical. The patient is supine with arms abducted for access, but I ensure abduction is less than 90 degrees to reduce brachial plexus injury risk, forearms neutral to reduce ulnar nerve injury, and I pad all pressure points. Because the case is long, I recheck padding and limb position, and where feasible I’d ensure joints are moved at the end of the case to reduce postoperative stiffness.
+
+Temperature management is a priority throughout. Large areas are exposed for prolonged periods and anaesthesia lowers the threshold for vasoconstriction. I use forced-air warming—often underbody warming so both chest and abdomen remain accessible—warm IV fluids, humidified gases, and maintain an appropriate theatre temperature.
+
+Examiner: What postoperative flap issues are you concerned about? Specifically, what are the signs of arterial versus venous compromise?
+
+Candidate: The key concern is flap compromise due to impaired perfusion, and early detection is the main determinant of salvage. I’d describe monitoring as clinical assessment supported by Doppler.
+
+Clinically I assess flap colour, capillary refill time, turgor, skin temperature, and bleeding on pinprick. An 8 MHz Doppler signal is often used over a marked perforator point and checked regularly in recovery and on the ward.
+
+If the problem is arterial insufficiency, the flap is typically cool and pale, capillary refill is slow, there is no bleeding on pinprick, and there is loss of the arterial Doppler signal.
+
+If the problem is venous outflow obstruction, the flap is warm, congested and bluish, capillary refill is brisk, pinprick produces rapid dark bleeding, and the venous Doppler signal is lost.
+
+If compromise is suspected, I would immediately optimise the systemic physiology—maintain a warm patient, ensure adequate perfusion pressure and normovolaemia, treat pain, and avoid vasoconstriction—while urgently escalating to the surgical team because definitive management is usually prompt re-exploration to relieve kinking or compression, address thrombosis or revise the anastomosis. Salvage rates are highest when managed early.
+
+Examiner: What are your postoperative priorities, including thrombosis prevention and emergence?
+
+Candidate: Postoperatively I continue the intraoperative principles—warmth, stable perfusion, normovolaemia and good analgesia—because secondary ischaemia and thrombosis risk persist after transfer and reperfusion. For thrombosis prevention, I’d use mechanical prophylaxis such as stockings and intermittent pneumatic compression, and pharmacological prophylaxis with subcutaneous heparin in line with the surgical plan, which also supports flap survival.
+
+For emergence, I aim for smooth extubation because coughing and retching increase venous pressure and can reduce flap flow. Techniques include maintaining a low-dose remifentanil infusion to facilitate tube tolerance, considering deep extubation in suitable patients, or exchanging the tracheal tube for a supraglottic airway where appropriate and safe.
+
+Examiner: Finally, tell me your analgesia strategy.
+
+Candidate: I’d structure analgesia by operative sites: the chest and the abdominal donor site. In DIEP reconstruction the flap is insensate and the chest wound is often less painful than the abdomen; the abdominal incision is commonly the dominant pain source.
+
+Systemically, I’d use paracetamol, an NSAID if appropriate, and opioids titrated to effect—often with PCA initially.
+
+Regionally, I’d prioritise analgesia for the abdominal donor site using a transverse abdominis plane block. This can be performed under ultrasound at induction or placed by the surgeons under direct vision, and a catheter can be inserted to allow postoperative local anaesthetic infusion. This reduces opioid requirements for up to 48 hours and therefore improves nausea, mobilisation and respiratory function. I’d ensure the analgesic plan is continued consistently postoperatively to avoid sympathetic surges that could compromise flap perfusion
+
+## Science Question - Anatomy - Chest Wall Blocks
+
+Examiner: Describe the innervation of the chest wall and the course of the intercostal nerves. Which spinal roots are involved?
+
+Candidate: The chest wall is supplied predominantly by the intercostal nerves, which are the anterior rami of T1 to T11, with T12 continuing as the subcostal nerve.
+
+Each thoracic spinal nerve exits the intervertebral foramen and divides into a posterior ramus to the back and an anterior ramus that becomes the intercostal nerve. The intercostal nerve runs around the thoracic wall in the intercostal space in the neurovascular plane, accompanied by the intercostal vessels, and gives off lateral cutaneous branches around the mid-axillary line and anterior cutaneous branches near the parasternal region.
+
+For breast surgery, the most relevant dermatomes are typically T2 to T6, because these supply much of the breast skin. The axilla and medial upper arm are clinically important because they can be involved in mastectomy and axillary surgery, and analgesic techniques often aim to cover this region in addition to the anterolateral chest wall.
+
+Examiner: Describe the main chest wall blocks—ESP, serratus anterior plane and PECS—and what they cover.
+
+Candidate: I’ll answer by (1) where the local anaesthetic is deposited, and (2) which nerves and surgical areas are covered.
+
+First: PECS blocks.
+PECS blocks are interfascial plane blocks performed under ultrasound guidance.
+
+PECS I is performed by injecting local anaesthetic between pectoralis major and pectoralis minor. Its main target is the medial and lateral pectoral nerves, so it helps with pain from pectoralis muscle dissection.
+
+PECS II adds a deeper injection between pectoralis minor and serratus anterior, giving wider coverage. In addition to pectoral nerves, it aims to block the lateral branches of the intercostal nerves, and it also covers nerves relevant to axillary surgery including the intercostobrachial and long thoracic nerves. Clinically, PECS II is used to extend analgesia to the lateral breast and axilla.
+
+In terms of technique from the article: the probe is placed below the lateral third of the clavicle in an oblique plane; the first injection is at the level of the third rib between pectoralis major and minor, then the probe is adjusted to visualise the fourth rib and the needle directed to the plane between pectoralis minor and serratus anterior. Suggested volumes are 0.2 ml/kg at the PECS I plane and 0.4 ml/kg at the PECS II plane.
+
+Second: Serratus anterior plane block.
+This is designed to provide analgesia to the anterolateral chest wall by blocking the lateral cutaneous branches of the thoracic intercostal nerves, described in the article as T2 to T12. The injection is performed under ultrasound in the mid-axillary line at around the 4th or 5th rib, depositing local anaesthetic deep to latissimus dorsi and superficial to serratus anterior. The suggested volume in the article is 0.2 ml/kg of a long-acting local anaesthetic. This block is particularly useful for lateral breast and chest wall analgesia and can contribute to axillary coverage depending on spread.
+
+Third: Erector spinae plane block.
+ESP is another fascial plane technique used for breast surgery, performed posteriorly. Clinically, it aims to provide multi-dermatomal analgesia by spread in the erector spinae fascial plane, and it can cover thoracic wall pain across several segments. In breast surgery practice, it’s one of the regional options alongside paravertebral, PECS and serratus plane blocks, with the more anterior plane blocks—PECS and serratus—often favoured for day-case pathways because they avoid neuraxial sympathetic block.
+
+Examiner: You’re shown an ultrasound image of a serratus anterior plane block. Identify the structures, the plane of injection, ribs, and the thoracodorsal artery.
+
+Candidate: I’d identify structures from superficial to deep, then state the target plane.
+
+On the image, I’d expect to see subcutaneous tissue, then latissimus dorsi, and deeper to that the serratus anterior muscle. Beneath serratus, I would identify the rib as a hyperechoic curved line with posterior acoustic shadowing; deeper still lie the intercostal muscles and pleura, so recognising the rib and the depth is important for safety.
+
+The target plane described for this block in breast surgery is deep to latissimus dorsi and superficial to serratus anterior, in the mid-axillary region at about the 4th or 5th rib. I would confirm correct placement by hydrodissection opening that fascial plane with appropriate spread.
+
+For the thoracodorsal artery, I’d look for a vascular structure in the lateral chest wall region—often near the latissimus/serratus area—confirming with colour Doppler if needed, and I’d plan a needle path that avoids it.
+
+# Meningitis Short Case
+
+## Clinical Question
+
+
+Examiner: A 27-year-old woman presents with fever, headache and neck stiffness. What are your differentials?
+
+Candidate: With that presentation I’d organise the differentials into infective and non-infective, and I’d prioritise the time-critical ones first. Infective causes include acute meningitis—bacterial or viral—and encephalitis, particularly HSV, especially if there’s altered mental state, seizures or focal neurology. I’d also consider focal intracranial sepsis such as a brain abscess or subdural empyema, and occasionally systemic sepsis with meningism. Non-infective causes include subarachnoid haemorrhage, particularly if the headache is sudden onset or maximal at onset, and I’d keep autoimmune encephalitis in mind if microbiology is negative or the course is atypical. Given fever, headache and neck stiffness, my leading diagnosis is acute meningitis until proven otherwise.
+
+Examiner: What is meningitis?
+
+Candidate: Meningitis is inflammation of the meninges—particularly the pia and arachnoid mater—usually due to infection within the subarachnoid space. In bacterial meningitis, organisms typically invade after a period of high-grade bacteraemia, entering at highly vascular sites like the choroid plexus or leptomeningeal vessels, or via direct extension from adjacent infection such as sinusitis, or through a dural defect. The host inflammatory response drives endothelial activation and leucocyte infiltration; that helps control infection but also contributes to cerebral oedema, raised intracranial pressure and neuronal injury, which is what leads to many of the complications and poor outcomes.
+
+Examiner: Which organisms are most important in adults?
+
+Candidate: In immunocompetent adults with community-acquired meningitis, the most common bacterial cause is Streptococcus pneumoniae, and it’s also associated with the highest mortality. Neisseria meningitidis is the second most common, particularly in younger adults, and can be associated with a rash and meningococcal sepsis. Listeria monocytogenes is an important additional pathogen, especially in older patients and in those with immunocompromise, diabetes, malignancy or alcohol dependency. Haemophilus influenzae is now uncommon because of vaccination. If I’m considering viral meningitis, it tends to be less severe and more slowly progressive; the common viruses are enterovirus and herpes viruses, and in meningitis it’s often HSV-2 rather than HSV-1.
+
+Examiner: What complications are you worried about?
+
+Candidate: I think of them as neurological, systemic and long-term sequelae. Neurologically, patients can develop seizures, focal deficits and cranial nerve palsies, raised intracranial pressure from cerebral oedema, hydrocephalus, and suppurative complications like subdural empyema or brain abscess. Systemically, they can progress to septic shock, coagulopathy and multi-organ failure, particularly with meningococcal disease. And long-term, survivors can be left with cognitive impairment and hearing loss—so even when patients survive, morbidity can be substantial.
+
+Examiner: How would you manage this patient?
+
+Candidate: I’d manage this as a medical emergency and work in parallel: immediate stabilisation and immediate treatment, because delays in antibiotics worsen outcome and treatment should start within an hour.
+
+I’d start with an A–E. For airway, I’d assess consciousness and airway reflexes—if she’s maintaining her airway and protecting it, I’d keep her spontaneously breathing, but I’d have a low threshold to escalate if there’s reduced GCS or seizures. For breathing, I’d give high-flow oxygen, monitor saturations, and obtain a blood gas if there are concerns. For circulation, I’d secure IV access promptly, take blood cultures ideally before antibiotics but I would not delay treatment for cultures, and I’d send bloods including FBC, U&Es, glucose, CRP and coagulation. I’d treat hypotension with fluid and vasopressors as needed. For disability, I’d document GCS, pupils, focal neurology, check capillary glucose, and treat seizures promptly. On exposure, I’d look carefully for a rash, purpura, and any source such as otitis or sinusitis.
+
+Then I’d start empirical therapy immediately. I’d give a third-generation cephalosporin—ceftriaxone or cefotaxime—because of good CSF penetration and activity against pneumococcus and meningococcus. If there’s concern about pneumococcal resistance, I’d add vancomycin, and if she had risk factors for Listeria I’d add amoxicillin. If there’s any suspicion of encephalitis—altered mental state, seizures, focal signs—I’d also start aciclovir. I’d give dexamethasone at the same time as, or just before, the first antibiotic dose, because steroids reduce neurological sequelae and are recommended early; if an organism other than pneumococcus or TB is identified, steroids would be stopped.
+
+For diagnostics, lumbar puncture is central, but only if safe. If she has clinical features suggesting raised intracranial pressure—focal neurological signs, papilloedema, ongoing seizures, or a GCS of 12 or less—I’d arrange urgent brain imaging first, but crucially I would not delay antibiotics for imaging. If she has no features suggesting raised ICP or other contraindications, I’d proceed with LP urgently. The LP would include opening pressure, cell count and differential, protein, paired CSF and serum glucose, Gram stain and culture, and PCR for common bacterial pathogens and viral PCR depending on the syndrome.
+
+Examiner: When would you intubate her?
+
+Candidate: I’d intubate if she cannot protect her airway—so a low GCS, loss of airway reflexes, or recurrent vomiting with aspiration risk; if she has refractory seizures or status epilepticus; if there’s respiratory failure; or if she’s in septic shock requiring escalating vasopressors and I need controlled ventilation and oxygenation. I’d also consider intubation if there’s severe agitation preventing safe imaging or treatment. If I intubate, I’d do it in a controlled way with attention to haemodynamic stability and avoiding secondary brain injury—maintaining oxygenation, normocapnia and adequate perfusion pressure.
+
+## Science Questions - Physiology - Syndrome of Inappropriate Antidiuretic Hormone Secretion (SIADH)
+
+Examiner: A 54-year-old man is presenting for a lung biopsy. His sodium is 122 and he is confused. What’s the cause of his confusion?
+
+Candidate: The likely cause is symptomatic hyponatraemia causing cerebral oedema. In this context—lung pathology—SIADH is a likely mechanism, especially with small cell lung cancer, where ADH can be secreted inappropriately or ectopically. The low plasma osmolality drives water into brain cells, leading to cerebral swelling and neurological symptoms such as confusion, and at the severe end seizures and coma.
+
+Examiner: What is SIADH, and what causes it?
+
+Candidate: SIADH is inappropriate ADH activity—ADH is released or acts despite low plasma osmolality and without appropriate haemodynamic triggers. That causes water retention at the kidney, leading to dilutional hyponatraemia, low serum osmolality, and urine that remains inappropriately concentrated.
+
+The major causes fall into a few groups: malignancy—especially small cell lung cancer; CNS disorders such as haemorrhage, trauma, infections and tumours; pulmonary disease like pneumonia or respiratory failure; medications such as SSRIs, carbamazepine, and some chemotherapeutic agents; and then perioperative triggers—surgery, pain and stress can all stimulate ADH release. Positive pressure ventilation can also contribute by stimulating baroreceptors and promoting non-osmotic ADH release.
+
+Examiner: Talk me through how sodium and water balance are regulated—what’s the physiology?
+
+Candidate: I’d frame it as three interacting systems: osmoregulation via ADH, volume regulation via the renin–angiotensin–aldosterone system, and natriuretic peptides.
+
+ADH is released from the posterior pituitary in response to increased plasma osmolality and also in response to non-osmotic triggers like hypovolaemia, pain and stress. In the kidney, ADH binds V2 receptors in the collecting duct, increasing aquaporin-2 channel expression and water reabsorption—so it concentrates urine and dilutes plasma sodium.
+
+RAAS is triggered by reduced renal perfusion pressure, reduced sodium delivery to the macula densa, and sympathetic activation. Renin leads to angiotensin II, which constricts arterioles and stimulates aldosterone release. Aldosterone increases sodium reabsorption in the distal nephron, with water following, supporting circulating volume.
+
+Natriuretic peptides, such as BNP and ANP, promote natriuresis, counteracting RAAS and helping excrete sodium and water in states of volume expansion.
+
+In SIADH, ADH secretion becomes uncoupled from appropriate osmotic and haemodynamic control, so the patient retains free water, plasma becomes hypotonic, and sodium falls, while urine remains inappropriately concentrated.
+
+Examiner: How would you classify hyponatraemia?
+
+Candidate: The most useful classification starts with serum osmolality, then volume status. First, determine if it’s hypotonic hyponatraemia—which is the commonest and clinically important category—or isotonic pseudohyponatraemia, or hypertonic hyponatraemia such as from hyperglycaemia. Once it’s confirmed hypotonic, I classify by volume status into hypovolaemic, euvolaemic or hypervolaemic. SIADH is characteristically a hypotonic, euvolaemic hyponatraemia, with inappropriately concentrated urine and elevated urinary sodium, and normal thyroid, adrenal and renal function.
+
+Examiner: How would you treat SIADH in this patient?
+
+Candidate: I’d treat based on symptoms and risk. He is confused with sodium 122, so he has clinically significant symptoms and needs urgent management.
+
+First, I’d confirm and assess: repeat sodium, measure serum osmolality, urine osmolality and urine sodium, and review volume status clinically to ensure this is SIADH rather than hypovolaemic hyponatraemia such as cerebral salt wasting in a neuro patient. In a lung tumour context, SIADH is more likely.
+
+Treatment begins with addressing the cause and restricting free water—fluid restriction is the cornerstone. Because he’s symptomatic, I would also use hypertonic saline cautiously. The goal is an initial controlled rise—enough to improve symptoms—typically aiming to increase sodium by about 4–6 mmol/L early, while avoiding overcorrection. I’d monitor sodium frequently, every 2–4 hours initially, and set strict correction limits to reduce the risk of osmotic demyelination: generally no more than 10 mmol/L in 24 hours in low-risk patients, and no more than 8 mmol/L in high-risk patients.
+
+If he were less symptomatic, I’d start with fluid restriction and stopping precipitating drugs. If restriction fails, second-line options include oral salt and loop diuretics, and for refractory cases urea or a vasopressin antagonist such as tolvaptan, with careful monitoring. Throughout, I’d avoid hypotonic fluids, and if this were elective surgery I’d consider postponing until sodium is optimised.
