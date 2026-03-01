@@ -58,5 +58,5 @@
     "scenario_2_rescue": "Rescue question",
     "scenario_2_scoring": "Scoring rubric"
   },
-  "first_message": "Good morning, Dr {{candidate_name}}. Please take a seat. I am Dr Whitmore and this is my colleague Dr Harris. We will each examine you on a clinical scenario. Shall we begin?"
+  "first_message": "Hello, Dr {{candidate_name}}. This is your FRCA structured oral examination. I am Dr Whitmore and this is my colleague Dr Harris. We will each examine you on a clinical question and linked science topic.  You will have 13 minutes for each pair of questions. Let us begin."
 }
